@@ -76,8 +76,8 @@ public class VrUiManager : UuvrBehaviour
         Destroy(_vrUiQuad.GetComponent("Collider"));
         _vrUiQuad.name = "VrUiQuad";
         _vrUiQuad.transform.parent = _uiContainer.transform;
-        _vrUiQuad.transform.localPosition = Vector3.forward * 2f;
-        var quadWidth = 1.8f;
+        _vrUiQuad.transform.localPosition = Vector3.forward * 1.6f + Vector3.up * 1.6f; // lorns lure player height
+        var quadWidth = 2f;
         var quadHeight = quadWidth * uiTextureAspectRatio;
         _vrUiQuad.transform.localScale = new Vector3(quadWidth, quadHeight, 1f);
 
