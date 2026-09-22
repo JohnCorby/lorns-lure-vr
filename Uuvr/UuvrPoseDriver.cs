@@ -86,7 +86,7 @@ public class UuvrPoseDriver: UuvrBehaviour
             transform.localRotation = (Quaternion)_trackingRotationMethod.Invoke(null, _trackingRotationMethodArgs);
         }
 
-        if (_trackingPositionMethod != null && ModConfiguration.Instance.HeadsetDOF.Value == DegreesOfFreedom.Six)
+        if (_trackingPositionMethod != null)
         {            
             var pos = (Vector3)_trackingPositionMethod.Invoke(null, _trackingRotationMethodArgs);
             if (_positionOffset == null)
@@ -94,13 +94,10 @@ public class UuvrPoseDriver: UuvrBehaviour
                 _positionOffset = -pos;  // First time we get the position, we store the reverse as the offset.
             }
             // add the offset to the position.
-            pos += _positionOffset.Value;
+            pos.x += _positionOffset.Value.x;
+            pos.z += _positionOffset.Value.z;
             
             transform.localPosition = pos;
-        }
-        else
-        {
-            transform.localPosition = Vector3.zero;
         }
     }
 

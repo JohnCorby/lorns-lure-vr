@@ -31,17 +31,8 @@ public class ModConfiguration
         [Description("OpenXR")]
         OpenXr,
     }
-
 #endif
-
-    public enum DegreesOfFreedom
-    {
-        [Description("3-DOF")]
-        Three,
-        [Description("6-DOF")]
-        Six,
-    }
-
+    
     public enum ScreenSpaceCanvasType
     {
         [Description("None")]
@@ -70,10 +61,8 @@ public class ModConfiguration
         CanvasRedirect,
     }
 
-    
     public readonly ConfigFile Config;
     public readonly ConfigEntry<CameraTrackingMode> CameraTracking;
-    public readonly ConfigEntry<DegreesOfFreedom> HeadsetDOF;
     public readonly ConfigEntry<bool> RelativeCameraSetStereoView;
     public readonly ConfigEntry<int> VrCameraDepth;
     public readonly ConfigEntry<int> VrUiLayerOverride;
@@ -114,9 +103,7 @@ public class ModConfiguration
             CameraTrackingMode.RelativeTransform,
 #endif
             "Defines how camera tracking is done. Relative is usually preferred, but not all games support it. Changing this might require restarting the level.");
-
         
-
         RelativeCameraSetStereoView = config.Bind(
             "Relative Camera",
             "Use SetStereoView for Relative Camera",
@@ -128,13 +115,6 @@ public class ModConfiguration
             "Align To Horizon",
             false,
             "Prevents pitch and roll changes on the camera, allowing only yaw changes.");
-
-
-        HeadsetDOF = config.Bind(
-            "Camera",
-            "Headset Degrees of Freedom",
-            DegreesOfFreedom.Three,
-            "Some games are better with 3-DOF, some are better with 6-DOF. Changing this might require restarting the level.");
 
         CameraPositionOffsetX = config.Bind(
             "Camera",

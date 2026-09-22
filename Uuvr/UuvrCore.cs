@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Reflection;
 using UnityEngine;
 using Uuvr.VrCamera;
@@ -57,7 +58,7 @@ public class UuvrCore: MonoBehaviour
 
         _vrTogglerManager = new VrTogglerManager();
 
-        SetPositionTrackingEnabled(true);
+        SetPositionTrackingEnabled(false);
     }
 
     private void Update()
@@ -67,10 +68,16 @@ public class UuvrCore: MonoBehaviour
 
         if (_recenterKey.UpdateIsDown())
         {
-            UuvrPoseDriver.RecenterView();
+            StartCoroutine(RecenterView());
         }
 
         UpdatePhysicsRate();
+    }
+
+    private IEnumerator RecenterView()
+    {
+        yield return new WaitForSecondsRealtime(3);
+        UuvrPoseDriver.RecenterView();
     }
 
     private void UpdatePhysicsRate()
