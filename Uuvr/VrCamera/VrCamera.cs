@@ -4,6 +4,7 @@ using Il2CppSystem.Collections.Generic;
 using System.Collections.Generic;
 #endif
 using UnityEngine;
+using UnityEngine.XR;
 
 namespace Uuvr.VrCamera;
 
@@ -41,6 +42,14 @@ public class VrCamera : UuvrBehaviour
         base.Awake();
         ParentCamera = GetComponent<Camera>();
         VrCameras.Add(ParentCamera);
+        
+        Hand.Create(this, XRNode.LeftHand);
+        Hand.Create(this, XRNode.RightHand);
+        
+        // make feet origin for reference
+        var origin = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        origin.transform.SetParent(transform.parent, false);
+        origin.transform.localScale = Vector3.one * .1f;
     }
 
 #if MODERN
