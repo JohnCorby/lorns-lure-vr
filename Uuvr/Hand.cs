@@ -10,6 +10,7 @@ public class Hand : MonoBehaviour
     public static void Create(VrCamera.VrCamera vrCamera, XRNode hand)
     {
         var go = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Destroy(go.GetComponent<Collider>());
         go.AddComponent<Hand>().hand = hand;
 
         go.transform.SetParent(vrCamera.transform.parent);

@@ -42,12 +42,13 @@ public class VrCamera : UuvrBehaviour
         base.Awake();
         ParentCamera = GetComponent<Camera>();
         VrCameras.Add(ParentCamera);
-        
+
         Hand.Create(this, XRNode.LeftHand);
         Hand.Create(this, XRNode.RightHand);
-        
+
         // make feet origin for reference
         var origin = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        Destroy(origin.GetComponent<Collider>());
         origin.transform.SetParent(transform.parent, false);
         origin.transform.localScale = Vector3.one * .1f;
     }

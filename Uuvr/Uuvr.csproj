@@ -14,8 +14,14 @@
     </PropertyGroup>
 
     <ItemGroup>
-<!--        i have no idea why this works -->
+        <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
+
+
+        <!--        i have no idea why this works -->
         <Reference Include="$(GameManagedDir)\UnityEngine*.dll">
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="$(GameManagedDir)\Assembly-CSharp.dll" Publicize="true" >
             <Private>False</Private>
         </Reference>
         <Reference Include="..\lib\$(UnityBackend)\$(UnityGeneration)\UnityEngine.UI.dll">
