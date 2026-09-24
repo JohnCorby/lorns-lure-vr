@@ -3,6 +3,7 @@
   xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <BepInExDir>C:\Users\willi\AppData\Roaming\raicuparta\rai-pal\data\installed-mods\155641091330048681\bepinex\BepInEx</BepInExDir>
+      <GameManagedDir>D:\SteamLibrary\steamapps\common\Lorn's Lure\LornsLure_Data\Managed</GameManagedDir>
   </PropertyGroup>
 
   <!--  Il2Cpp  -->

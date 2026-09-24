@@ -14,7 +14,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Reference Include="..\lib\$(UnityBackend)\$(UnityGeneration)\*.dll">
+<!--        i have no idea why this works -->
+        <Reference Include="$(GameManagedDir)\UnityEngine*.dll">
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="..\lib\$(UnityBackend)\$(UnityGeneration)\UnityEngine.UI.dll">
             <Private>False</Private>
         </Reference>
         <Content Include="Assets\**" >
