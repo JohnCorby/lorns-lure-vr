@@ -30,7 +30,7 @@
 
     <!--  Mono  -->
     <PropertyGroup Condition=" '$(Configuration)' == 'legacy-mono' ">
-        <TargetFramework>net35</TargetFramework>
+        <TargetFramework>net48</TargetFramework>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'modern-mono' ">
         <TargetFramework>net48</TargetFramework>

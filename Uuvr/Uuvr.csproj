@@ -17,13 +17,13 @@
         <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
 
 
-        <!--        i have no idea why this works -->
         <Reference Include="$(GameManagedDir)\UnityEngine*.dll">
             <Private>False</Private>
         </Reference>
         <Reference Include="$(GameManagedDir)\Assembly-CSharp.dll" Publicize="true" >
             <Private>False</Private>
         </Reference>
+        <!--this version is publicized so just yoink it-->
         <Reference Include="..\lib\$(UnityBackend)\$(UnityGeneration)\UnityEngine.UI.dll">
             <Private>False</Private>
         </Reference>
@@ -42,7 +42,7 @@
 
     <!--  Mono  -->
     <PropertyGroup Condition=" '$(Configuration)' == 'legacy-mono' ">
-        <TargetFramework>net35</TargetFramework>
+        <TargetFramework>net48</TargetFramework>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)' == 'modern-mono' ">
         <TargetFramework>net48</TargetFramework>
@@ -58,5 +58,8 @@
     </ItemGroup>
     <ItemGroup>
       <ProjectReference Include="..\Uuvr.SteamVR\Uuvr.SteamVR.csproj" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="obj\" />
     </ItemGroup>
 </Project>
