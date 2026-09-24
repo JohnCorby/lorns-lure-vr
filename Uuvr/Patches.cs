@@ -91,7 +91,7 @@ public static class Patches
     }
 
     // cant change fov in vr. dont care
-    [HarmonyPrefix, HarmonyPatch(typeof(Dash), nameof(ZoomIn.Update))]
+    [HarmonyPrefix, HarmonyPatch(typeof(ZoomIn), nameof(ZoomIn.Update))]
     private static bool ZoomIn_Update() => false;
 
     #endregion
