@@ -43,6 +43,8 @@ public class VrCamera : UuvrBehaviour
         ParentCamera = GetComponent<Camera>();
         VrCameras.Add(ParentCamera);
 
+        return;
+
         Hand.Create(this, XRNode.LeftHand);
         Hand.Create(this, XRNode.RightHand);
 
