@@ -48,7 +48,6 @@ public class UuvrPoseDriver: UuvrBehaviour
         }
 
         DisableCameraAutoTracking();
-        RecenterView();
     }
 
     protected override void OnBeforeRender()
@@ -67,17 +66,6 @@ public class UuvrPoseDriver: UuvrBehaviour
         UpdateTransform();
     }
 
-    /// <summary>
-    /// This vector is used to recenter the view position.  (its static so that all VRCamera's share the same offset.
-    /// </summary>
-    private static Vector3? _positionOffset;
-    
-
-    public static void RecenterView()
-    {
-        _positionOffset = null;
-    }
-
     
     private void UpdateTransform()
     {
@@ -87,17 +75,8 @@ public class UuvrPoseDriver: UuvrBehaviour
         }
 
         if (_trackingPositionMethod != null)
-        {            
-            var pos = (Vector3)_trackingPositionMethod.Invoke(null, _trackingRotationMethodArgs);
-            if (_positionOffset == null)
-            {
-                _positionOffset = -pos;  // First time we get the position, we store the reverse as the offset.
-            }
-            // add the offset to the position.
-            pos.x += _positionOffset.Value.x;
-            pos.z += _positionOffset.Value.z;
-            
-            transform.localPosition = pos;
+        {
+            transform.localPosition = (Vector3)_trackingPositionMethod.Invoke(null, _trackingRotationMethodArgs);
         }
     }
 
@@ -106,6 +85,7 @@ public class UuvrPoseDriver: UuvrBehaviour
         var camera = GetComponent<Camera>();
         if (!camera) return;
         
+        // we do what this does but manually. for some reason this makes player at weird angle. not sure why
         var cameraTrackingDisablingMethod = UuvrXrDevice.XrDeviceType?.GetMethod("DisableAutoXRCameraTracking");
 
         if (cameraTrackingDisablingMethod != null)

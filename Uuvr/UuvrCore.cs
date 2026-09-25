@@ -16,7 +16,6 @@ public class UuvrCore: MonoBehaviour
     }
 #endif
 
-    private readonly KeyboardKey _recenterKey = new (KeyboardKey.KeyCode.F2);
     private readonly KeyboardKey _toggleVrKey = new (KeyboardKey.KeyCode.F3);
     private float _originalFixedDeltaTime;
     
@@ -66,18 +65,7 @@ public class UuvrCore: MonoBehaviour
         if (_toggleVrKey.UpdateIsDown()) 
             _vrTogglerManager?.ToggleVr();
 
-        if (_recenterKey.UpdateIsDown())
-        {
-            StartCoroutine(RecenterView());
-        }
-
         UpdatePhysicsRate();
-    }
-
-    private IEnumerator RecenterView()
-    {
-        yield return new WaitForSecondsRealtime(3);
-        UuvrPoseDriver.RecenterView();
     }
 
     private void UpdatePhysicsRate()
