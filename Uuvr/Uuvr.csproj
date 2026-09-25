@@ -30,6 +30,9 @@
         <Content Include="Assets\**" >
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
+        <Reference Include="Valve.Newtonsoft.Json">
+          <HintPath>..\lib\Valve.Newtonsoft.Json.dll</HintPath>
+        </Reference>
     </ItemGroup>
 
     <!--  Il2Cpp  -->
