@@ -33,8 +33,7 @@ public class UuvrCore: MonoBehaviour
         DontDestroyOnLoad(gameObject);
         gameObject.AddComponent<VrCameraManager>();
         
-        // TODO: Emulate input.   
-        // UuvrBehaviour.Create<UuvrInput>(transform);
+        UuvrBehaviour.Create<UuvrInput>(transform);
     }
 
     private void OnDestroy()

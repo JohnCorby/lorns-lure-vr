@@ -1,13 +1,14 @@
-﻿// TODO: Emulate Input.
-
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using UnityEngine;
+using UnityEngine.XR;
 using Valve.VR;
 
 namespace Uuvr;
 
 public class UuvrInput: UuvrBehaviour
 {
+    public static InputDevice HeadDevice, LeftHandDevice, RightHandDevice;
+
     private enum XboxButton
     {
         DpadUp = 0x0001,
@@ -28,7 +29,18 @@ public class UuvrInput: UuvrBehaviour
 
     private void Awake()
     {
-        SteamVR.Initialize();
+        // SteamVR.Initialize();
+    }
+
+    private void Start()
+    {
+        HeadDevice = InputDevices.GetDeviceAtXRNode(XRNode.Head);
+        LeftHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
+        RightHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
+        
+        Debug.Log($"head = {HeadDevice.name} with {HeadDevice.characteristics}");
+        Debug.Log($"left hand = {LeftHandDevice.name} with {LeftHandDevice.characteristics}");
+        Debug.Log($"right hand = {RightHandDevice.name} with {RightHandDevice.characteristics}");
     }
 
     [DllImport("xinput1_4.dll", EntryPoint = "XInputSetButtonState")]
@@ -47,6 +59,9 @@ public class UuvrInput: UuvrBehaviour
 
     private void Update()
     {
+        
+        return;
+        
         var actions = SteamVR_Actions.Xbox;
         // SetButtonState(XboxButton.DpadUp ,actions.DpadUp.state);
         // SetButtonState(XboxButton.DpadDown ,actions.DpadDown.state);
