@@ -1,4 +1,6 @@
-﻿using System.Runtime.InteropServices;
+﻿using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
 using UnityEngine;
 using UnityEngine.XR;
 using Valve.VR;
@@ -26,6 +28,23 @@ public class UuvrInput: UuvrBehaviour
         X = 0x4000,
         Y = 0x8000,
     }
+
+    public struct InputState
+    {
+        public bool X, Y, A, B;
+        public Vector2 LeftAxis, RightAxis;
+        public bool LeftClick, RightClick;
+        public bool LeftTrigger, RightTrigger;
+        public bool LeftGrip, RightGrip;
+        public bool LeftMenu, RightMenu;
+
+        public override string ToString()
+        {
+            return $"{nameof(X)}: {X}, {nameof(Y)}: {Y}, {nameof(A)}: {A}, {nameof(B)}: {B}, {nameof(LeftAxis)}: {LeftAxis}, {nameof(RightAxis)}: {RightAxis}, {nameof(LeftClick)}: {LeftClick}, {nameof(RightClick)}: {RightClick}, {nameof(LeftTrigger)}: {LeftTrigger}, {nameof(RightTrigger)}: {RightTrigger}, {nameof(LeftGrip)}: {LeftGrip}, {nameof(RightGrip)}: {RightGrip}, {nameof(LeftMenu)}: {LeftMenu}, {nameof(RightMenu)}: {RightMenu}";
+        }
+    }
+
+    public static InputState State;
 
     private void Awake()
     {
@@ -59,6 +78,20 @@ public class UuvrInput: UuvrBehaviour
 
     private void Update()
     {
+        // LeftHandDevice.TryGetFeatureValue(CommonUsages.primaryButton, out State.X);
+        // LeftHandDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out State.Y);
+        // LeftHandDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out State.LeftAxis);
+        // LeftHandDevice.TryGetFeatureValue(CommonUsages.primary2DAxisClick, out State.LeftClick);
+        // LeftHandDevice.TryGetFeatureValue(CommonUsages.triggerButton, out State.LeftTrigger);
+        // LeftHandDevice.TryGetFeatureValue(CommonUsages.gripButton, out State.LeftGrip);
+        // LeftHandDevice.TryGetFeatureValue(CommonUsages.menuButton, out State.LeftMenu);
+        // RightHandDevice.TryGetFeatureValue(CommonUsages.primaryButton, out State.A);
+        // RightHandDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out State.B);
+        // RightHandDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out State.RightAxis);
+        // RightHandDevice.TryGetFeatureValue(CommonUsages.primary2DAxisClick, out State.RightClick);
+        // RightHandDevice.TryGetFeatureValue(CommonUsages.triggerButton, out State.RightTrigger);
+        // RightHandDevice.TryGetFeatureValue(CommonUsages.gripButton, out State.RightGrip);
+        // RightHandDevice.TryGetFeatureValue(CommonUsages.menuButton, out State.RightMenu);
         
         return;
         
@@ -83,5 +116,78 @@ public class UuvrInput: UuvrBehaviour
         
         XInputSetThumbState(true, (short) (actions.StickLeft.axis.x * short.MaxValue), (short) (actions.StickLeft.axis.y * short.MaxValue));
         XInputSetThumbState(false, (short) (actions.StickRight.axis.x * short.MaxValue), (short) (actions.StickRight.axis.y * short.MaxValue));
+    }
+
+    private void OnGUI()
+    {
+        GUILayout.Label("LEFT");
+        List<InputFeatureUsage> usages = new();
+        usages.Clear();
+        LeftHandDevice.TryGetFeatureUsages(usages);
+        foreach (var usage in usages)
+        {
+            GUILayout.Label($"{usage.name} = {GetValue(LeftHandDevice, usage)}");
+        }
+        GUILayout.Label("RIGHT");
+        usages.Clear();
+        RightHandDevice.TryGetFeatureUsages(usages);
+        foreach (var usage in usages)
+        {
+            GUILayout.Label($"{usage.name} = {GetValue(RightHandDevice, usage)}");
+        }
+
+        // GUILayout.Label(State.ToString());
+
+        static object GetValue(InputDevice device, InputFeatureUsage usage)
+        {
+            var type = usage.type;
+            if (type == typeof(bool))
+            {
+                device.TryGetFeatureValue(usage.As<bool>(), out var value);
+                return value;
+            }
+            if (type == typeof(uint))
+            {
+                device.TryGetFeatureValue(usage.As<uint>(), out var value);
+                return value;
+            }
+            if (type == typeof(float))
+            {
+                device.TryGetFeatureValue(usage.As<float>(), out var value);
+                return value;
+            }
+            if (type == typeof(Vector2))
+            {
+                device.TryGetFeatureValue(usage.As<Vector2>(), out var value);
+                return value;
+            }
+            if (type == typeof(Vector3))
+            {
+                device.TryGetFeatureValue(usage.As<Vector3>(), out var value);
+                return value;
+            }
+            if (type == typeof(Quaternion))
+            {
+                device.TryGetFeatureValue(usage.As<Quaternion>(), out var value);
+                return value;
+            }
+            if (type == typeof(UnityEngine.XR.Hand))
+            {
+                device.TryGetFeatureValue(usage.As<UnityEngine.XR.Hand>(), out var value);
+                return value;
+            }
+            if (type == typeof(Bone))
+            {
+                device.TryGetFeatureValue(usage.As<Bone>(), out var value);
+                return value;
+            }
+            if (type == typeof(Eyes))
+            {
+                device.TryGetFeatureValue(usage.As<Eyes>(), out var value);
+                return value;
+            }
+
+            throw new NotImplementedException();
+        }
     }
 }
