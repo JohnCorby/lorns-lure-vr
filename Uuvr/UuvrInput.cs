@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
+using BepInEx;
 using UnityEngine;
 using UnityEngine.XR;
 using Valve.VR;
@@ -9,8 +10,6 @@ namespace Uuvr;
 
 public class UuvrInput: UuvrBehaviour
 {
-    public static InputDevice HeadDevice, LeftHandDevice, RightHandDevice;
-
     private enum XboxButton
     {
         DpadUp = 0x0001,
@@ -53,13 +52,11 @@ public class UuvrInput: UuvrBehaviour
 
     private void Start()
     {
-        HeadDevice = InputDevices.GetDeviceAtXRNode(XRNode.Head);
-        LeftHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.LeftHand);
-        RightHandDevice = InputDevices.GetDeviceAtXRNode(XRNode.RightHand);
-        
-        Debug.Log($"head = {HeadDevice.name} with {HeadDevice.characteristics}");
-        Debug.Log($"left hand = {LeftHandDevice.name} with {LeftHandDevice.characteristics}");
-        Debug.Log($"right hand = {RightHandDevice.name} with {RightHandDevice.characteristics}");
+        // openvr initializes after Awake. need to init steamvr after that
+        SteamVR_Actions.PreInitialize();
+        SteamVR.Initialize();
+
+        poseAction = SteamVR_Input.GetAction<SteamVR_Action_Pose>("Pose");
     }
 
     [DllImport("xinput1_4.dll", EntryPoint = "XInputSetButtonState")]
@@ -78,21 +75,6 @@ public class UuvrInput: UuvrBehaviour
 
     private void Update()
     {
-        // LeftHandDevice.TryGetFeatureValue(CommonUsages.primaryButton, out State.X);
-        // LeftHandDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out State.Y);
-        // LeftHandDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out State.LeftAxis);
-        // LeftHandDevice.TryGetFeatureValue(CommonUsages.primary2DAxisClick, out State.LeftClick);
-        // LeftHandDevice.TryGetFeatureValue(CommonUsages.triggerButton, out State.LeftTrigger);
-        // LeftHandDevice.TryGetFeatureValue(CommonUsages.gripButton, out State.LeftGrip);
-        // LeftHandDevice.TryGetFeatureValue(CommonUsages.menuButton, out State.LeftMenu);
-        // RightHandDevice.TryGetFeatureValue(CommonUsages.primaryButton, out State.A);
-        // RightHandDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out State.B);
-        // RightHandDevice.TryGetFeatureValue(CommonUsages.primary2DAxis, out State.RightAxis);
-        // RightHandDevice.TryGetFeatureValue(CommonUsages.primary2DAxisClick, out State.RightClick);
-        // RightHandDevice.TryGetFeatureValue(CommonUsages.triggerButton, out State.RightTrigger);
-        // RightHandDevice.TryGetFeatureValue(CommonUsages.gripButton, out State.RightGrip);
-        // RightHandDevice.TryGetFeatureValue(CommonUsages.menuButton, out State.RightMenu);
-        
         return;
         
         var actions = SteamVR_Actions.Xbox;
@@ -118,76 +100,17 @@ public class UuvrInput: UuvrBehaviour
         XInputSetThumbState(false, (short) (actions.StickRight.axis.x * short.MaxValue), (short) (actions.StickRight.axis.y * short.MaxValue));
     }
 
+    public SteamVR_Action_Pose poseAction;
+    
     private void OnGUI()
     {
-        GUILayout.Label("LEFT");
-        List<InputFeatureUsage> usages = new();
-        usages.Clear();
-        LeftHandDevice.TryGetFeatureUsages(usages);
-        foreach (var usage in usages)
-        {
-            GUILayout.Label($"{usage.name} = {GetValue(LeftHandDevice, usage)}");
-        }
-        GUILayout.Label("RIGHT");
-        usages.Clear();
-        RightHandDevice.TryGetFeatureUsages(usages);
-        foreach (var usage in usages)
-        {
-            GUILayout.Label($"{usage.name} = {GetValue(RightHandDevice, usage)}");
-        }
-
-        // GUILayout.Label(State.ToString());
-
-        static object GetValue(InputDevice device, InputFeatureUsage usage)
-        {
-            var type = usage.type;
-            if (type == typeof(bool))
-            {
-                device.TryGetFeatureValue(usage.As<bool>(), out var value);
-                return value;
-            }
-            if (type == typeof(uint))
-            {
-                device.TryGetFeatureValue(usage.As<uint>(), out var value);
-                return value;
-            }
-            if (type == typeof(float))
-            {
-                device.TryGetFeatureValue(usage.As<float>(), out var value);
-                return value;
-            }
-            if (type == typeof(Vector2))
-            {
-                device.TryGetFeatureValue(usage.As<Vector2>(), out var value);
-                return value;
-            }
-            if (type == typeof(Vector3))
-            {
-                device.TryGetFeatureValue(usage.As<Vector3>(), out var value);
-                return value;
-            }
-            if (type == typeof(Quaternion))
-            {
-                device.TryGetFeatureValue(usage.As<Quaternion>(), out var value);
-                return value;
-            }
-            if (type == typeof(UnityEngine.XR.Hand))
-            {
-                device.TryGetFeatureValue(usage.As<UnityEngine.XR.Hand>(), out var value);
-                return value;
-            }
-            if (type == typeof(Bone))
-            {
-                device.TryGetFeatureValue(usage.As<Bone>(), out var value);
-                return value;
-            }
-            if (type == typeof(Eyes))
-            {
-                device.TryGetFeatureValue(usage.As<Eyes>(), out var value);
-                return value;
-            }
-
-            throw new NotImplementedException();
-        }
+        // var actions = SteamVR_Actions.Xbox;
+        // GUILayout.Label($"{actions.A.state}");
+        // GUILayout.Label($"{actions.B.state}");
+        // GUILayout.Label($"{actions.X.state}");
+        // GUILayout.Label($"{actions.Y.state}");
+        
+        Vector3 pos = poseAction.GetLocalPosition(SteamVR_Input_Sources.Head);
+GUILayout.Label(pos.ToString());
     }
 }

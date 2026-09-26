@@ -37,15 +37,6 @@ public class UuvrPlugin
     private void Awake()
 #endif
     {
-        // https://github.com/Raicuparta/nomai-vr/blob/master/NomaiVR/NomaiVR.cs#L44
-        ApplicationManifestHelper.UpdateManifest(Paths.ManagedPath + @"\..\StreamingAssets\lornslure.vrmanifest",
-            "steam.app.1417930",
-            "https://steamcdn-a.akamaihd.net/steam/apps/1417930/header.jpg",
-            "Lorn's Lure VR",
-            "VR mod for Lorn's Lure",
-            steamBuild: true,
-            steamAppId: 1417930);
-        
         _instance = this;
         ModFolderPath = Path.GetDirectoryName(Assembly.GetAssembly(typeof(UuvrPlugin)).Location);
         
