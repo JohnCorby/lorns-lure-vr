@@ -62,6 +62,16 @@ public class UuvrInput: UuvrBehaviour
         // openvr initializes after Awake. need to init steamvr after that
         SteamVR_Actions.PreInitialize(); // in testing i dont need this but wtv everyone else does it
         SteamVR.Initialize();
+        
+        // https://github.com/Raicuparta/nomai-vr/blob/master/NomaiVR/NomaiVR.cs#L44
+        // https://github.com/xen-42/DredgeVR/blob/main/DredgeVR/Loader.cs#L75
+        ApplicationManifestHelper.UpdateManifest(Paths.ManagedPath + @"\..\StreamingAssets\lornslure.vrmanifest",
+            "steam.app.1417930",
+            "https://steamcdn-a.akamaihd.net/steam/apps/1417930/header.jpg",
+            "Lorn's Lure VR",
+            "VR mod for Lorn's Lure",
+            steamBuild: true,
+            steamAppId: 1417930);
     }
 
     [DllImport("xinput1_4.dll", EntryPoint = "XInputSetButtonState")]
