@@ -53,12 +53,12 @@ namespace VRMaker
                 },
                 new HardwareAxisInfo[]
                 {
-                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, SpecialAxisType.None),
-                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, SpecialAxisType.None),
-                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, SpecialAxisType.None),
-                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, SpecialAxisType.None),
-                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, SpecialAxisType.None),  //analog trigger
-                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, SpecialAxisType.None)  //analog trigger
+                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, 0f, SpecialAxisType.None),
+                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, 0f, SpecialAxisType.None),
+                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, 0f, SpecialAxisType.None),
+                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, 0f, SpecialAxisType.None),
+                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, 0f, SpecialAxisType.None),  //analog trigger
+                    new HardwareAxisInfo(AxisCoordinateMode.Absolute, false, 0f, SpecialAxisType.None)  //analog trigger
                 },
                 new HardwareButtonInfo[] { },
                 null

@@ -52,19 +52,24 @@ namespace VRMaker
 
                 inputs = new BaseInput[]
                 {
-                    new VectorInput(SteamVR_Actions.default_move, 0, 1),
-                    new VectorInput(SteamVR_Actions.default_movecamera, 2, 3),
-                    new ButtonInput(SteamVR_Actions.default_confirm, 4),
-                    new ButtonInput(SteamVR_Actions.default_decline, 5),
-                    new ButtonInput(SteamVR_Actions.default_pause, 6),
-                    new ButtonInput(SteamVR_Actions.default_actionbar, 7),
-                    new AxisInput(SteamVR_Actions.default_group, 8),
-                    new AxisInput(SteamVR_Actions.default_menus, 9),
-                    new ButtonInput(SteamVR_Actions.default_options, 10),
-                    new ButtonInput(SteamVR_Actions.default_highlight, 11),
-                    new ButtonInput(SteamVR_Actions.default_switchturnbased, 12),
-                    new ButtonInput(SteamVR_Actions.default_prevtarget, 13),
-                    new ButtonInput(SteamVR_Actions.default_nexttarget, 14)
+                    new VectorInput(SteamVR_Actions.xbox_StickLeft, 0, 1),
+                    new VectorInput(SteamVR_Actions.xbox_StickRight, 2, 3),
+                    new ButtonInput(SteamVR_Actions.xbox_A, 4),
+                    new ButtonInput(SteamVR_Actions.xbox_B, 5),
+                    new ButtonInput(SteamVR_Actions.xbox_X, 6),
+                    new ButtonInput(SteamVR_Actions.xbox_Y, 7),
+                    new AxisInput(SteamVR_Actions.xbox_LT, 8),
+                    new AxisInput(SteamVR_Actions.xbox_RT, 9),
+                    new ButtonInput(SteamVR_Actions.xbox_LB, 10),
+                    new ButtonInput(SteamVR_Actions.xbox_RB, 11),
+                    new ButtonInput(SteamVR_Actions.xbox_StickLeftClick, 12),
+                    new ButtonInput(SteamVR_Actions.xbox_StickRightClick, 13),
+                    new ButtonInput(SteamVR_Actions.xbox_DUp, 14),
+                    new ButtonInput(SteamVR_Actions.xbox_DDown, 15),
+                    new ButtonInput(SteamVR_Actions.xbox_DLeft, 16),
+                    new ButtonInput(SteamVR_Actions.xbox_DRight, 17),
+                    new ButtonInput(SteamVR_Actions.xbox_Start, 18),
+                    new ButtonInput(SteamVR_Actions.xbox_Select, 19),
                 };
         }
 
@@ -72,8 +77,8 @@ namespace VRMaker
         {
             if (!initializedMainPlayer)
             {
-                Logs.WriteInfo("allPlayerCount: ");
-                Logs.WriteInfo(ReInput.players.allPlayerCount);
+                Debug.Log("allPlayerCount: ");
+                Debug.Log(ReInput.players.allPlayerCount);
                 Player p = null;
                 //for (int i = 0; i < ReInput.players.allPlayerCount; i++)
                 //{
@@ -86,12 +91,12 @@ namespace VRMaker
                 //    }
 
                 //}
-                p = Kingmaker.Assets.Console.GamepadInput.GamePad.Instance.Player;
+                p = Input.player; // lorns lure specific
 
                 if (AddVRController(p))
                 {
                     initializedMainPlayer = true;
-                    Logs.WriteInfo("VRController successfully added");
+                    Debug.Log("VRController successfully added");
                 }
             }
 
@@ -134,7 +139,7 @@ namespace VRMaker
         // For printing the flatscreen game binds
         public static void LogAllGameActions(Rewired.Player player)
         {
-            Logs.WriteInfo("LogAllGameActions started");
+            Debug.Log("LogAllGameActions started");
             // All elements mapped to all joysticks in the player
             foreach (Joystick j in player.controllers.Joysticks)
             {
@@ -146,13 +151,13 @@ namespace VRMaker
                     // Loop over all button maps
                     foreach (ActionElementMap aem in map.ButtonMaps)
                     {
-                        Logs.WriteInfo(aem.elementIdentifierName + " is assigned to Button " + aem.elementIndex + " with the Action " + ReInput.mapping.GetAction(aem.actionId).name + " with actionId " + aem.actionId);
+                        Debug.Log(aem.elementIdentifierName + " is assigned to Button " + aem.elementIndex + " with the Action " + ReInput.mapping.GetAction(aem.actionId).name + " with actionId " + aem.actionId);
                     }
 
                     // Loop over all axis maps
                     foreach (ActionElementMap aem in map.AxisMaps)
                     {
-                        Logs.WriteInfo(aem.elementIdentifierName + " is assigned to Axis " + aem.elementIndex + " with the Action " + ReInput.mapping.GetAction(aem.actionId).name + " with actionId " + aem.actionId);
+                        Debug.Log(aem.elementIdentifierName + " is assigned to Axis " + aem.elementIndex + " with the Action " + ReInput.mapping.GetAction(aem.actionId).name + " with actionId " + aem.actionId);
                     }
 
                     // Loop over all element maps of any type
@@ -160,16 +165,16 @@ namespace VRMaker
                     {
                         if (aem.elementType == ControllerElementType.Axis)
                         {
-                            Logs.WriteInfo(aem.elementIdentifierName + " is assigned to Axis " + aem.elementIndex + " with the Action " + ReInput.mapping.GetAction(aem.actionId).name + " with actionId " + aem.actionId);
+                            Debug.Log(aem.elementIdentifierName + " is assigned to Axis " + aem.elementIndex + " with the Action " + ReInput.mapping.GetAction(aem.actionId).name + " with actionId " + aem.actionId);
                         }
                         else if (aem.elementType == ControllerElementType.Button)
                         {
-                            Logs.WriteInfo(aem.elementIdentifierName + " is assigned to Button " + aem.elementIndex + " with the Action " + ReInput.mapping.GetAction(aem.actionId).name + " with actionId " + aem.actionId);
+                            Debug.Log(aem.elementIdentifierName + " is assigned to Button " + aem.elementIndex + " with the Action " + ReInput.mapping.GetAction(aem.actionId).name + " with actionId " + aem.actionId);
                         }
                     }
                 }
             }
-            Logs.WriteInfo("LogAllGameActions ended");
+            Debug.Log("LogAllGameActions ended");
         } 
     }
 }
