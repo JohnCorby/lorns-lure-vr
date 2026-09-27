@@ -65,6 +65,7 @@ Global
 		{DBC32AA0-BC31-4826-8B43-C57A2D1EA140}.modern-il2cpp|Any CPU.ActiveCfg = modern-il2cpp|Any CPU
 		{DBC32AA0-BC31-4826-8B43-C57A2D1EA140}.modern-mono|Any CPU.ActiveCfg = modern-mono|Any CPU
 		{DBC32AA0-BC31-4826-8B43-C57A2D1EA140}.legacy-mono|Any CPU.Build.0 = legacy-mono|Any CPU
+		{DBC32AA0-BC31-4826-8B43-C57A2D1EA140}.modern-mono|Any CPU.Build.0 = modern-mono|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

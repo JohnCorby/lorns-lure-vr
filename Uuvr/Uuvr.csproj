@@ -62,7 +62,4 @@
     <ItemGroup>
       <ProjectReference Include="..\Uuvr.SteamVR\Uuvr.SteamVR.csproj" />
     </ItemGroup>
-    <ItemGroup>
-      <Folder Include="obj\" />
-    </ItemGroup>
 </Project>

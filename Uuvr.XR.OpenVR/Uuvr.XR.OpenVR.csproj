@@ -17,7 +17,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <Reference Include="..\lib\$(UnityBackend)\$(UnityGeneration)\*.dll">
+        <Reference Include="$(GameManagedDir)\UnityEngine*.dll">
             <Private>False</Private>
         </Reference>
     </ItemGroup>
