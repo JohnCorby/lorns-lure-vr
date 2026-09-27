@@ -21,7 +21,7 @@ public class UuvrCore: MonoBehaviour
     
     private VrUiManager? _vrUi;
     private PropertyInfo? _refreshRateProperty;
-    private VrTogglerManager? _vrTogglerManager;
+    // private VrTogglerManager? _vrTogglerManager;
 
     public static void Create()
     {
@@ -54,15 +54,15 @@ public class UuvrCore: MonoBehaviour
         
         _vrUi = UuvrBehaviour.Create<VrUiManager>(transform);
 
-        _vrTogglerManager = new VrTogglerManager();
+        // _vrTogglerManager = new VrTogglerManager();
 
         SetPositionTrackingEnabled(false);
     }
 
     private void Update()
     {
-        if (_toggleVrKey.UpdateIsDown()) 
-            _vrTogglerManager?.ToggleVr();
+        // if (_toggleVrKey.UpdateIsDown()) 
+            // _vrTogglerManager?.ToggleVr();
 
         UpdatePhysicsRate();
     }
