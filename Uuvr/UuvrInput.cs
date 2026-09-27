@@ -50,13 +50,17 @@ public class UuvrInput: UuvrBehaviour
         // SteamVR.Initialize();
     }
 
+    private static bool _initialized = false;
+    
     private void Start()
     {
+        // uuvr gets destroyed and recreated for some reason. we only wanna init steamvr once tho
+        if (_initialized) return;
+        _initialized = true;
+        
         // openvr initializes after Awake. need to init steamvr after that
-        SteamVR_Actions.PreInitialize();
+        SteamVR_Actions.PreInitialize(); // in testing i dont need this but wtv everyone else does it
         SteamVR.Initialize();
-
-        poseAction = SteamVR_Input.GetAction<SteamVR_Action_Pose>("Pose");
     }
 
     [DllImport("xinput1_4.dll", EntryPoint = "XInputSetButtonState")]
@@ -75,9 +79,16 @@ public class UuvrInput: UuvrBehaviour
 
     private void Update()
     {
-        return;
-        
         var actions = SteamVR_Actions.Xbox;
+
+        State.A = actions.A.state;
+        State.B =  actions.B.state;
+        State.X = actions.X.state;
+        State.Y = actions.Y.state;
+        State.LeftAxis = actions.StickLeft.axis;
+        State.RightAxis = actions.StickRight.axis;
+        
+        /*
         // SetButtonState(XboxButton.DpadUp ,actions.DpadUp.state);
         // SetButtonState(XboxButton.DpadDown ,actions.DpadDown.state);
         // SetButtonState(XboxButton.DpadLeft ,actions.DpadLeft.state);
@@ -98,19 +109,11 @@ public class UuvrInput: UuvrBehaviour
         
         XInputSetThumbState(true, (short) (actions.StickLeft.axis.x * short.MaxValue), (short) (actions.StickLeft.axis.y * short.MaxValue));
         XInputSetThumbState(false, (short) (actions.StickRight.axis.x * short.MaxValue), (short) (actions.StickRight.axis.y * short.MaxValue));
+    */
     }
 
-    public SteamVR_Action_Pose poseAction;
-    
     private void OnGUI()
     {
-        // var actions = SteamVR_Actions.Xbox;
-        // GUILayout.Label($"{actions.A.state}");
-        // GUILayout.Label($"{actions.B.state}");
-        // GUILayout.Label($"{actions.X.state}");
-        // GUILayout.Label($"{actions.Y.state}");
-        
-        Vector3 pos = poseAction.GetLocalPosition(SteamVR_Input_Sources.Head);
-GUILayout.Label(pos.ToString());
+        GUILayout.Label(State.ToString());
     }
 }
