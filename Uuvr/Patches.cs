@@ -1,4 +1,6 @@
-﻿using ECM.Controllers;
+﻿using System;
+using ECM.Components;
+using ECM.Controllers;
 using HarmonyLib;
 using UnityEngine;
 
@@ -94,11 +96,9 @@ public static class Patches
     [HarmonyPrefix, HarmonyPatch(typeof(ZoomIn), nameof(ZoomIn.Update))]
     private static bool ZoomIn_Update() => false;
 
-    #region input
-
-    
-
-    #endregion
+    // no terminal velocity makes falling scarier. will have to see if this breaks gameplay
+    [HarmonyPrefix, HarmonyPatch(typeof(CharacterMovement), nameof(CharacterMovement.Awake))]
+    private static void CharacterMovement_Awake(CharacterMovement __instance) => __instance.maxFallSpeed = float.MaxValue;
 
     #endregion
 }
