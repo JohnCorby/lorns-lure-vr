@@ -77,7 +77,7 @@ public class ModConfiguration
     public readonly HardcodedConfigEntry<ScreenSpaceCanvasType> ScreenSpaceCanvasTypesToPatch = new(ScreenSpaceCanvasType.NotToTexture);
     
 #if MODERN
-    public readonly ConfigEntry<VrApi> PreferredVrApi = new(VrApi.OpenXr);
+    public readonly HardcodedConfigEntry<VrApi> PreferredVrApi = new(VrApi.OpenXr);
 #endif
 
     public ModConfiguration(ConfigFile config)
