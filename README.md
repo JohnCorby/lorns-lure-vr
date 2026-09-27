@@ -1,11 +1,22 @@
-# Universal Unity VR
+# Lorn's Lure VR
 
-Use [Rai Pal](https://pal.raicuparta.com) to install this mod.
+Fork of [UUVR](https://github.com/Raicuparta/uuvr) tailored for [Lorn's lure](https://store.steampowered.com/app/1417930/Lorns_Lure/)
+
+# Installing
+
+Use [Rai Pal](https://pal.raicuparta.com) to install `UUVR Mono Legacy`, then build this mod over it.
+
+# Building
+
+- Switch to the legacy-mono build configuration
+- In Directory.Build.Props, set BepInExDir and GameManagedDir
+- Make sure UUVR Mono Legacy is installed from Rai Pal (this sets up the right directories and lets you uninstall the mod later)
+- Build
 
 ## License
 
     Rai Pal
-    Copyright (C) 2024  Raicuparta
+    Copyright (C) 2024  Raicuparta (and JohnCorby)
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
