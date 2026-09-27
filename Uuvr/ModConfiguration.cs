@@ -97,14 +97,13 @@ public class ModConfiguration
         CameraTracking = config.Bind(
             "Camera",
             "Camera Tracking Mode",
+            // this should be absolute for lorns lure. everything else can stay at default
 #if LEGACY
-            CameraTrackingMode.RelativeMatrix,
+            CameraTrackingMode.Absolute,
 #else
-            CameraTrackingMode.RelativeTransform,
+            CameraTrackingMode.Absolute,
 #endif
             "Defines how camera tracking is done. Relative is usually preferred, but not all games support it. Changing this might require restarting the level.");
-        // this should be absolute for lorns lure. everything else can stay at default
-        CameraTracking.Value = CameraTrackingMode.Absolute; 
         
         RelativeCameraSetStereoView = config.Bind(
             "Relative Camera",
