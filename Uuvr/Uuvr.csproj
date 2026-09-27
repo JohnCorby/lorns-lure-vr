@@ -23,16 +23,15 @@
         <Reference Include="$(GameManagedDir)\Assembly-CSharp.dll" Publicize="true" >
             <Private>False</Private>
         </Reference>
-        <!--this version is publicized so just yoink it-->
-        <Reference Include="..\lib\$(UnityBackend)\$(UnityGeneration)\UnityEngine.UI.dll">
+        <Reference Include="$(GameManagedDir)\Assembly-CSharp-firstpass.dll" Publicize="true" >
+            <Private>False</Private>
+        </Reference>
+        <Reference Include="$(GameManagedDir)\UnityEngine.UI.dll" Publicize="true">
             <Private>False</Private>
         </Reference>
         <Content Include="Assets\**" >
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
-        <Reference Include="Valve.Newtonsoft.Json">
-          <HintPath>..\lib\Valve.Newtonsoft.Json.dll</HintPath>
-        </Reference>
     </ItemGroup>
 
     <!--  Il2Cpp  -->

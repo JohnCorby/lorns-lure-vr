@@ -94,5 +94,11 @@ public static class Patches
     [HarmonyPrefix, HarmonyPatch(typeof(ZoomIn), nameof(ZoomIn.Update))]
     private static bool ZoomIn_Update() => false;
 
+    #region input
+
+    
+
+    #endregion
+
     #endregion
 }

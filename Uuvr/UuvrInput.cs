@@ -33,7 +33,8 @@ public class UuvrInput: UuvrBehaviour
         public bool X, Y, A, B;
         public Vector2 LeftAxis, RightAxis;
         public bool LeftClick, RightClick;
-        public bool LeftTrigger, RightTrigger;
+        public float LeftTrigger;
+        public float RightTrigger;
         public bool LeftGrip, RightGrip;
         public bool LeftMenu, RightMenu;
 
@@ -81,14 +82,26 @@ public class UuvrInput: UuvrBehaviour
     {
         var actions = SteamVR_Actions.Xbox;
 
-        State.A = actions.A.state;
-        State.B =  actions.B.state;
-        State.X = actions.X.state;
-        State.Y = actions.Y.state;
-        State.LeftAxis = actions.StickLeft.axis;
-        State.RightAxis = actions.StickRight.axis;
+        State = new()
+        {
+            X = actions.X.state,
+            Y = actions.Y.state,
+            A = actions.A.state,
+            B = actions.B.state,
+            LeftAxis = actions.StickLeft.axis,
+            RightAxis = actions.StickRight.axis,
+            LeftClick = actions.StickLeftClick.state,
+            RightClick = actions.StickRightClick.state,
+            LeftTrigger = actions.LT.axis,
+            RightTrigger = actions.RT.axis,
+            LeftGrip = actions.LB.state,
+            RightGrip = actions.RB.state,
+            LeftMenu = actions.Select.state,
+            RightMenu = actions.Start.state,
+        };
+
+        return;
         
-        /*
         // SetButtonState(XboxButton.DpadUp ,actions.DpadUp.state);
         // SetButtonState(XboxButton.DpadDown ,actions.DpadDown.state);
         // SetButtonState(XboxButton.DpadLeft ,actions.DpadLeft.state);
@@ -109,7 +122,6 @@ public class UuvrInput: UuvrBehaviour
         
         XInputSetThumbState(true, (short) (actions.StickLeft.axis.x * short.MaxValue), (short) (actions.StickLeft.axis.y * short.MaxValue));
         XInputSetThumbState(false, (short) (actions.StickRight.axis.x * short.MaxValue), (short) (actions.StickRight.axis.y * short.MaxValue));
-    */
     }
 
     private void OnGUI()

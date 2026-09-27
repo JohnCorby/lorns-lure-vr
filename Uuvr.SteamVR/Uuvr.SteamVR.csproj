@@ -18,6 +18,7 @@
         <Reference Include="$(GameManagedDir)\UnityEngine*.dll">
             <Private>False</Private>
         </Reference>
+        <!--game has newtonsoft but different namespace and im lazy-->
         <Reference Include="..\lib\Valve.Newtonsoft.Json.dll">
             <Private>True</Private>
         </Reference>
