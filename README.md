@@ -2,6 +2,8 @@
 
 Fork of [UUVR](https://github.com/Raicuparta/uuvr) tailored for [Lorn's lure](https://store.steampowered.com/app/1417930/Lorns_Lure/)
 
+Yes, this means the code looks kind of bad. It's my first VR project, sorry!
+
 # Installing
 
 Use [Rai Pal](https://pal.raicuparta.com) to install `UUVR Mono Legacy`, then build this mod over it.
