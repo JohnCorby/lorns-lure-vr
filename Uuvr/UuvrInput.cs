@@ -1,6 +1,5 @@
 ﻿using System.Runtime.InteropServices;
 using HarmonyLib;
-using NullSave;
 using Rewired.Integration.UnityUI;
 using Valve.VR;
 
@@ -93,16 +92,17 @@ public class UuvrInput : UuvrBehaviour
 
     // everything goes through these. just patch the methods to give hardcoded outputs using the default binds
     // this code is terrible. i dont care! i want to work on other things!
+    // TODO: eventually, open unity, change actions.json to have these rewired actions directly instead of mapping in the patches.
+    //       thisll make this code a million times simpler because buttons and axes can just be those directly
 
     private const int UIHorizontal = 20;
     private const int UIVertical = 21;
     private const int UISubmit = 22;
     private const int UICancel = 23;
 
-    [HarmonyPrefix, HarmonyPatch(typeof(Input), nameof(Input.GetButton))]
-    private static bool Input_GetButton(string buttonName, out bool __result)
+    [HarmonyPostfix, HarmonyPatch(typeof(Input), nameof(Input.GetButton))]
+    private static void Input_GetButton(string buttonName, ref bool __result)
     {
-        __result = false;
         __result |= buttonName switch
         {
             "Jump" => Actions.A.state,
@@ -132,14 +132,11 @@ public class UuvrInput : UuvrBehaviour
             "UICancel" => Actions.B.state,
             _ => false,
         };
-
-        return false;
     }
 
-    [HarmonyPrefix, HarmonyPatch(typeof(Input), nameof(Input.GetButtonDown))]
-    private static bool Input_GetButtonDown(string buttonName, out bool __result)
+    [HarmonyPostfix, HarmonyPatch(typeof(Input), nameof(Input.GetButtonDown))]
+    private static void Input_GetButtonDown(string buttonName, ref bool __result)
     {
-        __result = false;
         __result |= buttonName switch
         {
             "Jump" => Actions.A.stateDown,
@@ -169,13 +166,11 @@ public class UuvrInput : UuvrBehaviour
             "UICancel" => Actions.B.stateDown,
             _ => false,
         };
-        return false;
     }
 
-    [HarmonyPrefix, HarmonyPatch(typeof(Input), nameof(Input.GetButtonUp), typeof(string))]
-    private static bool Input_GetButtonUp(string buttonName, out bool __result)
+    [HarmonyPostfix, HarmonyPatch(typeof(Input), nameof(Input.GetButtonUp), typeof(string))]
+    private static void Input_GetButtonUp(string buttonName, ref bool __result)
     {
-        __result = false;
         __result |= buttonName switch
         {
             "Jump" => Actions.A.stateUp,
@@ -205,12 +200,12 @@ public class UuvrInput : UuvrBehaviour
             "UICancel" => Actions.B.stateUp,
             _ => false,
         };
-        return false;
     }
 
-    [HarmonyPrefix, HarmonyPatch(typeof(Input), nameof(Input.GetAxis))]
-    private static bool Input_GetAxis(string axisName, out float __result)
+    [HarmonyPostfix, HarmonyPatch(typeof(Input), nameof(Input.GetAxis))]
+    private static void Input_GetAxis(string axisName, ref float __result)
     {
+        if (__result != 0) return;
         __result = axisName switch
         {
             "Mouse X" => Actions.StickRight.axis.x,
@@ -222,12 +217,12 @@ public class UuvrInput : UuvrBehaviour
             "UIVertical" => Actions.StickLeft.axis.y,
             _ => 0f,
         };
-        return false;
     }
 
-    [HarmonyPrefix, HarmonyPatch(typeof(Input), nameof(Input.GetAxisRaw))]
-    private static bool Input_GetAxisRaw(string axisName, out float __result)
+    [HarmonyPostfix, HarmonyPatch(typeof(Input), nameof(Input.GetAxisRaw))]
+    private static void Input_GetAxisRaw(string axisName, ref float __result)
     {
+        if (__result != 0) return;
         __result = axisName switch
         {
             "Mouse X" => Actions.StickRight.axis.x,
@@ -239,13 +234,11 @@ public class UuvrInput : UuvrBehaviour
             "UIVertical" => Actions.StickLeft.axis.y,
             _ => 0f,
         };
-        return false;
     }
 
-    [HarmonyPrefix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetButton))]
-    private static bool RewiredStandaloneInputModule_GetButton(int actionId, out bool __result)
+    [HarmonyPostfix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetButton))]
+    private static void RewiredStandaloneInputModule_GetButton(int actionId, ref bool __result)
     {
-        __result = false;
         __result |= actionId switch
         {
             UIHorizontal => Actions.StickLeft.axis.x > .5f,
@@ -258,13 +251,11 @@ public class UuvrInput : UuvrBehaviour
             UICancel => Actions.B.stateDown,
             _ => false,
         };
-        return false;
     }
 
-    [HarmonyPrefix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetButtonDown))]
-    private static bool RewiredStandaloneInputModule_GetButtonDown(int actionId, out bool __result)
+    [HarmonyPostfix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetButtonDown))]
+    private static void RewiredStandaloneInputModule_GetButtonDown(int actionId, ref bool __result)
     {
-        __result = false;
         __result |= actionId switch
         {
             UIHorizontal => Actions.StickLeft.axis.x > .5f && Actions.StickLeft.lastAxis.x <= .5f,
@@ -277,53 +268,40 @@ public class UuvrInput : UuvrBehaviour
             UICancel => Actions.B.stateDown,
             _ => false,
         };
-        return false;
     }
 
-    [HarmonyPrefix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetNegativeButton))]
-    private static bool RewiredStandaloneInputModule_GetNegativeButton(int actionId, out bool __result)
+    [HarmonyPostfix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetNegativeButton))]
+    private static void RewiredStandaloneInputModule_GetNegativeButton(int actionId, ref bool __result)
     {
-        __result = actionId switch
+        __result |= actionId switch
         {
             UIHorizontal => Actions.StickLeft.axis.x < -.5f,
             UIVertical => Actions.StickLeft.axis.y < -.5f,
             _ => false,
         };
-        return false;
     }
 
-    [HarmonyPrefix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetNegativeButtonDown))]
-    private static bool RewiredStandaloneInputModule_GetNegativeButtonDown(int actionId, out bool __result)
+    [HarmonyPostfix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetNegativeButtonDown))]
+    private static void RewiredStandaloneInputModule_GetNegativeButtonDown(int actionId, ref bool __result)
     {
-        __result = actionId switch
+        __result |= actionId switch
         {
             UIHorizontal => Actions.StickLeft.axis.x < -.5f && Actions.StickLeft.lastAxis.x >= -.5f,
             UIVertical => Actions.StickLeft.axis.y < -.5f && Actions.StickLeft.lastAxis.y >= -.5f,
             _ => false,
         };
-        return false;
     }
 
-    [HarmonyPrefix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetAxis))]
-    private static bool RewiredStandaloneInputModule_GetAxis(int actionId, out float __result)
+    [HarmonyPostfix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetAxis))]
+    private static void RewiredStandaloneInputModule_GetAxis(int actionId, ref float __result)
     {
+        if (__result != 0) return;
         __result = actionId switch
         {
             UIHorizontal => Actions.StickLeft.axis.x,
             UIVertical => Actions.StickLeft.axis.y,
             _ => 0f,
         };
-        return false;
-    }
-
-    [HarmonyPrefix, HarmonyPatch(typeof(ReIconed), nameof(ReIconed.Awake))]
-    private static void ReIconed_Awake(ReIconed __instance)
-    {
-        // make keyboard mouse also have xbox icons
-        var i1 = __instance.controllerMaps.FindIndex(x => x.name.ToLower().Contains("xbox"));
-        var i2 = __instance.controllerMaps.FindIndex(x => x.name.ToLower().Contains("desktop"));
-        __instance.controllerMaps[i2].inputMaps = __instance.controllerMaps[i1].inputMaps;
-        __instance.controllerMaps[i2].tmpSpriteAsset = __instance.controllerMaps[i1].tmpSpriteAsset;
     }
 
     #endregion
