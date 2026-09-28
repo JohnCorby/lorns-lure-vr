@@ -215,8 +215,8 @@ public class UuvrInput : UuvrBehaviour
         __result = false;
         __result |= actionId switch
         {
-            UIHorizontal => Actions.StickLeft.axis.x > .5f && Actions.StickRight.lastAxis.x <= .5f,
-            UIVertical => Actions.StickLeft.axis.y > .5f && Actions.StickRight.lastAxis.y <= .5f,
+            UIHorizontal => Actions.StickLeft.axis.x > .5f && Actions.StickLeft.lastAxis.x <= .5f,
+            UIVertical => Actions.StickLeft.axis.y > .5f && Actions.StickLeft.lastAxis.y <= .5f,
             _ => false,
         };
         __result |= actionId switch
@@ -245,8 +245,8 @@ public class UuvrInput : UuvrBehaviour
     {
         __result = actionId switch
         {
-            UIHorizontal => Actions.StickLeft.axis.x < -.5f && Actions.StickRight.lastAxis.x >= -.5f,
-            UIVertical => Actions.StickLeft.axis.y < -.5f && Actions.StickRight.lastAxis.y >= -.5f,
+            UIHorizontal => Actions.StickLeft.axis.x < -.5f && Actions.StickLeft.lastAxis.x >= -.5f,
+            UIVertical => Actions.StickLeft.axis.y < -.5f && Actions.StickLeft.lastAxis.y >= -.5f,
             _ => false,
         };
         return false;
