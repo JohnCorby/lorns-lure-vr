@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
-using BepInEx;
+using HarmonyLib;
+using Rewired;
+using Rewired.Integration.UnityUI;
 using UnityEngine;
-using UnityEngine.XR;
 using Valve.VR;
 
 namespace Uuvr;
 
+[HarmonyPatch]
 public class UuvrInput: UuvrBehaviour
 {
     private enum XboxButton
@@ -28,24 +30,6 @@ public class UuvrInput: UuvrBehaviour
         Y = 0x8000,
     }
 
-    public struct InputState
-    {
-        public bool X, Y, A, B;
-        public Vector2 LeftAxis, RightAxis;
-        public bool LeftClick, RightClick;
-        public float LeftTrigger;
-        public float RightTrigger;
-        public bool LeftGrip, RightGrip;
-        public bool LeftMenu, RightMenu;
-
-        public override string ToString()
-        {
-            return $"{nameof(X)}: {X}, {nameof(Y)}: {Y}, {nameof(A)}: {A}, {nameof(B)}: {B}, {nameof(LeftAxis)}: {LeftAxis}, {nameof(RightAxis)}: {RightAxis}, {nameof(LeftClick)}: {LeftClick}, {nameof(RightClick)}: {RightClick}, {nameof(LeftTrigger)}: {LeftTrigger}, {nameof(RightTrigger)}: {RightTrigger}, {nameof(LeftGrip)}: {LeftGrip}, {nameof(RightGrip)}: {RightGrip}, {nameof(LeftMenu)}: {LeftMenu}, {nameof(RightMenu)}: {RightMenu}";
-        }
-    }
-
-    public static InputState State;
-
     private void Awake()
     {
         // SteamVR.Initialize();
@@ -62,6 +46,12 @@ public class UuvrInput: UuvrBehaviour
         // openvr initializes after Awake. need to init steamvr after that
         SteamVR_Actions.PreInitialize(); // in testing i dont need this but wtv everyone else does it
         SteamVR.Initialize();
+        
+        
+        foreach (var action in ReInput.mapping.Actions)
+        {
+            Debug.LogWarning($"ACTION {action.name}");
+        }
     }
 
     [DllImport("xinput1_4.dll", EntryPoint = "XInputSetButtonState")]
@@ -78,30 +68,10 @@ public class UuvrInput: UuvrBehaviour
         XInputSetButtonState((ushort) button, pressed);
     }
 
+    /*
     private void Update()
     {
         var actions = SteamVR_Actions.Xbox;
-
-        State = new()
-        {
-            X = actions.X.state,
-            Y = actions.Y.state,
-            A = actions.A.state,
-            B = actions.B.state,
-            LeftAxis = actions.StickLeft.axis,
-            RightAxis = actions.StickRight.axis,
-            LeftClick = actions.StickLeftClick.state,
-            RightClick = actions.StickRightClick.state,
-            LeftTrigger = actions.LT.axis,
-            RightTrigger = actions.RT.axis,
-            LeftGrip = actions.LB.state,
-            RightGrip = actions.RB.state,
-            LeftMenu = actions.Select.state,
-            RightMenu = actions.Start.state,
-        };
-
-        return;
-        
         // SetButtonState(XboxButton.DpadUp ,actions.DpadUp.state);
         // SetButtonState(XboxButton.DpadDown ,actions.DpadDown.state);
         // SetButtonState(XboxButton.DpadLeft ,actions.DpadLeft.state);
@@ -123,9 +93,154 @@ public class UuvrInput: UuvrBehaviour
         XInputSetThumbState(true, (short) (actions.StickLeft.axis.x * short.MaxValue), (short) (actions.StickLeft.axis.y * short.MaxValue));
         XInputSetThumbState(false, (short) (actions.StickRight.axis.x * short.MaxValue), (short) (actions.StickRight.axis.y * short.MaxValue));
     }
+*/
 
-    private void OnGUI()
+    private static SteamVR_Input_ActionSet_Xbox Actions => SteamVR_Actions.Xbox;
+
+    /*
+    private static Dictionary<string, SteamVR_Action_Boolean> ButtonMap = new()
     {
-        GUILayout.Label(State.ToString());
+        ["Interact"] = Actions.X
+    };
+
+    private static Dictionary<string, SteamVR_Action_Single> AxisMap;
+    */
+    
+
+    #region patches
+    // everything goes through these. just patch the methods to give hardcoded outputs
+
+    private const int UIHorizontal = 20;
+    private const int UIVertical = 21;
+    private const int UISubmit = 22;
+    private const int UICancel = 23;
+    
+    [HarmonyPrefix, HarmonyPatch(typeof(Input), nameof(Input.GetButtonDown))]
+    private static bool Input_GetButtonDown(string buttonName, out bool __result)
+    {
+        __result = false;
+        __result |= buttonName switch
+        {
+            "UIHorizontal" => Actions.DRight.state,
+            "UIVertical" => Actions.DUp.state,
+            "UISubmit" => Actions.DUp.state,
+            "UICancel" => Actions.DUp.state,
+            _ => false,
+        };
+        return false;
     }
+    [HarmonyPrefix, HarmonyPatch(typeof(Input), nameof(Input.GetButtonUp), typeof(string))]
+    private static bool Input_GetButtonUp(string buttonName, out bool __result)
+    {
+        __result = false;
+        __result |= buttonName switch
+        {
+            "UIHorizontal" => Actions.DRight.stateUp,
+            "UIVertical" => Actions.DUp.stateUp,
+            "UISubmit" => Actions.A.stateUp,
+            "UICancel" => Actions.B.stateUp,
+            _ => false,
+        };
+        return false;
+    }
+    [HarmonyPrefix, HarmonyPatch(typeof(Input), nameof(Input.GetButton))]
+    private static bool Input_GetButton(string buttonName, out bool __result)
+    {
+        __result = false;
+        __result |= buttonName switch
+        {
+            "UIHorizontal" => Actions.DRight.stateUp,
+            "UIVertical" => Actions.DUp.stateUp,
+            "UISubmit" => Actions.A.stateUp,
+            "UICancel" => Actions.B.stateUp,
+            _ => false,
+        };
+
+        return false;
+    }
+    [HarmonyPrefix, HarmonyPatch(typeof(Input), nameof(Input.GetAxis))]
+    private static bool Input_GetAxis(string buttonName, out float __result)
+    {
+        __result = 0;
+        return false;
+    }
+    [HarmonyPrefix, HarmonyPatch(typeof(Input), nameof(Input.GetAxisRaw))]
+    private static bool Input_GetAxisRaw(string buttonName, out float __result)
+    {
+        __result = 0;
+        return false;
+    }
+
+    [HarmonyPrefix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetButton))]
+    private static bool RewiredStandaloneInputModule_GetButton(int actionId, out bool __result)
+    {
+        __result = false;
+        __result |= actionId switch
+        {
+            UIHorizontal => Actions.DDown.state,
+            UIVertical => Actions.DUp.state,
+            _ => false,
+        };
+        __result |= actionId switch
+        {
+            UISubmit => Actions.A.stateDown,
+            UICancel => Actions.B.stateDown,
+            _ => false,
+        };
+        return false;
+    }
+    [HarmonyPrefix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetButtonDown))]
+    private static bool RewiredStandaloneInputModule_GetButtonDown(int actionId, out bool __result)
+    {
+        __result = false;
+        __result |= actionId switch
+        {
+            UIHorizontal => Actions.DRight.stateDown,
+            UIVertical => Actions.DUp.stateDown,
+            _ => false,
+        };
+        __result |= actionId switch
+        {
+            UISubmit => Actions.A.stateDown,
+            UICancel => Actions.B.stateDown,
+            _ => false,
+        };
+        return false;
+    }
+    [HarmonyPrefix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetNegativeButton))]
+    private static bool RewiredStandaloneInputModule_GetNegativeButton(int actionId, out bool __result)
+    {
+        __result = actionId switch
+        {
+            UIHorizontal => Actions.DLeft.state,
+            UIVertical => Actions.DDown.state,
+            _ => false,
+        };
+        return false;
+    }
+
+    [HarmonyPrefix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetNegativeButtonDown))]
+    private static bool RewiredStandaloneInputModule_GetNegativeButtonDown(int actionId, out bool __result)
+    {
+        __result = actionId switch
+        {
+            UIHorizontal => Actions.DLeft.stateDown,
+            UIVertical => Actions.DDown.stateDown,
+            _ => false,
+        };
+        return false;
+    }
+    [HarmonyPrefix, HarmonyPatch(typeof(RewiredStandaloneInputModule), nameof(RewiredStandaloneInputModule.GetAxis))]
+    private static bool RewiredStandaloneInputModule_GetAxis(int actionId, out float __result)
+    {
+        __result = actionId switch
+        {
+            UIHorizontal => Actions.StickLeft.axis.x,
+            UIVertical => Actions.StickLeft.axis.y,
+            _ => 0f,
+        };
+        return false;
+    }
+
+    #endregion
 }

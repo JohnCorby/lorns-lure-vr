@@ -1,0 +1,114 @@
+[Info   : Unity Log] LogAllGameActions started
+[Info   : Unity Log] A is assigned to Button 0 with the Action Jump with actionId 9
+[Info   : Unity Log] Y is assigned to Button 3 with the Action Zoom with actionId 6
+[Info   : Unity Log] X is assigned to Button 2 with the Action Interact with actionId 3
+[Info   : Unity Log] A is assigned to Button 0 with the Action Submit with actionId 7
+[Info   : Unity Log] Left Shoulder is assigned to Button 4 with the Action Dash with actionId 14
+[Info   : Unity Log] B is assigned to Button 1 with the Action SlowDown with actionId 10
+[Info   : Unity Log] D-Pad Left is assigned to Button 14 with the Action VideoMode with actionId 17
+[Info   : Unity Log] Back is assigned to Button 6 with the Action TryAgain with actionId 5
+[Info   : Unity Log] D-Pad Right is assigned to Button 12 with the Action Hints with actionId 19
+[Info   : Unity Log] D-Pad Down is assigned to Button 13 with the Action Crouch with actionId 27
+[Info   : Unity Log] D-Pad Up is assigned to Button 11 with the Action PictureMode with actionId 16
+[Info   : Unity Log] Left Stick Button is assigned to Button 9 with the Action DropCheckpoint with actionId 45
+[Info   : Unity Log] Right Stick Button is assigned to Button 10 with the Action UseBattery with actionId 44
+[Info   : Unity Log] Left Trigger is assigned to Axis 4 with the Action Cling with actionId 2
+[Info   : Unity Log] Right Trigger is assigned to Axis 5 with the Action Grapple with actionId 11
+[Info   : Unity Log] Left Trigger is assigned to Axis 4 with the Action Scan with actionId 18
+[Info   : Unity Log] Right Trigger is assigned to Axis 5 with the Action Flare with actionId 28
+[Info   : Unity Log] Left Stick X is assigned to Axis 0 with the Action HorizontalNonAssignable with actionId 43
+[Info   : Unity Log] Left Stick Y is assigned to Axis 1 with the Action VerticalNonAssignable with actionId 42
+[Info   : Unity Log] A is assigned to Button 0 with the Action Jump with actionId 9
+[Info   : Unity Log] Y is assigned to Button 3 with the Action Zoom with actionId 6
+[Info   : Unity Log] X is assigned to Button 2 with the Action Interact with actionId 3
+[Info   : Unity Log] A is assigned to Button 0 with the Action Submit with actionId 7
+[Info   : Unity Log] Left Shoulder is assigned to Button 4 with the Action Dash with actionId 14
+[Info   : Unity Log] B is assigned to Button 1 with the Action SlowDown with actionId 10
+[Info   : Unity Log] D-Pad Left is assigned to Button 14 with the Action VideoMode with actionId 17
+[Info   : Unity Log] Back is assigned to Button 6 with the Action TryAgain with actionId 5
+[Info   : Unity Log] D-Pad Right is assigned to Button 12 with the Action Hints with actionId 19
+[Info   : Unity Log] D-Pad Down is assigned to Button 13 with the Action Crouch with actionId 27
+[Info   : Unity Log] D-Pad Up is assigned to Button 11 with the Action PictureMode with actionId 16
+[Info   : Unity Log] Left Stick Button is assigned to Button 9 with the Action DropCheckpoint with actionId 45
+[Info   : Unity Log] Right Stick Button is assigned to Button 10 with the Action UseBattery with actionId 44
+[Info   : Unity Log] Left Trigger is assigned to Axis 4 with the Action Cling with actionId 2
+[Info   : Unity Log] Right Trigger is assigned to Axis 5 with the Action Grapple with actionId 11
+[Info   : Unity Log] Left Trigger is assigned to Axis 4 with the Action Scan with actionId 18
+[Info   : Unity Log] Right Trigger is assigned to Axis 5 with the Action Flare with actionId 28
+[Info   : Unity Log] Left Stick X is assigned to Axis 0 with the Action HorizontalNonAssignable with actionId 43
+[Info   : Unity Log] Left Stick Y is assigned to Axis 1 with the Action VerticalNonAssignable with actionId 42
+[Info   : Unity Log] A is assigned to Button 0 with the Action UISubmit with actionId 22
+[Info   : Unity Log] B is assigned to Button 1 with the Action UICancel with actionId 23
+[Info   : Unity Log] D-Pad Up is assigned to Button 11 with the Action UIVertical with actionId 21
+[Info   : Unity Log] D-Pad Right is assigned to Button 12 with the Action UIHorizontal with actionId 20
+[Info   : Unity Log] D-Pad Down is assigned to Button 13 with the Action UIVertical with actionId 21
+[Info   : Unity Log] D-Pad Left is assigned to Button 14 with the Action UIHorizontal with actionId 20
+[Info   : Unity Log] Left Stick X is assigned to Axis 0 with the Action UIHorizontal with actionId 20
+[Info   : Unity Log] Left Stick Y is assigned to Axis 1 with the Action UIVertical with actionId 21
+[Info   : Unity Log] A is assigned to Button 0 with the Action UISubmit with actionId 22
+[Info   : Unity Log] B is assigned to Button 1 with the Action UICancel with actionId 23
+[Info   : Unity Log] D-Pad Up is assigned to Button 11 with the Action UIVertical with actionId 21
+[Info   : Unity Log] D-Pad Right is assigned to Button 12 with the Action UIHorizontal with actionId 20
+[Info   : Unity Log] D-Pad Down is assigned to Button 13 with the Action UIVertical with actionId 21
+[Info   : Unity Log] D-Pad Left is assigned to Button 14 with the Action UIHorizontal with actionId 20
+[Info   : Unity Log] Left Stick X is assigned to Axis 0 with the Action UIHorizontal with actionId 20
+[Info   : Unity Log] Left Stick Y is assigned to Axis 1 with the Action UIVertical with actionId 21
+[Info   : Unity Log] Start is assigned to Button 7 with the Action Cancel with actionId 8
+[Info   : Unity Log] D-Pad Up is assigned to Button 11 with the Action ScrollTerminalUp with actionId 35
+[Info   : Unity Log] D-Pad Down is assigned to Button 13 with the Action ScrollTerminalDown with actionId 36
+[Info   : Unity Log] X is assigned to Button 2 with the Action UIScanClose with actionId 39
+[Info   : Unity Log] Right Stick X is assigned to Axis 2 with the Action Mouse X with actionId 12
+[Info   : Unity Log] Right Stick Y is assigned to Axis 3 with the Action Mouse Y with actionId 13
+[Info   : Unity Log] Left Stick X is assigned to Axis 0 with the Action Horizontal with actionId 0
+[Info   : Unity Log] Left Stick Y is assigned to Axis 1 with the Action Vertical with actionId 1
+[Info   : Unity Log] Start is assigned to Button 7 with the Action Cancel with actionId 8
+[Info   : Unity Log] D-Pad Up is assigned to Button 11 with the Action ScrollTerminalUp with actionId 35
+[Info   : Unity Log] D-Pad Down is assigned to Button 13 with the Action ScrollTerminalDown with actionId 36
+[Info   : Unity Log] X is assigned to Button 2 with the Action UIScanClose with actionId 39
+[Info   : Unity Log] Right Stick X is assigned to Axis 2 with the Action Mouse X with actionId 12
+[Info   : Unity Log] Right Stick Y is assigned to Axis 3 with the Action Mouse Y with actionId 13
+[Info   : Unity Log] Left Stick X is assigned to Axis 0 with the Action Horizontal with actionId 0
+[Info   : Unity Log] Left Stick Y is assigned to Axis 1 with the Action Vertical with actionId 1
+[Info   : Unity Log] LogAllGameActions ended
+
+
+
+
+
+
+
+
+
+
+
+[Warning: Unity Log] ACTION Horizontal
+[Warning: Unity Log] ACTION Vertical
+[Warning: Unity Log] ACTION Cling
+[Warning: Unity Log] ACTION Interact
+[Warning: Unity Log] ACTION TryAgain
+[Warning: Unity Log] ACTION Zoom
+[Warning: Unity Log] ACTION Submit
+[Warning: Unity Log] ACTION Cancel
+[Warning: Unity Log] ACTION Jump
+[Warning: Unity Log] ACTION SlowDown
+[Warning: Unity Log] ACTION Grapple
+[Warning: Unity Log] ACTION Mouse X
+[Warning: Unity Log] ACTION Mouse Y
+[Warning: Unity Log] ACTION Dash
+[Warning: Unity Log] ACTION FullScreen
+[Warning: Unity Log] ACTION PictureMode
+[Warning: Unity Log] ACTION VideoMode
+[Warning: Unity Log] ACTION Scan
+[Warning: Unity Log] ACTION Hints
+[Warning: Unity Log] ACTION UIHorizontal
+[Warning: Unity Log] ACTION UIVertical
+[Warning: Unity Log] ACTION UISubmit
+[Warning: Unity Log] ACTION UICancel
+[Warning: Unity Log] ACTION UIClick
+[Warning: Unity Log] ACTION Crouch
+[Warning: Unity Log] ACTION Flare
+[Warning: Unity Log] ACTION NOMAP
+[Warning: Unity Log] ACTION DropCheckpoint
+[Warning: Unity Log] ACTION UseBattery
+
+
