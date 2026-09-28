@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Runtime.InteropServices;
+﻿using System.Runtime.InteropServices;
 using HarmonyLib;
-using Rewired;
 using Rewired.Integration.UnityUI;
-using UnityEngine;
 using Valve.VR;
 
 namespace Uuvr;
@@ -46,12 +42,6 @@ public class UuvrInput : UuvrBehaviour
         // openvr initializes after Awake. need to init steamvr after that
         SteamVR_Actions.PreInitialize(); // in testing i dont need this but wtv everyone else does it
         SteamVR.Initialize();
-
-
-        foreach (var action in ReInput.mapping.Actions)
-        {
-            Debug.LogWarning($"ACTION {action.name}");
-        }
     }
 
     [DllImport("xinput1_4.dll", EntryPoint = "XInputSetButtonState")]
@@ -101,6 +91,7 @@ public class UuvrInput : UuvrBehaviour
     #region patches
 
     // everything goes through these. just patch the methods to give hardcoded outputs
+    // this code is terrible. i dont care! i want to work on other things!
 
     private const int UIHorizontal = 20;
     private const int UIVertical = 21;
@@ -113,8 +104,14 @@ public class UuvrInput : UuvrBehaviour
         __result = false;
         __result |= buttonName switch
         {
-            "UISubmit" => Actions.A.stateDown,
-            "UICancel" => Actions.B.stateDown,
+            "Jump" => Actions.A.state,
+            
+            "Submit" => Actions.A.state,
+            "Cancel" => Actions.Start.state,
+            "UIScanClose" => Actions.X.state,
+            
+            "UISubmit" => Actions.A.state,
+            "UICancel" => Actions.B.state,
             _ => false,
         };
 
@@ -127,6 +124,12 @@ public class UuvrInput : UuvrBehaviour
         __result = false;
         __result |= buttonName switch
         {
+            "Jump" => Actions.A.stateDown,
+            
+            "Submit" => Actions.A.stateDown,
+            "Cancel" => Actions.Start.stateDown,
+            "UIScanClose" => Actions.X.stateDown,
+            
             "UISubmit" => Actions.A.stateDown,
             "UICancel" => Actions.B.stateDown,
             _ => false,
@@ -140,6 +143,12 @@ public class UuvrInput : UuvrBehaviour
         __result = false;
         __result |= buttonName switch
         {
+            "Jump" => Actions.A.stateUp,
+            
+            "Submit" => Actions.A.stateUp,
+            "Cancel" => Actions.Start.stateUp,
+            "UIScanClose" => Actions.X.stateUp,
+            
             "UISubmit" => Actions.A.stateUp,
             "UICancel" => Actions.B.stateUp,
             _ => false,
@@ -152,6 +161,11 @@ public class UuvrInput : UuvrBehaviour
     {
         __result = axisName switch
         {
+            "Mouse X" => Actions.StickRight.axis.x,
+            "Mouse Y" => Actions.StickRight.axis.y,
+            "Horizontal" => Actions.StickLeft.axis.x,
+            "Vertical" => Actions.StickLeft.axis.y,
+
             "UIHorizontal" => Actions.StickLeft.axis.x,
             "UIVertical" => Actions.StickLeft.axis.y,
             _ => 0f,
@@ -164,6 +178,11 @@ public class UuvrInput : UuvrBehaviour
     {
         __result = axisName switch
         {
+            "Mouse X" => Actions.StickRight.axis.x,
+            "Mouse Y" => Actions.StickRight.axis.y,
+            "Horizontal" => Actions.StickLeft.axis.x,
+            "Vertical" => Actions.StickLeft.axis.y,
+            
             "UIHorizontal" => Actions.StickLeft.axis.x,
             "UIVertical" => Actions.StickLeft.axis.y,
             _ => 0f,
