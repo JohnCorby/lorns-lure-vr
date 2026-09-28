@@ -1,5 +1,6 @@
 ﻿using System.Runtime.InteropServices;
 using HarmonyLib;
+using NullSave;
 using Rewired.Integration.UnityUI;
 using Valve.VR;
 
@@ -313,6 +314,15 @@ public class UuvrInput : UuvrBehaviour
             _ => 0f,
         };
         return false;
+    }
+
+    [HarmonyPrefix, HarmonyPatch(typeof(ReIconed), nameof(ReIconed.Awake))]
+    private static void ReIconed_Awake(ReIconed __instance)
+    {
+        // make keyboard mouse also have xbox icons
+        var i1 = __instance.controllerMaps.FindIndex(x => x.name.ToLower().Contains("xbox"));
+        var i2 = __instance.controllerMaps.FindIndex(x => x.name.ToLower().Contains("desktop"));
+        __instance.controllerMaps[i2] = __instance.controllerMaps[i1];
     }
 
     #endregion
