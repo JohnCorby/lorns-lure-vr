@@ -32,6 +32,9 @@
         <Reference Include="$(GameManagedDir)\Rewired_Core.dll" Publicize="true">
             <Private>False</Private>
         </Reference>
+        <Reference Include="$(GameManagedDir)\Unity.TextMeshPro.dll">
+            <Private>False</Private>
+        </Reference>
         <Content Include="Assets\**" >
             <CopyToOutputDirectory>Always</CopyToOutputDirectory>
         </Content>
