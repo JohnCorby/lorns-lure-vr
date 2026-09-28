@@ -90,7 +90,7 @@ public class UuvrInput : UuvrBehaviour
 
     #region patches
 
-    // everything goes through these. just patch the methods to give hardcoded outputs
+    // everything goes through these. just patch the methods to give hardcoded outputs using the default binds
     // this code is terrible. i dont care! i want to work on other things!
 
     private const int UIHorizontal = 20;
@@ -105,6 +105,23 @@ public class UuvrInput : UuvrBehaviour
         __result |= buttonName switch
         {
             "Jump" => Actions.A.state,
+            "SlowDown" => Actions.B.state,
+            "Interact" => Actions.X.state,
+            "Zoom" => Actions.Y.state,
+            "Dash" => Actions.LB.state,
+            "TryAgain" => Actions.Select.state,
+            "Crouch" => Actions.DDown.state,
+            "Hints" => Actions.DRight.state,
+            "PictureMode" => Actions.DUp.state,
+            "VideoMode" => Actions.DLeft.state,
+            
+            "Cling" => Actions.LT.axis > .5f,
+            "Grapple" => Actions.RT.axis > .5f,
+            "Scan" => Actions.LT.axis > .5f,
+            "Flare" => Actions.RT.axis > .5f,
+            
+            "DropCheckpoint" => Actions.StickLeftClick.state,
+            "UseBattery" => Actions.StickRightClick.state,
             
             "Submit" => Actions.A.state,
             "Cancel" => Actions.Start.state,
@@ -125,7 +142,24 @@ public class UuvrInput : UuvrBehaviour
         __result |= buttonName switch
         {
             "Jump" => Actions.A.stateDown,
+            "SlowDown" => Actions.B.stateDown,
+            "Interact" => Actions.X.stateDown,
+            "Zoom" => Actions.Y.stateDown,
+            "Dash" => Actions.LB.stateDown,
+            "TryAgain" => Actions.Select.stateDown,
+            "Crouch" => Actions.DDown.stateDown,
+            "Hints" => Actions.DRight.stateDown,
+            "PictureMode" => Actions.DUp.stateDown,
+            "VideoMode" => Actions.DLeft.stateDown,
+ 
+            "Cling" => Actions.LT.axis > .5f && Actions.LT.lastAxis <= .5f,
+            "Grapple" => Actions.RT.axis > .5f && Actions.RT.lastAxis <= .5f,
+            "Scan" => Actions.LT.axis > .5f && Actions.LT.lastAxis <= .5f,
+            "Flare" => Actions.RT.axis > .5f && Actions.RT.lastAxis <= .5f,
             
+            "DropCheckpoint" => Actions.StickLeftClick.stateDown,
+            "UseBattery" => Actions.StickRightClick.stateDown,
+
             "Submit" => Actions.A.stateDown,
             "Cancel" => Actions.Start.stateDown,
             "UIScanClose" => Actions.X.stateDown,
@@ -144,7 +178,24 @@ public class UuvrInput : UuvrBehaviour
         __result |= buttonName switch
         {
             "Jump" => Actions.A.stateUp,
+            "SlowDown" => Actions.B.stateUp,
+            "Interact" => Actions.X.stateUp,
+            "Zoom" => Actions.Y.stateUp,
+            "Dash" => Actions.LB.stateUp,
+            "TryAgain" => Actions.Select.stateUp,
+            "Crouch" => Actions.DDown.stateUp,
+            "Hints" => Actions.DRight.stateUp,
+            "PictureMode" => Actions.DUp.stateUp,
+            "VideoMode" => Actions.DLeft.stateUp,
+ 
+            "Cling" => Actions.LT.axis <= .5f && Actions.LT.lastAxis > .5f,
+            "Grapple" => Actions.RT.axis <= .5f && Actions.RT.lastAxis > .5f,
+            "Scan" => Actions.LT.axis <= .5f && Actions.LT.lastAxis > .5f,
+            "Flare" => Actions.RT.axis <= .5f && Actions.RT.lastAxis > .5f,
             
+            "DropCheckpoint" => Actions.StickLeftClick.stateUp,
+            "UseBattery" => Actions.StickRightClick.stateUp,
+
             "Submit" => Actions.A.stateUp,
             "Cancel" => Actions.Start.stateUp,
             "UIScanClose" => Actions.X.stateUp,

@@ -39,6 +39,8 @@ public class VrCamera : UuvrBehaviour
 
     protected override void Awake()
     {
+        if (Climber == null) Climber = FindObjectOfType<ClimbingAbilityV2>();
+        
         base.Awake();
         ParentCamera = GetComponent<Camera>();
         VrCameras.Add(ParentCamera);
@@ -54,6 +56,8 @@ public class VrCamera : UuvrBehaviour
         origin.transform.SetParent(transform.parent, false);
         origin.transform.localScale = Vector3.one * .1f;
     }
+
+    public static ClimbingAbilityV2 Climber;
 
 #if MODERN
     protected override void OnBeginFrameRendering()
