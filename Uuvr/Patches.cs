@@ -22,6 +22,9 @@ public static class Patches
 
 
     #region game patches
+    
+    // TODO turn bloom off, turn down sens to 2
+    // TODO: fix cutscene camera, it also never ends on level 2 cutscene, you have to skip manually
 
     [HarmonyPrefix, HarmonyPatch(typeof(Dash), nameof(Dash.Update))]
     private static void Dash_Update(Dash __instance)
