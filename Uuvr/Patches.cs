@@ -99,9 +99,9 @@ public static class Patches
     [HarmonyPrefix, HarmonyPatch(typeof(ZoomIn), nameof(ZoomIn.Update))]
     private static bool ZoomIn_Update() => false;
 
-    // no terminal velocity makes falling scarier. will have to see if this breaks gameplay
-    [HarmonyPrefix, HarmonyPatch(typeof(CharacterMovement), nameof(CharacterMovement.Awake))]
-    private static void CharacterMovement_Awake(CharacterMovement __instance) => __instance.maxFallSpeed = float.MaxValue;
+    // no terminal velocity makes falling scarier
+    [HarmonyPrefix, HarmonyPatch(typeof(CharacterMovement), nameof(CharacterMovement.LimitVerticalVelocity))]
+    private static bool CharacterMovement_LimitVerticalVelocity(CharacterMovement __instance) => ModConfiguration.Instance.NoTerminalVelocity.Value == false;
 
     #endregion
 }

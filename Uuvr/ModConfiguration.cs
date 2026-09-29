@@ -75,6 +75,7 @@ public class ModConfiguration
     public readonly HardcodedConfigEntry<UiPatchMode> PreferredUiPatchMode = new(UiPatchMode.Mirror);
     public readonly HardcodedConfigEntry<UiRenderMode> PreferredUiRenderMode = new(UiRenderMode.OverlayCamera);
     public readonly HardcodedConfigEntry<ScreenSpaceCanvasType> ScreenSpaceCanvasTypesToPatch = new(ScreenSpaceCanvasType.NotToTexture);
+    public ConfigEntry<bool> NoTerminalVelocity;
     
 #if MODERN
     public readonly HardcodedConfigEntry<VrApi> PreferredVrApi = new(VrApi.OpenXr);
@@ -85,6 +86,13 @@ public class ModConfiguration
         Instance = this;
 
         Config = config;
+
+        NoTerminalVelocity = Config.Bind(
+            "Gameplay",
+            "No Terminal Velocity",
+            true,
+            "Turns off vertical velocity limit. Makes falling cool and scary but breaks a few sections."
+        );
     }
 }
 
