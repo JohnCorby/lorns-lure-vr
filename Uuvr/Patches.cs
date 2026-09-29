@@ -25,6 +25,8 @@ public static class Patches
     
     // TODO turn bloom off, turn down sens to 2
     // TODO: fix cutscene camera, it also never ends on level 2 cutscene, you have to skip manually
+    // TODO: move picks to hands, else just have regular hands
+    // TODO tie grapple and flare to arms, make laser for grapple that changes color when u can get it, turn off timing aspect of grapple
 
     [HarmonyPrefix, HarmonyPatch(typeof(Dash), nameof(Dash.Update))]
     private static void Dash_Update(Dash __instance)
