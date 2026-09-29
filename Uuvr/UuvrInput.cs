@@ -115,19 +115,21 @@ public class UuvrInput : UuvrBehaviour
             "Hints" => Actions.DRight.state,
             // "PictureMode" => Actions.DUp.state,
             // "VideoMode" => Actions.DLeft.state,
-            
+
             "Cling" => Actions.LT.axis > .5f,
             "Grapple" => Actions.RT.axis > .5f,
             "Scan" => Actions.LT.axis > .5f,
             "Flare" => Actions.RT.axis > .5f,
-            
+
             "DropCheckpoint" => Actions.StickLeftClick.state,
             "UseBattery" => Actions.StickRightClick.state,
-            
+
             "Submit" => Actions.A.state,
             "Cancel" => Actions.Start.state,
             "UIScanClose" => Actions.X.state,
-            
+            "ScrollTerminalUp" => Actions.StickLeft.axis.y > .5f,
+            "ScrollTerminalDown" => Actions.StickLeft.axis.y < -.5f,
+
             "UISubmit" => Actions.A.state,
             "UICancel" => Actions.B.state,
             _ => false,
@@ -149,19 +151,21 @@ public class UuvrInput : UuvrBehaviour
             "Hints" => Actions.DRight.stateDown,
             // "PictureMode" => Actions.DUp.stateDown,
             // "VideoMode" => Actions.DLeft.stateDown,
- 
+
             "Cling" => Actions.LT.axis > .5f && Actions.LT.lastAxis <= .5f,
             "Grapple" => Actions.RT.axis > .5f && Actions.RT.lastAxis <= .5f,
             "Scan" => Actions.LT.axis > .5f && Actions.LT.lastAxis <= .5f,
             "Flare" => Actions.RT.axis > .5f && Actions.RT.lastAxis <= .5f,
-            
+
             "DropCheckpoint" => Actions.StickLeftClick.stateDown,
             "UseBattery" => Actions.StickRightClick.stateDown,
 
             "Submit" => Actions.A.stateDown,
             "Cancel" => Actions.Start.stateDown,
             "UIScanClose" => Actions.X.stateDown,
-            
+            "ScrollTerminalUp" => Actions.StickLeft.axis.y > .5f && Actions.StickLeft.lastAxis.y <= .5f,
+            "ScrollTerminalDown" => Actions.StickLeft.axis.y < -.5f && Actions.StickLeft.lastAxis.y >= -.5f,
+
             "UISubmit" => Actions.A.stateDown,
             "UICancel" => Actions.B.stateDown,
             _ => false,
@@ -183,19 +187,21 @@ public class UuvrInput : UuvrBehaviour
             "Hints" => Actions.DRight.stateUp,
             // "PictureMode" => Actions.DUp.stateUp,
             // "VideoMode" => Actions.DLeft.stateUp,
- 
-            "Cling" => Actions.LT.axis <= .5f && Actions.LT.lastAxis > .5f,
-            "Grapple" => Actions.RT.axis <= .5f && Actions.RT.lastAxis > .5f,
-            "Scan" => Actions.LT.axis <= .5f && Actions.LT.lastAxis > .5f,
-            "Flare" => Actions.RT.axis <= .5f && Actions.RT.lastAxis > .5f,
-            
+
+            "Cling" => Actions.LT.axis < .5f && Actions.LT.lastAxis >= .5f,
+            "Grapple" => Actions.RT.axis < .5f && Actions.RT.lastAxis >= .5f,
+            "Scan" => Actions.LT.axis < .5f && Actions.LT.lastAxis >= .5f,
+            "Flare" => Actions.RT.axis < .5f && Actions.RT.lastAxis >= .5f,
+
             "DropCheckpoint" => Actions.StickLeftClick.stateUp,
             "UseBattery" => Actions.StickRightClick.stateUp,
 
             "Submit" => Actions.A.stateUp,
             "Cancel" => Actions.Start.stateUp,
             "UIScanClose" => Actions.X.stateUp,
-            
+            "ScrollTerminalUp" => Actions.StickLeft.axis.y < .5f && Actions.StickLeft.lastAxis.y >= .5f,
+            "ScrollTerminalDown" => Actions.StickLeft.axis.y > -.5f && Actions.StickLeft.lastAxis.y <= -.5f,
+
             "UISubmit" => Actions.A.stateUp,
             "UICancel" => Actions.B.stateUp,
             _ => false,
@@ -229,7 +235,7 @@ public class UuvrInput : UuvrBehaviour
             "Mouse Y" => Actions.StickRight.axis.y,
             "Horizontal" => Actions.StickLeft.axis.x,
             "Vertical" => Actions.StickLeft.axis.y,
-            
+
             "UIHorizontal" => Actions.StickLeft.axis.x,
             "UIVertical" => Actions.StickLeft.axis.y,
             _ => 0f,
