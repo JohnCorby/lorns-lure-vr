@@ -39,25 +39,21 @@ public class VrCamera : UuvrBehaviour
 
     protected override void Awake()
     {
-        if (Climber == null) Climber = FindObjectOfType<ClimbingAbilityV2>();
+        // easy bootstrap for the player lol
+        var climber = FindObjectOfType<ClimbingAbilityV2>();
+        if (climber != null && VrPlayer.Instance == null)
+            VrPlayer.Instance = climber.gameObject.AddComponent<VrPlayer>();
+        
+        // this is terrible. i dont care for now. unless it breaks post processing to have a child camera
+        ModConfiguration.Instance.CameraTracking.Value = 
+            VrPlayer.Instance != null ? 
+                ModConfiguration.CameraTrackingMode.Absolute : 
+                ModConfiguration.CameraTrackingMode.Child;
         
         base.Awake();
         ParentCamera = GetComponent<Camera>();
         VrCameras.Add(ParentCamera);
-
-        return;
-
-        Hand.Create(this, XRNode.LeftHand);
-        Hand.Create(this, XRNode.RightHand);
-
-        // make feet origin for reference
-        var origin = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        Destroy(origin.GetComponent<Collider>());
-        origin.transform.SetParent(transform.parent, false);
-        origin.transform.localScale = Vector3.one * .1f;
     }
-
-    public static ClimbingAbilityV2 Climber;
 
 #if MODERN
     protected override void OnBeginFrameRendering()

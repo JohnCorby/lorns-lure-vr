@@ -101,6 +101,6 @@ public class ModConfiguration
 /// </summary>
 public class HardcodedConfigEntry<T>
 {
-    public readonly T Value;
+    public T Value;
     public HardcodedConfigEntry(T value) => Value = value;
 }
