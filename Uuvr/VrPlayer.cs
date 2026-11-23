@@ -107,7 +107,7 @@ public class VrPlayer : MonoBehaviour
             flarePoint.localPosition = new(0, 0, .4f);
             flarePoint.localRotation = Quaternion.identity;
 
-            VrHand.AddGizmo(flarePoint);
+            // VrHand.AddGizmo(flarePoint);
         }
     }
 

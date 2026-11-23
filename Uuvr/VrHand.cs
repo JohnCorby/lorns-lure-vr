@@ -33,6 +33,8 @@ public class VrHand : MonoBehaviour
     private void Update()
     {
         // TODO at some point use steamvr input and see if that gives any difference of position
+        
+        // TODO make a child thingy and tilt picks down (on y axis)
         transform.localPosition = InputTracking.GetLocalPosition(node);
         transform.localRotation = InputTracking.GetLocalRotation(node);
     }
