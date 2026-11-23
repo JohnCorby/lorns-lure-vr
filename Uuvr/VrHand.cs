@@ -8,6 +8,7 @@ public class VrHand : MonoBehaviour
     private XRNode node;
     private GameObject model;
 
+    // TODO: model doesnt update. use gain climbing ability and uh probably grapple since that has little doodad
     public static VrHand Create(XRNode node, GameObject modelBase)
     {
         var go = new GameObject($"hand {node}");
@@ -17,24 +18,27 @@ public class VrHand : MonoBehaviour
             DestroyImmediate(cube.GetComponent<Collider>());
             cube.transform.SetParent(go.transform, false);
             cube.transform.localPosition = new(.05f, 0, 0);
-            cube.transform.localScale = new(.1f, .03f, .03f);
-            cube.transform.GetComponent<Renderer>().material.color = Color.red;
+            cube.transform.localScale = new(.1f, .01f, .01f);
+            cube.GetComponent<Renderer>().material.color = Color.red;
+            cube.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
         }
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             DestroyImmediate(cube.GetComponent<Collider>());
             cube.transform.SetParent(go.transform, false);
             cube.transform.localPosition = new(0, .05f, 0);
-            cube.transform.localScale = new(.03f, .1f, .03f);
-            cube.transform.GetComponent<Renderer>().material.color = Color.green;
+            cube.transform.localScale = new(.01f, .1f, .01f);
+            cube.GetComponent<Renderer>().material.color = Color.green;
+            cube.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
         }
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             DestroyImmediate(cube.GetComponent<Collider>());
             cube.transform.SetParent(go.transform, false);
             cube.transform.localPosition = new(0, 0, .05f);
-            cube.transform.localScale = new(.03f, .03f, .1f);
-            cube.transform.GetComponent<Renderer>().material.color = Color.blue;
+            cube.transform.localScale = new(.01f, .01f, .1f);
+            cube.GetComponent<Renderer>().material.color = Color.blue;
+            cube.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
         }
 
 

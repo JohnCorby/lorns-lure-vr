@@ -20,6 +20,8 @@ public class VrPlayer : MonoBehaviour
     public bool isClimbingView => climbingCamera.enabled;
 
     private GameObject origin;
+    
+    public static readonly Shader UnlitAlwaysDrawShader = Shader.Find("GUI/Text Shader");
 
     private void Awake()
     {
@@ -62,6 +64,7 @@ public class VrPlayer : MonoBehaviour
         DestroyImmediate(origin.GetComponent<Collider>());
         origin.transform.SetParent(_vrPivot.transform, false);
         origin.transform.localScale = Vector3.one * .1f;
+        origin.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
         
         // turn off camera picks. using setactive breaks pause somehow what
         foreach (var renderer in _climber.leftPickClose.GetComponentsInChildren<Renderer>(true))

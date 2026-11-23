@@ -100,8 +100,12 @@ public static class Patches
     private static bool ZoomIn_Update() => false;
 
     // no terminal velocity makes falling scarier
-    [HarmonyPrefix, HarmonyPatch(typeof(CharacterMovement), nameof(CharacterMovement.LimitVerticalVelocity))]
-    private static bool CharacterMovement_LimitVerticalVelocity(CharacterMovement __instance) => ModConfiguration.Instance.NoTerminalVelocity.Value == false;
+    // need to keep rise velocity because dash goes up a lot for some reason
+    [HarmonyPostfix, HarmonyPatch(typeof(CharacterMovement), nameof(CharacterMovement.maxFallSpeed), MethodType.Getter)]
+    private static void CharacterMovement_maxFallSpeed(CharacterMovement __instance, ref float __result)
+    {
+        if (ModConfiguration.Instance.NoTerminalVelocity.Value) __result = float.MaxValue;
+    }
 
     #endregion
 }
