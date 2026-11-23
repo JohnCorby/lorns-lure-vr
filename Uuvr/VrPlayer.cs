@@ -21,6 +21,11 @@ public class VrPlayer : MonoBehaviour
 
     private GameObject origin;
     private VrHand leftHand, rightHand;
+    private GrappleHook grappleHook;
+
+    public VrPlayer()
+    {
+    }
 
     public static readonly Shader UnlitAlwaysDrawShader = Shader.Find("GUI/Text Shader");
 
@@ -33,6 +38,8 @@ public class VrPlayer : MonoBehaviour
         
         defaultCamera = _climber.defaultCamera.GetComponent<Camera>();
         climbingCamera = _climber.climbingCamera.GetComponent<Camera>();
+        
+        grappleHook = _climber.GetComponent<GrappleHook>();
         
         // move flare spawn and throw to right hand
         // move grapple to left. make laser for grapple that changes color when u can get it, turn off timing aspect of grapple
@@ -67,13 +74,23 @@ public class VrPlayer : MonoBehaviour
         origin.transform.localScale = new(.1f, .01f, .1f);
         // origin.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
 
-        VrHand.AddGizmo(_climber.GetComponent<GrappleHook>().gunTip);
 
         // turn off camera picks. using setactive breaks pause somehow what
         foreach (var renderer in _climber.leftPickClose.GetComponentsInChildren<Renderer>(true))
             renderer.enabled = false;
         foreach (var renderer in _climber.rightPickClose.GetComponentsInChildren<Renderer>(true))
             renderer.enabled = false;
+        
+        // _ui.transform.SetParent(rightHand.transform, false);
+        // _ui.renderMode = RenderMode.ScreenSpaceCamera;
+        // _ui.planeDistance = 1;
+
+        {
+            VrHand.AddGizmo(grappleHook.gunTip);
+            VrHand.AddGizmo(grappleHook.grappleSpark.transform);
+            
+            
+        }
     }
 
     private void Update()
@@ -85,6 +102,8 @@ public class VrPlayer : MonoBehaviour
         
         leftHand.model.SetActive(_climber.leftPickClose.activeSelf);
         rightHand.model.SetActive(_climber.rightPickClose.activeSelf);
-        leftHand.model.transform.Find("GrappleAttachmentRunning").gameObject.SetActive(_climber.GetComponent<GrappleHook>().abilityActive);
+        leftHand.model.transform.Find("GrappleAttachmentRunning").gameObject.SetActive(grappleHook.abilityActive);
+
+        _ui.worldCamera = isClimbingView ? climbingCamera : defaultCamera;
     }
 }

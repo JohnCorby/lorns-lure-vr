@@ -3,6 +3,7 @@ using ECM.Components;
 using ECM.Controllers;
 using HarmonyLib;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Uuvr;
 
@@ -26,6 +27,9 @@ public static class Patches
     // TODO turn bloom off, turn down sens to 2
     // TODO: fix cutscene camera, it also never ends on level 2 cutscene, you have to skip manually
 
+    /// <summary>
+    /// dont care about fov
+    /// </summary>
     [HarmonyPrefix, HarmonyPatch(typeof(Dash), nameof(Dash.Update))]
     private static void Dash_Update(Dash __instance)
     {
@@ -95,12 +99,18 @@ public static class Patches
         }
     }
 
-    // cant change fov in vr. dont care
+    /// <summary>
+    /// cant change fov in vr. dont care
+    /// </summary>
     [HarmonyPrefix, HarmonyPatch(typeof(ZoomIn), nameof(ZoomIn.Update))]
     private static bool ZoomIn_Update() => false;
 
-    // no terminal velocity makes falling scarier
-    // need to keep rise velocity because dash goes up a lot for some reason
+    /// <summary>
+    /// no terminal velocity makes falling scarier
+    /// need to keep rise velocity because dash goes up a lot for some reason
+    /// </summary>
+    /// <param name="__instance"></param>
+    /// <param name="__result"></param>
     [HarmonyPostfix, HarmonyPatch(typeof(CharacterMovement), nameof(CharacterMovement.maxFallSpeed), MethodType.Getter)]
     private static void CharacterMovement_maxFallSpeed(CharacterMovement __instance, ref float __result)
     {
@@ -108,6 +118,75 @@ public static class Patches
     }
     
     // CheckClimbTriggered for climb casts. move to picks
+    
+    /// <summary>
+    /// grapple raycast should come out of hand
+    /// </summary>
+    [HarmonyPrefix, HarmonyPatch(typeof(GrappleHook), nameof(GrappleHook.Update))]
+    private static void GrappleHook_Update(GrappleHook __instance)
+    {
+        if (!__instance.abilityActive)
+        {
+            return;
+        }
+        if (__instance.GetComponent<FallDeath>().dead)
+        {
+            __instance.StopGrapple();
+            return;
+        }
+        if (__instance.activeTimeOffset)
+        {
+            return;
+        }
+        if (PauseHelper.cutscenePause || PauseHelper.currentlyPaused || PauseHelper.narrationPause)
+        {
+            return;
+        }
+        if (!__instance.GetComponent<ClimbingAbilityV2>().abilityActive)
+        {
+            return;
+        }
+        // raycast from left hand gun tip
+        bool flag = Physics.Raycast(__instance.camera.position, __instance.camera.forward, out __instance.hit, __instance.maxDistance, __instance.whatIsGrappleable);
+        if (flag && __instance.GetComponent<UIToggleControls>().liveMode == "default")
+        {
+            __instance.grapplableReticle.SetActive(true);
+            if (__instance.GetComponent<FallDeath>().criticalVelocityReached || __instance.GetComponent<StaminaSystem>().stamina <= 0f)
+            {
+                __instance.grapplableReticle.GetComponent<Image>().color = __instance.terminalColor;
+            }
+            else
+            {
+                __instance.grapplableReticle.GetComponent<Image>().color = __instance.grapplableColor;
+            }
+        }
+        else
+        {
+            __instance.grapplableReticle.SetActive(false);
+        }
+        // removing timing aspect
+        if (Input.GetButtonDown("Grapple"))
+        {
+            __instance.StartGrapple(flag);
+        }
+        else if (Input.GetButtonUp("Grapple") && !__instance.GetComponent<ClimbingAbilityV2>().exitClimbByReachingTop && !__instance.GetComponent<ClimbingAbilityV2>().climbingLedge && !__instance.GetComponent<ClimbingAbilityV2>().onWall)
+        {
+            __instance.StopGrapple();
+        }
+        if (__instance.IsGrappling() && __instance.GetComponent<StaminaSystem>().stamina <= 0f)
+        {
+            __instance.StopGrapple();
+        }
+        if (__instance.IsGrappling() && __instance.terminalDetachApplies && __instance.GetComponent<FallDeath>().criticalVelocityReached)
+        {
+            __instance.StopGrapple();
+        }
+        if (Input.GetButtonDown("TryAgain"))
+        {
+            __instance.StopGrapple();
+        }
+        __instance.DrawRope();
+    }
 
     #endregion
 }
