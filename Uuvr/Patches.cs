@@ -1,5 +1,4 @@
-﻿using System;
-using ECM.Components;
+﻿using ECM.Components;
 using ECM.Controllers;
 using HarmonyLib;
 using UnityEngine;
@@ -24,7 +23,7 @@ public static class Patches
 
 
     #region game patches
-    
+
     // TODO turn bloom off, turn down sens to 2
     // TODO: fix cutscene camera, it also never ends on level 2 cutscene, you have to skip manually
 
@@ -120,9 +119,9 @@ public static class Patches
     {
         if (ModConfiguration.Instance.NoTerminalVelocity.Value) __result = float.MaxValue;
     }
-    
+
     // CheckClimbTriggered for climb casts. move to picks
-    
+
     /// <summary>
     /// grapple raycast should come out of hand
     /// </summary>
@@ -133,23 +132,28 @@ public static class Patches
         {
             return false;
         }
+
         if (__instance.GetComponent<FallDeath>().dead)
         {
             __instance.StopGrapple();
             return false;
         }
+
         if (__instance.activeTimeOffset)
         {
             return false;
         }
+
         if (PauseHelper.cutscenePause || PauseHelper.currentlyPaused || PauseHelper.narrationPause)
         {
             return false;
         }
+
         if (!__instance.GetComponent<ClimbingAbilityV2>().abilityActive)
         {
             return false;
         }
+
         // raycast from left hand gun tip
         bool flag = Physics.Raycast(__instance.gunTip.position, __instance.gunTip.forward, out __instance.hit, __instance.maxDistance, __instance.whatIsGrappleable);
         if (flag && __instance.GetComponent<UIToggleControls>().liveMode == "default")
@@ -168,6 +172,7 @@ public static class Patches
         {
             __instance.grapplableReticle.SetActive(false);
         }
+
         // removing timing aspect
         if (Input.GetButton("Grapple") && !__instance.lr.enabled)
         {
@@ -177,18 +182,22 @@ public static class Patches
         {
             __instance.StopGrapple();
         }
+
         if (__instance.IsGrappling() && __instance.GetComponent<StaminaSystem>().stamina <= 0f)
         {
             __instance.StopGrapple();
         }
+
         if (__instance.IsGrappling() && __instance.terminalDetachApplies && __instance.GetComponent<FallDeath>().criticalVelocityReached)
         {
             __instance.StopGrapple();
         }
+
         if (Input.GetButtonDown("TryAgain"))
         {
             __instance.StopGrapple();
         }
+
         __instance.DrawRope();
 
         return false;
@@ -201,10 +210,8 @@ public static class Patches
         __instance.grappleGunModel.SetActive(false);
         return false;
     }
-    
-    
-    
-    
+
+
     /// <summary>
     /// throw flare from right hand
     /// </summary>
@@ -231,6 +238,96 @@ public static class Patches
     }
 
 
+    [HarmonyPrefix, HarmonyPatch(typeof(Scanner), nameof(Scanner.Update))]
+    private static bool Scanner_Update(Scanner __instance)
+    {
+        if (__instance.isScanning)
+        {
+            if (Input.GetButtonDown("UIScanClose") || Input.GetButtonUp("Scan"))
+            {
+                __instance.scanAudio.Stop();
+                __instance.StopAllCoroutines();
+                __instance.isScanning = false;
+                __instance.ClearAllReticles();
+                __instance.unclimbableCursor.color = __instance.unclimbableColor;
+                __instance.scanCursor.SetActive(false);
+            }
+
+            return false;
+        }
+
+        if (__instance.GetComponent<ClimbingAbilityV2>().onWall)
+        {
+            if (__instance.rayOrigin.gameObject.name != "ClimbingPlayerView")
+            {
+                __instance.rayOrigin = GameObject.Find("ClimbingPlayerView").transform;
+            }
+        }
+        else if (__instance.rayOrigin.gameObject.name != "Camera")
+        {
+            __instance.rayOrigin = GameObject.Find("Camera").transform;
+        }
+
+        bool flag = Physics.Raycast(__instance.rayOrigin.position, __instance.rayOrigin.forward, out __instance.scanRay, __instance.sensorRange);
+        float num = 0f;
+        if (flag)
+        {
+            num = Vector3.Distance(__instance.rayOrigin.position, __instance.scanRay.point);
+            if (__instance.scanRay.collider.gameObject.GetComponent<ScannableObject>() && num > __instance.scanRange)
+            {
+                flag = false;
+            }
+        }
+
+        if (flag && !PauseHelper.currentlyPaused && !PauseHelper.narrationPause)
+        {
+            if (__instance.scanRay.collider.tag == "Scannable" && num <= __instance.scanRange)
+            {
+                __instance.ClearAllReticles();
+                if (!__instance.scanRay.collider.gameObject.GetComponent<ScannableObject>().historicallyScanned)
+                {
+                    __instance.scannableCursor.color = __instance.scannableReticleColor;
+                }
+                else
+                {
+                    __instance.scannableCursor.color = __instance.alreadyScannedReticleColor;
+                }
+
+                if (Input.GetButtonDown("Scan") && __instance.scanRay.collider.gameObject.GetComponent<ScannableObject>().allowRescan && !__instance.terminalContainer.activeSelf)
+                {
+                    Debug.Log("play scan sound");
+                    __instance.isScanning = true;
+                    __instance.scanAudio.Play();
+                    __instance.ClearAllReticles();
+                    __instance.scannableCursor.color = __instance.scanningReticleColor;
+                    __instance.scanCursor.SetActive(true);
+                    __instance.StopAllCoroutines();
+                    __instance.StartCoroutine(__instance.StartScan());
+                    return false;
+                }
+            }
+            else
+            {
+                if (Mathf.Abs(__instance.scanRay.normal.y) < 0.0001f && __instance.scanRay.collider.tag != "Unclimbable" && __instance.scanRay.collider.tag != "NoClimbOrLedgeClimb" && __instance.scanRay.collider.tag != "Scannable")
+                {
+                    __instance.ClearAllReticles();
+                    __instance.climbableCursor.color = __instance.climbableReticleColor;
+                    return false;
+                }
+
+                __instance.ClearAllReticles();
+                __instance.unclimbableCursor.color = __instance.unclimbableColor;
+                return false;
+            }
+        }
+        else
+        {
+            __instance.ClearAllReticles();
+            __instance.reticle.color = __instance.unreachableReticleColor;
+        }
+
+        return false;
+    }
 
     #endregion
 }

@@ -102,8 +102,10 @@ public class VrPlayer : MonoBehaviour
         {
             flarePoint = new GameObject("flare spawner").transform;
             flarePoint.SetParent(rightHand.transform, false);
-            flarePoint.localPosition = new(0, 0, .35f);
+            flarePoint.localPosition = new(0, 0, .4f);
             flarePoint.localRotation = Quaternion.identity;
+
+            VrHand.AddGizmo(flarePoint);
         }
     }
 
