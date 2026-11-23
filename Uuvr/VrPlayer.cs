@@ -71,6 +71,7 @@ public class VrPlayer : MonoBehaviour
 
     private void Update()
     {
-        _vrPivot.transform.SetParent(isClimbingView ? _climber.climbingPivot.transform : _climber.transform, false);
+        // used to try to be smart with pivots. but that broke with headtilt. so whatever, crouching will just scale weird
+        _vrPivot.transform.SetParent(isClimbingView ? climbingCamera.transform.parent : defaultCamera.transform.parent, false);
     }
 }
