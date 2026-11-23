@@ -123,31 +123,31 @@ public static class Patches
     /// grapple raycast should come out of hand
     /// </summary>
     [HarmonyPrefix, HarmonyPatch(typeof(GrappleHook), nameof(GrappleHook.Update))]
-    private static void GrappleHook_Update(GrappleHook __instance)
+    private static bool GrappleHook_Update(GrappleHook __instance)
     {
         if (!__instance.abilityActive)
         {
-            return;
+            return false;
         }
         if (__instance.GetComponent<FallDeath>().dead)
         {
             __instance.StopGrapple();
-            return;
+            return false;
         }
         if (__instance.activeTimeOffset)
         {
-            return;
+            return false;
         }
         if (PauseHelper.cutscenePause || PauseHelper.currentlyPaused || PauseHelper.narrationPause)
         {
-            return;
+            return false;
         }
         if (!__instance.GetComponent<ClimbingAbilityV2>().abilityActive)
         {
-            return;
+            return false;
         }
         // raycast from left hand gun tip
-        bool flag = Physics.Raycast(__instance.camera.position, __instance.camera.forward, out __instance.hit, __instance.maxDistance, __instance.whatIsGrappleable);
+        bool flag = Physics.Raycast(__instance.gunTip.position, __instance.gunTip.forward, out __instance.hit, __instance.maxDistance, __instance.whatIsGrappleable);
         if (flag && __instance.GetComponent<UIToggleControls>().liveMode == "default")
         {
             __instance.grapplableReticle.SetActive(true);
@@ -165,7 +165,7 @@ public static class Patches
             __instance.grapplableReticle.SetActive(false);
         }
         // removing timing aspect
-        if (Input.GetButtonDown("Grapple"))
+        if (Input.GetButton("Grapple") && !__instance.lr.enabled)
         {
             __instance.StartGrapple(flag);
         }
@@ -186,7 +186,18 @@ public static class Patches
             __instance.StopGrapple();
         }
         __instance.DrawRope();
+
+        return false;
     }
+
+    [HarmonyPrefix, HarmonyPatch(typeof(GrappleHook), nameof(GrappleHook.ShowPicks))]
+    [HarmonyPatch(typeof(GrappleHook), nameof(GrappleHook.HidePicks))]
+    private static bool GrappleHook_Picks(GrappleHook __instance)
+    {
+        __instance.grappleGunModel.SetActive(false);
+        return false;
+    }
+
 
     #endregion
 }

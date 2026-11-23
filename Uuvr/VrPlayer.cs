@@ -72,6 +72,7 @@ public class VrPlayer : MonoBehaviour
         DestroyImmediate(origin.GetComponent<Collider>());
         origin.transform.SetParent(_vrPivot.transform, false);
         origin.transform.localScale = new(.1f, .01f, .1f);
+        origin.GetComponent<Renderer>().material.color = Color.grey;
         // origin.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
 
 
@@ -86,11 +87,18 @@ public class VrPlayer : MonoBehaviour
         // _ui.planeDistance = 1;
 
         {
-            VrHand.AddGizmo(grappleHook.gunTip);
-            VrHand.AddGizmo(grappleHook.grappleSpark.transform);
-            
-            
+            grappleHook.gunTip.transform.SetParent(leftHand.transform, false);
+            grappleHook.gunTip.transform.localPosition = new(0, .12f, .35f);
+            grappleHook.gunTip.transform.localRotation = Quaternion.identity;
+            grappleHook.grappleSpark.transform.SetParent(grappleHook.gunTip, false);
+            grappleHook.grappleSpark.transform.localPosition = Vector3.zero;
+            grappleHook.grappleSpark.transform.localRotation = Quaternion.identity;
         }
+    }
+
+    private void Start()
+    {
+        throw new NotImplementedException();
     }
 
     private void Update()
