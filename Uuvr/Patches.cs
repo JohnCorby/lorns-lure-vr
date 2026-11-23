@@ -257,33 +257,33 @@ public static class Patches
 			{
 				if (__instance.cav2.onWall)
 				{
-					__instance.flareInstances.Add(Object.Instantiate<GameObject>(__instance.flarePrefab, __instance.cav2.climbingCamera.transform.position + __instance.cav2.climbingCamera.transform.forward * 0.2f + __instance.cav2.climbingCamera.transform.right * 0.2f + __instance.cav2.climbingCamera.transform.up * 0.2f, __instance.cav2.climbingCamera.transform.rotation));
+					__instance.flareInstances.Add(Object.Instantiate<GameObject>(__instance.flarePrefab, VrPlayer.Instance.flarePoint.position, VrPlayer.Instance.flarePoint.rotation));
 					if (Time.time - __instance.timePressed < __instance.chargeTime)
 					{
 						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = false;
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(__instance.cav2.climbingCamera.transform.forward * __instance.throwForce, ForceMode.Impulse);
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce, ForceMode.Impulse);
 					}
 					else
 					{
 						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = true;
 						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().ChangeFlare(40f);
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(__instance.cav2.climbingCamera.transform.forward * __instance.throwForce * 2f, ForceMode.Impulse);
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce * 2f, ForceMode.Impulse);
 					}
 					__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddTorque(20f, 0f, 2f, ForceMode.Impulse);
 				}
 				else
 				{
-					__instance.flareInstances.Add(Object.Instantiate<GameObject>(__instance.flarePrefab, __instance.cav2.defaultCamera.transform.position + __instance.cav2.defaultCamera.transform.forward * 0.2f + __instance.cav2.defaultCamera.transform.right * 0.2f + __instance.cav2.defaultCamera.transform.up * 0.2f, __instance.cav2.defaultCamera.transform.rotation));
+					__instance.flareInstances.Add(Object.Instantiate<GameObject>(__instance.flarePrefab, VrPlayer.Instance.flarePoint.position, VrPlayer.Instance.flarePoint.rotation));
 					if (Time.time - __instance.timePressed < __instance.chargeTime)
 					{
 						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = false;
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(__instance.cav2.defaultCamera.transform.forward * __instance.throwForce + __instance.cav2.GetComponent<Rigidbody>().velocity, ForceMode.Impulse);
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce + __instance.cav2.GetComponent<Rigidbody>().velocity, ForceMode.Impulse);
 					}
 					else
 					{
 						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = true;
 						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().ChangeFlare(40f);
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(__instance.cav2.defaultCamera.transform.forward * __instance.throwForce * 2f + __instance.cav2.GetComponent<Rigidbody>().velocity, ForceMode.Impulse);
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce * 2f + __instance.cav2.GetComponent<Rigidbody>().velocity, ForceMode.Impulse);
 					}
 					__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddTorque(20f, 0f, 2f, ForceMode.Impulse);
 				}
