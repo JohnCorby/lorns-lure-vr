@@ -215,24 +215,87 @@ public static class Patches
     /// <summary>
     /// throw flare from right hand
     /// </summary>
-    [HarmonyPrefix, HarmonyPatch(typeof(FlareGemThrower), nameof(FlareGemThrower.ThrowFlare))]
-    public static bool FlareGemThrower_ThrowFlare(FlareGemThrower __instance)
+    [HarmonyPrefix, HarmonyPatch(typeof(DRGFlareThrower2), nameof(DRGFlareThrower2.Update))]
+    public static bool DRGFlareThrower2_Update(DRGFlareThrower2 __instance)
     {
-        GameObject gameObject = Object.Instantiate<GameObject>(__instance.flarePrefab, VrPlayer.Instance.flarePoint.position, VrPlayer.Instance.flarePoint.rotation);
-        gameObject.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * __instance.throwStrength);
-        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-        gameObject.GetComponent<FlareBehaviour>().flareLight.range = 40f;
-        gameObject.GetComponent<FlareBehaviour>().thrown = true;
-        gameObject.GetComponent<FlareBehaviour>().trail.Play();
-        __instance.numFlares--;
-        __instance.lastFlareThrowTime = Time.time;
-        __instance.rts.UpdateFlares(__instance.numFlares, __instance.MAX_FLARES);
-        __instance.FlareThrown(gameObject);
-        __instance.cav2.csem.lastFrameState = "";
-        if (__instance.flareAudioGeneral)
-        {
-            __instance.flareAudioGeneral.PlayOneShot(__instance.throwCrystal);
-        }
+		if (PauseHelper.currentlyPaused || PauseHelper.narrationPause || PauseHelper.cutscenePause)
+		{
+			return false;
+		}
+		if (Input.GetButtonDown("Flare"))
+		{
+			__instance.timePressed = Time.time;
+		}
+		else if (Input.GetButton("Flare") && __instance.chargeSound)
+		{
+			if (Time.time - __instance.timePressed > __instance.chargeSoundDelay && !__instance.chargeSound.isPlaying)
+			{
+				__instance.chargeSound.Play();
+				__instance.chargeSpark.Play();
+				if (HideUIToggle.liveMode == "default")
+				{
+					__instance.chargeCompleteUI.SetActive(true);
+				}
+			}
+			if (Time.time - __instance.timePressed >= __instance.chargeTime && !__instance.chargeCompleteSound.isPlaying)
+			{
+				__instance.chargeCompleteSound.Play();
+				__instance.chargeCompleteUI.GetComponent<FlashUI>().enabled = true;
+			}
+		}
+		if (Input.GetButtonUp("Flare"))
+		{
+			if (__instance.chargeSound)
+			{
+				__instance.chargeSound.Stop();
+				__instance.chargeCompleteSound.Stop();
+				__instance.chargeCompleteUI.GetComponent<FlashUI>().enabled = false;
+				__instance.chargeCompleteUI.GetComponent<FlashUI>().ResetColor();
+				__instance.chargeCompleteUI.SetActive(false);
+			}
+			if (__instance.throwable)
+			{
+				if (__instance.cav2.onWall)
+				{
+					__instance.flareInstances.Add(Object.Instantiate<GameObject>(__instance.flarePrefab, __instance.cav2.climbingCamera.transform.position + __instance.cav2.climbingCamera.transform.forward * 0.2f + __instance.cav2.climbingCamera.transform.right * 0.2f + __instance.cav2.climbingCamera.transform.up * 0.2f, __instance.cav2.climbingCamera.transform.rotation));
+					if (Time.time - __instance.timePressed < __instance.chargeTime)
+					{
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = false;
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(__instance.cav2.climbingCamera.transform.forward * __instance.throwForce, ForceMode.Impulse);
+					}
+					else
+					{
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = true;
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().ChangeFlare(40f);
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(__instance.cav2.climbingCamera.transform.forward * __instance.throwForce * 2f, ForceMode.Impulse);
+					}
+					__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddTorque(20f, 0f, 2f, ForceMode.Impulse);
+				}
+				else
+				{
+					__instance.flareInstances.Add(Object.Instantiate<GameObject>(__instance.flarePrefab, __instance.cav2.defaultCamera.transform.position + __instance.cav2.defaultCamera.transform.forward * 0.2f + __instance.cav2.defaultCamera.transform.right * 0.2f + __instance.cav2.defaultCamera.transform.up * 0.2f, __instance.cav2.defaultCamera.transform.rotation));
+					if (Time.time - __instance.timePressed < __instance.chargeTime)
+					{
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = false;
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(__instance.cav2.defaultCamera.transform.forward * __instance.throwForce + __instance.cav2.GetComponent<Rigidbody>().velocity, ForceMode.Impulse);
+					}
+					else
+					{
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = true;
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().ChangeFlare(40f);
+						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(__instance.cav2.defaultCamera.transform.forward * __instance.throwForce * 2f + __instance.cav2.GetComponent<Rigidbody>().velocity, ForceMode.Impulse);
+					}
+					__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddTorque(20f, 0f, 2f, ForceMode.Impulse);
+				}
+				if (__instance.flareInstances.Count >= __instance.maxFlares)
+				{
+					Object.Destroy(__instance.flareInstances[0]);
+					__instance.flareInstances.RemoveAt(0);
+				}
+				__instance.throwable = false;
+				__instance.StartCoroutine(__instance.DeactivateFlare());
+			}
+		}
 
         return false;
     }
