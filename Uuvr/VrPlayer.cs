@@ -66,7 +66,9 @@ public class VrPlayer : MonoBehaviour
         origin.transform.SetParent(_vrPivot.transform, false);
         origin.transform.localScale = Vector3.one * .1f;
         origin.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
-        
+
+        VrHand.AddGizmo(_climber.GetComponent<GrappleHook>().gunTip);
+
         // turn off camera picks. using setactive breaks pause somehow what
         /*
         foreach (var renderer in _climber.leftPickClose.GetComponentsInChildren<Renderer>(true))
@@ -85,6 +87,6 @@ public class VrPlayer : MonoBehaviour
         
         leftHand.model.SetActive(_climber.leftPickClose.activeSelf);
         rightHand.model.SetActive(_climber.rightPickClose.activeSelf);
-        // TODO grapple
+        leftHand.model.transform.Find("GrappleAttachmentRunning").gameObject.SetActive(_climber.GetComponent<GrappleHook>().abilityActive);
     }
 }

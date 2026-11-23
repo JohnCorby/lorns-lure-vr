@@ -12,6 +12,36 @@ public class VrHand : MonoBehaviour
     {
         var go = new GameObject($"hand {node}");
 
+        AddGizmo(go.transform);
+
+        var hand = go.AddComponent<VrHand>();
+        hand.node = node;
+        hand.model = Instantiate(modelBase);
+        hand.model.transform.SetParent(go.transform, false);
+        // eyeballing it
+        hand.model.transform.localPosition = new(0, 0, -0.4f);
+        hand.model.transform.localRotation = Quaternion.Euler(0, 0, 90);
+        hand.model.transform.localScale = Vector3.one * .1f;
+
+        return hand;
+    }
+
+    private void Awake()
+    {
+    }
+
+    private void Update()
+    {
+        // TODO at some point use steamvr input and see if that gives any difference of position
+        transform.localPosition = InputTracking.GetLocalPosition(node);
+        transform.localRotation = InputTracking.GetLocalRotation(node);
+    }
+
+    public static GameObject AddGizmo(Transform transform)
+    {
+        var go = new GameObject("gizmo");
+        go.transform.SetParent(transform, false);
+
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
             DestroyImmediate(cube.GetComponent<Collider>());
@@ -39,28 +69,6 @@ public class VrHand : MonoBehaviour
             cube.GetComponent<Renderer>().material.color = Color.blue;
             cube.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
         }
-
-
-        var hand = go.AddComponent<VrHand>();
-        hand.node = node;
-        hand.model = Instantiate(modelBase);
-        hand.model.transform.SetParent(go.transform, false);
-        // eyeballing it
-        hand.model.transform.localPosition = new(0, 0, -0.4f);
-        hand.model.transform.localRotation = Quaternion.Euler(0, 0, 90);
-        hand.model.transform.localScale = Vector3.one * .1f;
-
-        return hand;
-    }
-
-    private void Awake()
-    {
-    }
-
-    private void Update()
-    {
-        // TODO at some point use steamvr input and see if that gives any difference of position
-        transform.localPosition = InputTracking.GetLocalPosition(node);
-        transform.localRotation = InputTracking.GetLocalRotation(node);
+        return go;
     }
 }

@@ -106,6 +106,8 @@ public static class Patches
     {
         if (ModConfiguration.Instance.NoTerminalVelocity.Value) __result = float.MaxValue;
     }
+    
+    // CheckClimbTriggered for climb casts. move to picks
 
     #endregion
 }
