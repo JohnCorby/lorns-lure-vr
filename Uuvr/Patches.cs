@@ -238,6 +238,10 @@ public static class Patches
     }
 
 
+    /*
+    /// <summary>
+    /// scan from right hand. dont entirely need this but im trying it anyway
+    /// </summary>
     [HarmonyPrefix, HarmonyPatch(typeof(Scanner), nameof(Scanner.Update))]
     private static bool Scanner_Update(Scanner __instance)
     {
@@ -328,6 +332,7 @@ public static class Patches
 
         return false;
     }
+    */
 
     #endregion
 }

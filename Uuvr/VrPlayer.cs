@@ -5,7 +5,9 @@ using UnityEngine.XR;
 namespace Uuvr;
 
 /// <summary>
-/// handles the walking and clinging camera, and the hands
+/// holds all vr player related data.
+/// handles the walking and clinging camera, and the hands.
+/// also makes all the new thingies lol
 /// </summary>
 public class VrPlayer : MonoBehaviour
 {
@@ -109,11 +111,6 @@ public class VrPlayer : MonoBehaviour
         }
     }
 
-    private void Start()
-    {
-        throw new NotImplementedException();
-    }
-
     private void Update()
     {
         // used to try to be smart with pivots. but that broke with headtilt. so whatever, crouching will just scale weird
@@ -125,6 +122,6 @@ public class VrPlayer : MonoBehaviour
         rightHand.model.SetActive(_climber.rightPickClose.activeSelf);
         leftHand.model.transform.Find("GrappleAttachmentRunning").gameObject.SetActive(grappleHook.abilityActive);
 
-        _ui.worldCamera = isClimbingView ? climbingCamera : defaultCamera;
+        // _ui.worldCamera = isClimbingView ? climbingCamera : defaultCamera;
     }
 }
