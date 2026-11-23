@@ -22,6 +22,7 @@ public class VrPlayer : MonoBehaviour
     private GameObject origin;
     public VrHand leftHand, rightHand;
     private GrappleHook grappleHook;
+    public Transform flarePoint;
 
     public VrPlayer()
     {
@@ -96,6 +97,13 @@ public class VrPlayer : MonoBehaviour
             grappleHook.grappleSpark.transform.SetParent(grappleHook.gunTip, false);
             grappleHook.grappleSpark.transform.localPosition = Vector3.zero;
             grappleHook.grappleSpark.transform.localRotation = Quaternion.identity;
+        }
+
+        {
+            flarePoint = new GameObject("flare spawner").transform;
+            flarePoint.SetParent(rightHand.transform, false);
+            flarePoint.localPosition = new(0, 0, .35f);
+            flarePoint.localRotation = Quaternion.identity;
         }
     }
 

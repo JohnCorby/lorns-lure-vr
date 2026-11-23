@@ -208,13 +208,10 @@ public static class Patches
     /// <summary>
     /// throw flare from right hand
     /// </summary>
-    /// <param name="__instance"></param>
-    /// <returns></returns>
     [HarmonyPrefix, HarmonyPatch(typeof(FlareGemThrower), nameof(FlareGemThrower.ThrowFlare))]
     public static bool FlareGemThrower_ThrowFlare(FlareGemThrower __instance)
     {
-        // use pos new(0, 0, .35) rot identity (cuz forward is forward)
-        GameObject gameObject = Object.Instantiate<GameObject>(__instance.flarePrefab, __instance.transform.position, __instance.transform.rotation);
+        GameObject gameObject = Object.Instantiate<GameObject>(__instance.flarePrefab, VrPlayer.Instance.flarePoint.position, VrPlayer.Instance.flarePoint.rotation);
         gameObject.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * __instance.throwStrength);
         gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
         gameObject.GetComponent<FlareBehaviour>().flareLight.range = 40f;
