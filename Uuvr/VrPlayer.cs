@@ -20,7 +20,8 @@ public class VrPlayer : MonoBehaviour
     public bool isClimbingView => climbingCamera.enabled;
 
     private GameObject origin;
-    
+    private VrHand leftHand, rightHand;
+
     public static readonly Shader UnlitAlwaysDrawShader = Shader.Find("GUI/Text Shader");
 
     private void Awake()
@@ -53,10 +54,10 @@ public class VrPlayer : MonoBehaviour
         _vrPivot = new GameObject("VrPivot");
         _vrPivot.transform.SetParent(transform, false);
         
-        var leftHand = VrHand.Create(XRNode.LeftHand, _climber.leftPickClose);
+        leftHand = VrHand.Create(XRNode.LeftHand, _climber.leftPickClose);
         leftHand.transform.SetParent(_vrPivot.transform, false);
         
-        var rightHand = VrHand.Create(XRNode.RightHand, _climber.rightPickClose);
+        rightHand = VrHand.Create(XRNode.RightHand, _climber.rightPickClose);
         rightHand.transform.SetParent(_vrPivot.transform, false);
 
         // make feet origin for reference
@@ -67,10 +68,12 @@ public class VrPlayer : MonoBehaviour
         origin.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
         
         // turn off camera picks. using setactive breaks pause somehow what
+        /*
         foreach (var renderer in _climber.leftPickClose.GetComponentsInChildren<Renderer>(true))
             renderer.enabled = false;
         foreach (var renderer in _climber.rightPickClose.GetComponentsInChildren<Renderer>(true))
             renderer.enabled = false;
+    */
     }
 
     private void Update()
@@ -79,5 +82,9 @@ public class VrPlayer : MonoBehaviour
         _vrPivot.transform.SetParent(isClimbingView ? climbingCamera.transform.parent : defaultCamera.transform.parent, false);
         
         origin.SetActive(_climber.bfpsc.isGrounded);
+        
+        leftHand.model.SetActive(_climber.leftPickClose.activeSelf);
+        rightHand.model.SetActive(_climber.rightPickClose.activeSelf);
+        // TODO grapple
     }
 }

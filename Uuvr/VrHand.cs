@@ -6,9 +6,8 @@ namespace Uuvr;
 public class VrHand : MonoBehaviour
 {
     private XRNode node;
-    private GameObject model;
+    public GameObject model;
 
-    // TODO: model doesnt update. use gain climbing ability and uh probably grapple since that has little doodad
     public static VrHand Create(XRNode node, GameObject modelBase)
     {
         var go = new GameObject($"hand {node}");
@@ -63,8 +62,5 @@ public class VrHand : MonoBehaviour
         // TODO at some point use steamvr input and see if that gives any difference of position
         transform.localPosition = InputTracking.GetLocalPosition(node);
         transform.localRotation = InputTracking.GetLocalRotation(node);
-
-        // climbing makes its own hands. im keeping them detached
-        model.SetActive(!VrPlayer.Instance.isClimbingView);
     }
 }
