@@ -4,6 +4,7 @@ using ECM.Controllers;
 using HarmonyLib;
 using UnityEngine;
 using UnityEngine.UI;
+using Object = UnityEngine.Object;
 
 namespace Uuvr;
 
@@ -29,6 +30,8 @@ public static class Patches
 
     /// <summary>
     /// dont care about fov
+    ///
+    /// also dash uses left hand like grapple
     /// </summary>
     [HarmonyPrefix, HarmonyPatch(typeof(Dash), nameof(Dash.Update))]
     private static void Dash_Update(Dash __instance)
@@ -38,20 +41,21 @@ public static class Patches
             return;
         }
 
-        Debug.DrawLine(__instance.mainCamera.transform.position, __instance.mainCamera.transform.position + __instance.mainCamera.transform.forward * __instance.dashForce, Color.green);
+        var mainCameraTransform = VrPlayer.Instance.leftHand.transform; // tada
+        Debug.DrawLine(mainCameraTransform.position, mainCameraTransform.position + mainCameraTransform.forward * __instance.dashForce, Color.green);
         if (__instance.abilityActive && !__instance.dashing && !__instance.GetComponent<ClimbingAbilityV2>().cm.isGrounded && !__instance.GetComponent<FallDeath>().criticalVelocityReached && __instance.GetComponent<StaminaSystem>().stamina > 30f && Time.time - __instance.lastDashTime > __instance.dashResetTimeSeconds && !__instance.GetComponent<ClimbingAbilityV2>().onWall)
         {
             __instance.lagReticle.GetComponent<FlashUI>().enabled = true;
             if (Input.GetButtonDown("Dash"))
             {
                 __instance.GetComponent<BaseFirstPersonController>().movement.StopVelocity();
-                if (__instance.mainCamera.transform.forward.y < 0f)
+                if (mainCameraTransform.forward.y < 0f)
                 {
                     __instance.GetComponent<BaseFirstPersonController>().movement.ApplyImpulse(__instance.weakDashForce * 0.02f, __instance.transform.forward);
                 }
                 else
                 {
-                    __instance.GetComponent<BaseFirstPersonController>().movement.ApplyImpulse(__instance.dashForce * 0.02f, __instance.mainCamera.transform.forward);
+                    __instance.GetComponent<BaseFirstPersonController>().movement.ApplyImpulse(__instance.dashForce * 0.02f, mainCameraTransform.forward);
                 }
 
                 __instance.GetComponent<BaseFirstPersonController>().airControl = __instance.airControlWhileDash;
@@ -197,6 +201,38 @@ public static class Patches
         __instance.grappleGunModel.SetActive(false);
         return false;
     }
+    
+    
+    
+    
+    /// <summary>
+    /// throw flare from right hand
+    /// </summary>
+    /// <param name="__instance"></param>
+    /// <returns></returns>
+    [HarmonyPrefix, HarmonyPatch(typeof(FlareGemThrower), nameof(FlareGemThrower.ThrowFlare))]
+    public static bool FlareGemThrower_ThrowFlare(FlareGemThrower __instance)
+    {
+        // use pos new(0, 0, .35) rot identity (cuz forward is forward)
+        GameObject gameObject = Object.Instantiate<GameObject>(__instance.flarePrefab, __instance.transform.position, __instance.transform.rotation);
+        gameObject.GetComponent<Rigidbody>().AddForce(gameObject.transform.forward * __instance.throwStrength);
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+        gameObject.GetComponent<FlareBehaviour>().flareLight.range = 40f;
+        gameObject.GetComponent<FlareBehaviour>().thrown = true;
+        gameObject.GetComponent<FlareBehaviour>().trail.Play();
+        __instance.numFlares--;
+        __instance.lastFlareThrowTime = Time.time;
+        __instance.rts.UpdateFlares(__instance.numFlares, __instance.MAX_FLARES);
+        __instance.FlareThrown(gameObject);
+        __instance.cav2.csem.lastFrameState = "";
+        if (__instance.flareAudioGeneral)
+        {
+            __instance.flareAudioGeneral.PlayOneShot(__instance.throwCrystal);
+        }
+
+        return false;
+    }
+
 
 
     #endregion

@@ -20,7 +20,7 @@ public class VrPlayer : MonoBehaviour
     public bool isClimbingView => climbingCamera.enabled;
 
     private GameObject origin;
-    private VrHand leftHand, rightHand;
+    public VrHand leftHand, rightHand;
     private GrappleHook grappleHook;
 
     public VrPlayer()
@@ -45,6 +45,9 @@ public class VrPlayer : MonoBehaviour
         // move grapple to left. make laser for grapple that changes color when u can get it, turn off timing aspect of grapple
         // move picks to hands. for climbing probably just use cubes, oh well
         // move scanner raycast to right hand
+        
+        // maybe move everything to right hand lol
+        // also grapple trigger is right hand lol that is confusing!
         
         /*
          * notes:
