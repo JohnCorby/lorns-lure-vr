@@ -19,6 +19,8 @@ public class VrPlayer : MonoBehaviour
     
     public bool isClimbingView => climbingCamera.enabled;
 
+    private GameObject origin;
+
     private void Awake()
     {
         _climber = GetComponent<ClimbingAbilityV2>(); // this should be on ClimbingSystemPrefab/Climber
@@ -48,7 +50,6 @@ public class VrPlayer : MonoBehaviour
 
         _vrPivot = new GameObject("VrPivot");
         _vrPivot.transform.SetParent(transform, false);
-        // TODO: when wall turning. make sure to use climbing camera pivot for y axis turning.
         
         var leftHand = VrHand.Create(XRNode.LeftHand, _climber.leftPickClose);
         leftHand.transform.SetParent(_vrPivot.transform, false);
@@ -57,11 +58,12 @@ public class VrPlayer : MonoBehaviour
         rightHand.transform.SetParent(_vrPivot.transform, false);
 
         // make feet origin for reference
-        var origin = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        origin = GameObject.CreatePrimitive(PrimitiveType.Cube);
         DestroyImmediate(origin.GetComponent<Collider>());
         origin.transform.SetParent(_vrPivot.transform, false);
         origin.transform.localScale = Vector3.one * .1f;
         
+        // turn off camera picks. using setactive breaks pause somehow what
         foreach (var renderer in _climber.leftPickClose.GetComponentsInChildren<Renderer>(true))
             renderer.enabled = false;
         foreach (var renderer in _climber.rightPickClose.GetComponentsInChildren<Renderer>(true))
@@ -72,5 +74,7 @@ public class VrPlayer : MonoBehaviour
     {
         // used to try to be smart with pivots. but that broke with headtilt. so whatever, crouching will just scale weird
         _vrPivot.transform.SetParent(isClimbingView ? climbingCamera.transform.parent : defaultCamera.transform.parent, false);
+        
+        origin.SetActive(_climber.bfpsc.isGrounded);
     }
 }
