@@ -61,7 +61,6 @@ public class VrPlayer : MonoBehaviour
         DestroyImmediate(origin.GetComponent<Collider>());
         origin.transform.SetParent(_vrPivot.transform, false);
         origin.transform.localScale = Vector3.one * .1f;
-        origin.layer = LayerHelper.GetVrUiLayer();
         
         foreach (var renderer in _climber.leftPickClose.GetComponentsInChildren<Renderer>(true))
             renderer.enabled = false;

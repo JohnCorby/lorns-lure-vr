@@ -19,7 +19,6 @@ public class VrHand : MonoBehaviour
             cube.transform.localPosition = new(.05f, 0, 0);
             cube.transform.localScale = new(.1f, .03f, .03f);
             cube.transform.GetComponent<Renderer>().material.color = Color.red;
-            cube.layer = LayerHelper.GetVrUiLayer();
         }
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -28,7 +27,6 @@ public class VrHand : MonoBehaviour
             cube.transform.localPosition = new(0, .05f, 0);
             cube.transform.localScale = new(.03f, .1f, .03f);
             cube.transform.GetComponent<Renderer>().material.color = Color.green;
-            cube.layer = LayerHelper.GetVrUiLayer();
         }
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -37,7 +35,6 @@ public class VrHand : MonoBehaviour
             cube.transform.localPosition = new(0, 0, .05f);
             cube.transform.localScale = new(.03f, .03f, .1f);
             cube.transform.GetComponent<Renderer>().material.color = Color.blue;
-            cube.layer = LayerHelper.GetVrUiLayer();
         }
 
 
