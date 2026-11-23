@@ -16,7 +16,7 @@ public class VrHand : MonoBehaviour
 
         var hand = go.AddComponent<VrHand>();
         hand.node = node;
-        hand.model = Instantiate(modelBase);
+        hand.model = Instantiate(modelBase); // need to clone because something moves the picks every frame
         hand.model.transform.SetParent(go.transform, false);
         // eyeballing it
         hand.model.transform.localPosition = new(0, 0, -0.4f);
@@ -49,7 +49,7 @@ public class VrHand : MonoBehaviour
             cube.transform.localPosition = new(.05f, 0, 0);
             cube.transform.localScale = new(.1f, .01f, .01f);
             cube.GetComponent<Renderer>().material.color = Color.red;
-            cube.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
+            // cube.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
         }
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -58,7 +58,7 @@ public class VrHand : MonoBehaviour
             cube.transform.localPosition = new(0, .05f, 0);
             cube.transform.localScale = new(.01f, .1f, .01f);
             cube.GetComponent<Renderer>().material.color = Color.green;
-            cube.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
+            // cube.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
         }
         {
             var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
@@ -67,7 +67,7 @@ public class VrHand : MonoBehaviour
             cube.transform.localPosition = new(0, 0, .05f);
             cube.transform.localScale = new(.01f, .01f, .1f);
             cube.GetComponent<Renderer>().material.color = Color.blue;
-            cube.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
+            // cube.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
         }
         return go;
     }

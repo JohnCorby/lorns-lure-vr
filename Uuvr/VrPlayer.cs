@@ -64,18 +64,16 @@ public class VrPlayer : MonoBehaviour
         origin = GameObject.CreatePrimitive(PrimitiveType.Cube);
         DestroyImmediate(origin.GetComponent<Collider>());
         origin.transform.SetParent(_vrPivot.transform, false);
-        origin.transform.localScale = Vector3.one * .1f;
-        origin.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
+        origin.transform.localScale = new(.1f, .01f, .1f);
+        // origin.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
 
         VrHand.AddGizmo(_climber.GetComponent<GrappleHook>().gunTip);
 
         // turn off camera picks. using setactive breaks pause somehow what
-        /*
         foreach (var renderer in _climber.leftPickClose.GetComponentsInChildren<Renderer>(true))
             renderer.enabled = false;
         foreach (var renderer in _climber.rightPickClose.GetComponentsInChildren<Renderer>(true))
             renderer.enabled = false;
-    */
     }
 
     private void Update()
