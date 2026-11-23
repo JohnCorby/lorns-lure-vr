@@ -48,26 +48,29 @@ public class VrPlayer : MonoBehaviour
 
         _vrPivot = new GameObject("VrPivot");
         _vrPivot.transform.SetParent(transform, false);
-        // TODO: when wal turning. make sure to use climbing camera pivot for y axis turning.
+        // TODO: when wall turning. make sure to use climbing camera pivot for y axis turning.
         
-        var leftHand = VrHand.Create(XRNode.LeftHand, GameObject.Find("HiRezPickLeftClose"));
+        var leftHand = VrHand.Create(XRNode.LeftHand, _climber.leftPickClose);
         leftHand.transform.SetParent(_vrPivot.transform, false);
         
-        var rightHand = VrHand.Create(XRNode.RightHand, GameObject.Find("HiRezPickRightClose"));
+        var rightHand = VrHand.Create(XRNode.RightHand, _climber.rightPickClose);
         rightHand.transform.SetParent(_vrPivot.transform, false);
 
         // make feet origin for reference
         var origin = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        Destroy(origin.GetComponent<Collider>());
-        origin.transform.SetParent(transform.parent, false);
-        origin.transform.localScale = Vector3.one * .1f;
+        DestroyImmediate(origin.GetComponent<Collider>());
         origin.transform.SetParent(_vrPivot.transform, false);
+        origin.transform.localScale = Vector3.one * .1f;
+        origin.layer = LayerHelper.GetVrUiLayer();
         
-        GameObject.Find("WalkShifting").gameObject.SetActive(false); // turn off the hands
+        foreach (var renderer in _climber.leftPickClose.GetComponentsInChildren<Renderer>(true))
+            renderer.enabled = false;
+        foreach (var renderer in _climber.rightPickClose.GetComponentsInChildren<Renderer>(true))
+            renderer.enabled = false;
     }
 
     private void Update()
     {
-        _vrPivot.transform.SetParent(isClimbingView ? _climber.climbingPivot.transform : _climber.transform);
+        _vrPivot.transform.SetParent(isClimbingView ? _climber.climbingPivot.transform : _climber.transform, false);
     }
 }

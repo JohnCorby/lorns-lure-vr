@@ -11,17 +11,44 @@ public class VrHand : MonoBehaviour
     public static VrHand Create(XRNode node, GameObject modelBase)
     {
         var go = new GameObject($"hand {node}");
-        
-        // var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
-        // Destroy(cube.GetComponent<Collider>());
-        // cube.transform.SetParent(go.transform, false);
-        
+
+        {
+            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            DestroyImmediate(cube.GetComponent<Collider>());
+            cube.transform.SetParent(go.transform, false);
+            cube.transform.localPosition = new(.05f, 0, 0);
+            cube.transform.localScale = new(.1f, .03f, .03f);
+            cube.transform.GetComponent<Renderer>().material.color = Color.red;
+            cube.layer = LayerHelper.GetVrUiLayer();
+        }
+        {
+            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            DestroyImmediate(cube.GetComponent<Collider>());
+            cube.transform.SetParent(go.transform, false);
+            cube.transform.localPosition = new(0, .05f, 0);
+            cube.transform.localScale = new(.03f, .1f, .03f);
+            cube.transform.GetComponent<Renderer>().material.color = Color.green;
+            cube.layer = LayerHelper.GetVrUiLayer();
+        }
+        {
+            var cube = GameObject.CreatePrimitive(PrimitiveType.Cube);
+            DestroyImmediate(cube.GetComponent<Collider>());
+            cube.transform.SetParent(go.transform, false);
+            cube.transform.localPosition = new(0, 0, .05f);
+            cube.transform.localScale = new(.03f, .03f, .1f);
+            cube.transform.GetComponent<Renderer>().material.color = Color.blue;
+            cube.layer = LayerHelper.GetVrUiLayer();
+        }
+
+
         var hand = go.AddComponent<VrHand>();
         hand.node = node;
         hand.model = Instantiate(modelBase);
         hand.model.transform.SetParent(go.transform, false);
-
-        go.transform.localScale = Vector3.one * .1f;
+        // eyeballing it
+        hand.model.transform.localPosition = new(0, 0, -0.4f);
+        hand.model.transform.localRotation = Quaternion.Euler(0, 0, 90);
+        hand.model.transform.localScale = Vector3.one * .1f;
 
         return hand;
     }
@@ -35,8 +62,8 @@ public class VrHand : MonoBehaviour
         // TODO at some point use steamvr input and see if that gives any difference of position
         transform.localPosition = InputTracking.GetLocalPosition(node);
         transform.localRotation = InputTracking.GetLocalRotation(node);
-        
+
         // climbing makes its own hands. im keeping them detached
-        model.SetActive(VrPlayer.Instance.isClimbingView);
+        model.SetActive(!VrPlayer.Instance.isClimbingView);
     }
 }
