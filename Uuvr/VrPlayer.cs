@@ -1,6 +1,7 @@
 ﻿using System;
 using ECM.Components;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.XR;
 
 namespace Uuvr;
@@ -82,6 +83,7 @@ public class VrPlayer : MonoBehaviour
         origin.transform.localScale = new(.1f, .01f, .1f);
         origin.GetComponent<Renderer>().material.color = Color.grey;
         // origin.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
+        origin.GetComponent<Renderer>().shadowCastingMode = ShadowCastingMode.Off;
 
         mouseLook = GetComponentInChildren<MouseLook>(true);
         wallMouseLook = GetComponentInChildren<WallMouseLook>(true);
