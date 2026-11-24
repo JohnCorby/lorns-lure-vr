@@ -16,13 +16,15 @@ public class VrPlayer : MonoBehaviour
     private ClimbingAbilityV2 _climber;
     private Canvas _ui;
     private GameObject _vrPivot;
-    
+
     private Camera defaultCamera, climbingCamera;
-    
+    private UuvrPoseDriver defaultPoseDriver, climbingPoseDriver;
+
     public bool isClimbingView => climbingCamera.enabled;
 
     private GameObject origin;
     public VrHand leftHand, rightHand;
+    private GameObject leftHandGrappleModel;
     private GrappleHook grappleHook;
     public Transform flarePoint;
 
@@ -38,20 +40,20 @@ public class VrPlayer : MonoBehaviour
         _ui = GameObject.Find("UI").GetComponent<Canvas>();
         // TODO move this to right hand. except for Blackout/DeathImage part (DemoTransition holds that stuff)
         // okay moving ui is gonna be annoying. will have to test each thing to see if it should be on hand or not. like uh terminal container probably shouldnt be maybe
-        
+
         defaultCamera = _climber.defaultCamera.GetComponent<Camera>();
         climbingCamera = _climber.climbingCamera.GetComponent<Camera>();
-        
+
         grappleHook = _climber.GetComponent<GrappleHook>();
-        
+
         // move flare spawn and throw to right hand
         // move grapple to left. make laser for grapple that changes color when u can get it, turn off timing aspect of grapple
         // move picks to hands. for climbing probably just use cubes, oh well
         // move scanner raycast to right hand
-        
+
         // maybe move everything to right hand lol
         // also grapple trigger is right hand lol that is confusing!
-        
+
         /*
          * notes:
          * Climber and ClimbingCameraPivot rotates on y axis. Camera and ClimbingPlayerView rotates on x axis
@@ -66,10 +68,11 @@ public class VrPlayer : MonoBehaviour
 
         _vrPivot = new GameObject("VrPivot");
         _vrPivot.transform.SetParent(transform, false);
-        
+
         leftHand = VrHand.Create(XRNode.LeftHand, _climber.leftPickClose);
         leftHand.transform.SetParent(_vrPivot.transform, false);
-        
+        leftHandGrappleModel = leftHand.model.transform.Find("GrappleAttachmentRunning").gameObject;
+
         rightHand = VrHand.Create(XRNode.RightHand, _climber.rightPickClose);
         rightHand.transform.SetParent(_vrPivot.transform, false);
 
@@ -87,7 +90,7 @@ public class VrPlayer : MonoBehaviour
             renderer.enabled = false;
         foreach (var renderer in _climber.rightPickClose.GetComponentsInChildren<Renderer>(true))
             renderer.enabled = false;
-        
+
         // _ui.transform.SetParent(rightHand.transform, false);
         // _ui.renderMode = RenderMode.ScreenSpaceCamera;
         // _ui.planeDistance = 1;
@@ -115,13 +118,35 @@ public class VrPlayer : MonoBehaviour
     {
         // used to try to be smart with pivots. but that broke with headtilt. so whatever, crouching will just scale weird
         _vrPivot.transform.SetParent(isClimbingView ? climbingCamera.transform.parent : defaultCamera.transform.parent, false);
-        
+
         origin.SetActive(_climber.bfpsc.isGrounded);
-        
+
         leftHand.model.SetActive(_climber.leftPickClose.activeSelf);
         rightHand.model.SetActive(_climber.rightPickClose.activeSelf);
-        leftHand.model.transform.Find("GrappleAttachmentRunning").gameObject.SetActive(grappleHook.abilityActive);
+        leftHandGrappleModel.SetActive(grappleHook.abilityActive);
 
         // _ui.worldCamera = isClimbingView ? climbingCamera : defaultCamera;
+
+        // vrcamera and pose driver get created when camera first activated. so have to init here
+        if (defaultPoseDriver == null)
+        {
+            defaultPoseDriver = defaultCamera.GetComponent<UuvrPoseDriver>();
+            defaultPoseDriver.ApplyPosRot += (pos, rot) =>
+            {
+                if (isClimbingView) return;
+                defaultPoseDriver.transform.localPosition = pos;
+                defaultPoseDriver.transform.localRotation = rot;
+            };
+        }
+        if (climbingPoseDriver == null)
+        {
+            climbingPoseDriver = climbingCamera.GetComponent<UuvrPoseDriver>();
+            climbingPoseDriver.ApplyPosRot += (pos, rot) =>
+            {
+                if (!isClimbingView) return;
+                climbingPoseDriver.transform.localPosition = pos;
+                climbingPoseDriver.transform.localRotation = rot;
+            };
+        }
     }
 }
