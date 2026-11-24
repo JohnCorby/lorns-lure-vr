@@ -40,7 +40,7 @@ public static class Patches
             return;
         }
 
-        var mainCameraTransform = VrPlayer.Instance.leftHand.transform; // tada
+        var mainCameraTransform = VrPlayer.Instance.leftHand.offset.transform; // tada
         Debug.DrawLine(mainCameraTransform.position, mainCameraTransform.position + mainCameraTransform.forward * __instance.dashForce, Color.green);
         if (__instance.abilityActive && !__instance.dashing && !__instance.GetComponent<ClimbingAbilityV2>().cm.isGrounded && !__instance.GetComponent<FallDeath>().criticalVelocityReached && __instance.GetComponent<StaminaSystem>().stamina > 30f && Time.time - __instance.lastDashTime > __instance.dashResetTimeSeconds && !__instance.GetComponent<ClimbingAbilityV2>().onWall)
         {
@@ -203,6 +203,9 @@ public static class Patches
         return false;
     }
 
+    /// <summary>
+    /// keep gun model inactive
+    /// </summary>
     [HarmonyPrefix, HarmonyPatch(typeof(GrappleHook), nameof(GrappleHook.ShowPicks))]
     [HarmonyPatch(typeof(GrappleHook), nameof(GrappleHook.HidePicks))]
     private static bool GrappleHook_Picks(GrappleHook __instance)

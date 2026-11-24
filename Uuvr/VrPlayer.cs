@@ -98,7 +98,7 @@ public class VrPlayer : MonoBehaviour
         // _ui.planeDistance = 1;
 
         {
-            grappleHook.gunTip.transform.SetParent(leftHand.transform, false);
+            grappleHook.gunTip.transform.SetParent(leftHand.offset.transform, false);
             grappleHook.gunTip.transform.localPosition = new(0, .12f, .35f);
             grappleHook.gunTip.transform.localRotation = Quaternion.identity;
             grappleHook.grappleSpark.transform.SetParent(grappleHook.gunTip, false);
@@ -108,7 +108,7 @@ public class VrPlayer : MonoBehaviour
 
         {
             flarePoint = new GameObject("flare spawner").transform;
-            flarePoint.SetParent(rightHand.transform, false);
+            flarePoint.SetParent(rightHand.offset.transform, false);
             flarePoint.localPosition = new(0, 0, .4f);
             flarePoint.localRotation = Quaternion.identity;
 

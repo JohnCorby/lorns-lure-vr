@@ -7,6 +7,7 @@ public class VrHand : MonoBehaviour
 {
     private XRNode node;
     public GameObject model;
+    public GameObject offset;
 
     public static VrHand Create(XRNode node, GameObject modelBase)
     {
@@ -14,20 +15,23 @@ public class VrHand : MonoBehaviour
 
         AddGizmo(go.transform);
 
+        var offset = new GameObject("hacky offset");
+        offset.transform.SetParent(go.transform, false);
+        // eyeballing it based on my controllers to make it face the pointer direction
+        offset.transform.localPosition = new(0, -.06f, 0);
+        offset.transform.localEulerAngles =  new(30, 0,0);
+
         var hand = go.AddComponent<VrHand>();
         hand.node = node;
+        hand.offset = offset;
         hand.model = Instantiate(modelBase); // need to clone because something moves the picks every frame
-        hand.model.transform.SetParent(go.transform, false);
+        hand.model.transform.SetParent(offset.transform, false);
         // eyeballing it
         hand.model.transform.localPosition = new(0, 0, -0.4f);
-        hand.model.transform.localRotation = Quaternion.Euler(0, 0, 90);
+        hand.model.transform.localEulerAngles = new(0, 0, 90);
         hand.model.transform.localScale = Vector3.one * .1f;
 
         return hand;
-    }
-
-    private void Awake()
-    {
     }
 
     private void Update()
