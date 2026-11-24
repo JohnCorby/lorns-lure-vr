@@ -1,4 +1,5 @@
 ﻿using System;
+using ECM.Components;
 using UnityEngine;
 using UnityEngine.XR;
 
@@ -28,9 +29,8 @@ public class VrPlayer : MonoBehaviour
     private GrappleHook grappleHook;
     public Transform flarePoint;
 
-    public VrPlayer()
-    {
-    }
+    private MouseLook mouseLook;
+    private WallMouseLook wallMouseLook;
 
     public static readonly Shader UnlitAlwaysDrawShader = Shader.Find("GUI/Text Shader");
 
@@ -84,6 +84,9 @@ public class VrPlayer : MonoBehaviour
         origin.GetComponent<Renderer>().material.color = Color.grey;
         // origin.GetComponent<Renderer>().material.shader = VrPlayer.UnlitAlwaysDrawShader;
 
+        mouseLook = GetComponentInChildren<MouseLook>(true);
+        wallMouseLook = GetComponentInChildren<WallMouseLook>(true);
+
 
         // turn off camera picks. using setactive breaks pause somehow what
         foreach (var renderer in _climber.leftPickClose.GetComponentsInChildren<Renderer>(true))
@@ -127,26 +130,39 @@ public class VrPlayer : MonoBehaviour
 
         // _ui.worldCamera = isClimbingView ? climbingCamera : defaultCamera;
 
+        // mouseLook.enabled = false;
+        // wallMouseLook.enabled = false;
+
         // vrcamera and pose driver get created when camera first activated. so have to init here
         if (defaultPoseDriver == null)
         {
             defaultPoseDriver = defaultCamera.GetComponent<UuvrPoseDriver>();
-            defaultPoseDriver.ApplyPosRot += (pos, rot) =>
+            if (defaultPoseDriver != null)
             {
-                if (isClimbingView) return;
-                defaultPoseDriver.transform.localPosition = pos;
-                defaultPoseDriver.transform.localRotation = rot;
-            };
+                defaultPoseDriver.ApplyPosRot += (pos, rot) =>
+                {
+                    if (isClimbingView) return;
+                    defaultPoseDriver.transform.localPosition = pos;
+
+                    var euler = rot.eulerAngles;
+                    _climber.transform.localEulerAngles = _climber.transform.localEulerAngles with { y = euler.y };
+                    defaultPoseDriver.transform.localEulerAngles = defaultPoseDriver.transform.localEulerAngles with { x = euler.x, z = euler.z };
+                };
+            }
         }
+
         if (climbingPoseDriver == null)
         {
             climbingPoseDriver = climbingCamera.GetComponent<UuvrPoseDriver>();
-            climbingPoseDriver.ApplyPosRot += (pos, rot) =>
+            if (climbingPoseDriver != null)
             {
-                if (!isClimbingView) return;
-                climbingPoseDriver.transform.localPosition = pos;
-                climbingPoseDriver.transform.localRotation = rot;
-            };
+                climbingPoseDriver.ApplyPosRot += (pos, rot) =>
+                {
+                    if (!isClimbingView) return;
+                    climbingPoseDriver.transform.localPosition = pos;
+                    climbingPoseDriver.transform.localRotation = rot;
+                };
+            }
         }
     }
 }
