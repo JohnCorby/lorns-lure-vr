@@ -50,7 +50,8 @@ public static class Patches
                 __instance.GetComponent<BaseFirstPersonController>().movement.StopVelocity();
                 if (mainCameraTransform.forward.y < 0f)
                 {
-                    __instance.GetComponent<BaseFirstPersonController>().movement.ApplyImpulse(__instance.weakDashForce * 0.02f, __instance.transform.forward);
+                    // used to use body forward
+                    __instance.GetComponent<BaseFirstPersonController>().movement.ApplyImpulse(__instance.weakDashForce * 0.02f, mainCameraTransform.forward);
                 }
                 else
                 {
