@@ -19,7 +19,6 @@ public class VrPlayer : MonoBehaviour
     private GameObject _vrPivot;
 
     private Camera defaultCamera, climbingCamera;
-    private UuvrPoseDriver defaultPoseDriver, climbingPoseDriver;
 
     public bool isClimbingView => climbingCamera.enabled;
 
@@ -132,37 +131,5 @@ public class VrPlayer : MonoBehaviour
 
         // mouseLook.enabled = false;
         // wallMouseLook.enabled = false;
-
-        // vrcamera and pose driver get created when camera first activated. so have to init here
-        if (defaultPoseDriver == null)
-        {
-            defaultPoseDriver = defaultCamera.GetComponent<UuvrPoseDriver>();
-            if (defaultPoseDriver != null)
-            {
-                defaultPoseDriver.ApplyPosRot += (pos, rot) =>
-                {
-                    if (isClimbingView) return;
-                    defaultPoseDriver.transform.localPosition = pos;
-
-                    var euler = rot.eulerAngles;
-                    _climber.transform.localEulerAngles = _climber.transform.localEulerAngles with { y = euler.y };
-                    defaultPoseDriver.transform.localEulerAngles = defaultPoseDriver.transform.localEulerAngles with { x = euler.x, z = euler.z };
-                };
-            }
-        }
-
-        if (climbingPoseDriver == null)
-        {
-            climbingPoseDriver = climbingCamera.GetComponent<UuvrPoseDriver>();
-            if (climbingPoseDriver != null)
-            {
-                climbingPoseDriver.ApplyPosRot += (pos, rot) =>
-                {
-                    if (!isClimbingView) return;
-                    climbingPoseDriver.transform.localPosition = pos;
-                    climbingPoseDriver.transform.localRotation = rot;
-                };
-            }
-        }
     }
 }

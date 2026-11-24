@@ -66,19 +66,9 @@ public class UuvrPoseDriver: UuvrBehaviour
         UpdateTransform();
     }
 
-
-    public Action<Vector3, Quaternion>? ApplyPosRot;
     
     private void UpdateTransform()
     {
-        // terrible hacky override
-        if (ApplyPosRot != null)
-        {
-            ApplyPosRot((Vector3)_trackingPositionMethod.Invoke(null, _trackingRotationMethodArgs),
-                (Quaternion)_trackingRotationMethod.Invoke(null, _trackingRotationMethodArgs));
-            return;
-        }
-        
         if (_trackingRotationMethod != null)
         {
             transform.localRotation = (Quaternion)_trackingRotationMethod.Invoke(null, _trackingRotationMethodArgs);
