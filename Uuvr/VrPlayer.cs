@@ -40,7 +40,8 @@ public class VrPlayer : MonoBehaviour
         _ui = GameObject.Find("UI").GetComponent<Canvas>();
         // TODO move this to right hand. except for Blackout/DeathImage part (DemoTransition holds that stuff)
         // okay moving ui is gonna be annoying. will have to test each thing to see if it should be on hand or not. like uh terminal container probably shouldnt be maybe
-
+        // TODO: how the fuck does ui work? this is so shit
+        
         defaultCamera = _climber.defaultCamera.GetComponent<Camera>();
         climbingCamera = _climber.climbingCamera.GetComponent<Camera>();
 

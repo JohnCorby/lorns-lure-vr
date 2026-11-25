@@ -24,9 +24,6 @@ public static class Patches
 
     #region game patches
 
-    // TODO turn bloom off, turn down sens to 2
-    // TODO: fix cutscene camera, it also never ends on level 2 cutscene, you have to skip manually
-
     /// <summary>
     /// dont care about fov
     ///
@@ -305,7 +302,6 @@ public static class Patches
     }
 
 
-    /*
     /// <summary>
     /// scan from right hand. dont entirely need this but im trying it anyway
     /// </summary>
@@ -327,17 +323,8 @@ public static class Patches
             return false;
         }
 
-        if (__instance.GetComponent<ClimbingAbilityV2>().onWall)
-        {
-            if (__instance.rayOrigin.gameObject.name != "ClimbingPlayerView")
-            {
-                __instance.rayOrigin = GameObject.Find("ClimbingPlayerView").transform;
-            }
-        }
-        else if (__instance.rayOrigin.gameObject.name != "Camera")
-        {
-            __instance.rayOrigin = GameObject.Find("Camera").transform;
-        }
+        // change this to hand
+        __instance.rayOrigin = VrPlayer.Instance.flarePoint; // flare point is on right hand facing forward i win
 
         bool flag = Physics.Raycast(__instance.rayOrigin.position, __instance.rayOrigin.forward, out __instance.scanRay, __instance.sensorRange);
         float num = 0f;
@@ -399,7 +386,12 @@ public static class Patches
 
         return false;
     }
-    */
+    
+    // TODO gameoptions and settings for bloom and sens fix
+    
+    // TODO: use hand forward for movement? doesnt work with ui or wall detection :(
+    
+    // TODO: fix cutscene camera... how?? it also never ends on level 2 cutscene, you have to skip manually
 
     #endregion
 }
