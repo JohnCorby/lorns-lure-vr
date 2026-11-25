@@ -67,6 +67,14 @@ public class VrPlayer : MonoBehaviour
          * picks are on HiRezPickRightClose (AnimatedHands for climbing but idk about that). left has grapple as a child
          *
          * capsule collider is .6 radius 2 height. primitive cylinder would be .6 * 2
+         *
+         * UI: might be not be able to move. everything is reference or gameobject.find by name. HideUIToggle has all the things yay
+         * TerminalVelocityAlertV2 is for the little bits. some of them dont show up in vr for some reason. what????
+         *      V0 V1 V2
+         * cursor is the things
+         * lag retical for box. can flash using flashui
+         * deathimage for text blah
+         * flarechargereadyalert
          */
 
         _vrPivot = new GameObject("VrPivot");
