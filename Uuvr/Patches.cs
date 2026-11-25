@@ -47,6 +47,7 @@ public static class Patches
                 __instance.GetComponent<BaseFirstPersonController>().movement.StopVelocity();
                 if (mainCameraTransform.forward.y < 0f)
                 {
+                    // BUG: something about this is really finnicky when dashing straight up
                     // used to use body forward
                     __instance.GetComponent<BaseFirstPersonController>().movement.ApplyImpulse(__instance.weakDashForce * 0.02f, mainCameraTransform.forward);
                 }
@@ -308,6 +309,8 @@ public static class Patches
     [HarmonyPrefix, HarmonyPatch(typeof(Scanner), nameof(Scanner.Update))]
     private static bool Scanner_Update(Scanner __instance)
     {
+        return true; // nah
+        
         if (__instance.isScanning)
         {
             if (Input.GetButtonDown("UIScanClose") || Input.GetButtonUp("Scan"))
@@ -392,6 +395,8 @@ public static class Patches
     // TODO: use hand forward for movement? doesnt work with ui or wall detection :(
     
     // TODO: fix cutscene camera... how?? it also never ends on level 2 cutscene, you have to skip manually
+    
+    // TODO: AnimateView return false. iscrouching use camera height instead of button press for input
 
     #endregion
 }

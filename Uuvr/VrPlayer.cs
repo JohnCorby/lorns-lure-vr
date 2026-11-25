@@ -41,7 +41,7 @@ public class VrPlayer : MonoBehaviour
         // TODO move this to right hand. except for Blackout/DeathImage part (DemoTransition holds that stuff)
         // okay moving ui is gonna be annoying. will have to test each thing to see if it should be on hand or not. like uh terminal container probably shouldnt be maybe
         // TODO: how the fuck does ui work? this is so shit
-        
+
         defaultCamera = _climber.defaultCamera.GetComponent<Camera>();
         climbingCamera = _climber.climbingCamera.GetComponent<Camera>();
 
@@ -65,6 +65,8 @@ public class VrPlayer : MonoBehaviour
          * try not to move components, because things are referenced a lot by Find and by GetComponent on adjacent things. this might make UI really annoying :(
          *
          * picks are on HiRezPickRightClose (AnimatedHands for climbing but idk about that). left has grapple as a child
+         *
+         * capsule collider is .6 radius 2 height. primitive cylinder would be .6 * 2
          */
 
         _vrPivot = new GameObject("VrPivot");
