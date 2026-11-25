@@ -397,6 +397,8 @@ public static class Patches
     // TODO: fix cutscene camera... how?? it also never ends on level 2 cutscene, you have to skip manually
     
     // TODO: AnimateView return false. iscrouching use camera height instead of button press for input
+    
+    // TODO: turn off water reflections? i think that exists and i think its broken but its hard to tell cuz its so subtle anyway
 
     #endregion
 }
