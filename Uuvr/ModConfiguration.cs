@@ -73,7 +73,7 @@ public class ModConfiguration
     public readonly HardcodedConfigEntry<bool> OverrideDepth = new(false);
     public readonly HardcodedConfigEntry<bool> PhysicsMatchHeadsetRefreshRate = new(false);
     public readonly HardcodedConfigEntry<UiPatchMode> PreferredUiPatchMode = new(UiPatchMode.Mirror);
-    public readonly HardcodedConfigEntry<UiRenderMode> PreferredUiRenderMode = new(UiRenderMode.OverlayCamera);
+    public readonly HardcodedConfigEntry<UiRenderMode> PreferredUiRenderMode = new(UiRenderMode.InWorld);
     public readonly HardcodedConfigEntry<ScreenSpaceCanvasType> ScreenSpaceCanvasTypesToPatch = new(ScreenSpaceCanvasType.NotToTexture);
     public ConfigEntry<bool> NoTerminalVelocity;
     
