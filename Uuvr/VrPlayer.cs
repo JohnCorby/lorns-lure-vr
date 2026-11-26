@@ -3,6 +3,7 @@ using ECM.Components;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.XR;
+using Uuvr.VrUi;
 
 namespace Uuvr;
 
@@ -133,6 +134,16 @@ public class VrPlayer : MonoBehaviour
 
             // VrHand.AddGizmo(flarePoint);
         }
+
+        /*
+        // rotate ui with camera
+        var uiDriver = UiOverlayRenderMode.Instance._uiSceneCamera.GetComponent<UuvrPoseDriver>();
+        uiDriver.OverrideTransform += (pos, rot) =>
+        {
+            uiDriver.transform.localPosition = new(0, 1.6f, 0);
+            uiDriver.transform.localEulerAngles = Vector3.zero with { z = rot.eulerAngles.z };
+        };
+    */
     }
 
     private void Update()
