@@ -399,12 +399,12 @@ public static class Patches
     }
 
     /// <summary>
-    /// jump off wall using left hand
+    /// jump off wall using right hand
     /// </summary>
     [HarmonyPrefix, HarmonyPatch(typeof(ClimbingAbilityV2), nameof(ClimbingAbilityV2.Update))]
     private static bool Update(ClimbingAbilityV2 __instance)
     {
-        return true; // meh
+        // return true; // meh
         
         if (PauseHelper.currentlyPaused || PauseHelper.cutscenePause || PauseHelper.narrationPause)
         {
@@ -666,6 +666,9 @@ public static class Patches
     // TODO: AnimateView return false. iscrouching use camera height instead of button press for input
 
     // TODO: turn off water reflections? i think that exists and i think its broken but its hard to tell cuz its so subtle anyway
+
+    [HarmonyPrefix, HarmonyPatch(typeof(BaseFirstPersonController), nameof(BaseFirstPersonController.AnimateView))]
+    private static bool BaseFirstPersonController_AnimateView(BaseFirstPersonController __instance) => true;
 
     #endregion
 }

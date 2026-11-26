@@ -66,7 +66,6 @@ public class UuvrPoseDriver: UuvrBehaviour
         UpdateTransform();
     }
 
-    public Action<Vector3, Quaternion> OverrideTransform;
     
     private void UpdateTransform()
     {
@@ -79,8 +78,6 @@ public class UuvrPoseDriver: UuvrBehaviour
         {
             transform.localPosition = (Vector3)_trackingPositionMethod.Invoke(null, _trackingRotationMethodArgs);
         }
-
-        OverrideTransform?.Invoke(transform.localPosition, transform.localRotation);
     }
 
     private void DisableCameraAutoTracking()

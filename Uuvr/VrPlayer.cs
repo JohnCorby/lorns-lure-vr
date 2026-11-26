@@ -135,15 +135,7 @@ public class VrPlayer : MonoBehaviour
             // VrHand.AddGizmo(flarePoint);
         }
 
-        /*
-        // rotate ui with camera
-        var uiDriver = UiOverlayRenderMode.Instance._uiSceneCamera.GetComponent<UuvrPoseDriver>();
-        uiDriver.OverrideTransform += (pos, rot) =>
-        {
-            uiDriver.transform.localPosition = new(0, 1.6f, 0);
-            uiDriver.transform.localEulerAngles = Vector3.zero with { z = rot.eulerAngles.z };
-        };
-    */
+        // TODO: scanner sets cursor color. make it not transparent
     }
 
     private void Update()
@@ -161,5 +153,14 @@ public class VrPlayer : MonoBehaviour
 
         // mouseLook.enabled = false;
         // wallMouseLook.enabled = false;
+
+        // move ui with camera when not paused
+        var terminalContainer = _climber.GetComponent<Scanner>().terminalContainer;
+        var paused = PauseHelper.currentlyPaused || PauseHelper.cutscenePause || PauseHelper.narrationPause || terminalContainer.activeSelf;
+        if (!paused)
+        {
+            VrUiManager._uiContainer.transform.localPosition = UiOverlayRenderMode._uiSceneCamera.transform.localPosition;
+            VrUiManager._uiContainer.transform.localRotation = UiOverlayRenderMode._uiSceneCamera.transform.localRotation with { z = 0 };
+        }
     }
 }

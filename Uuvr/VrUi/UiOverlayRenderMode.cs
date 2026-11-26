@@ -10,10 +10,8 @@ public class UiOverlayRenderMode: UuvrBehaviour
     }
 #endif
 
-    public static UiOverlayRenderMode Instance;
-
     // Overlay camera that sees the UI quad where the captured UI is projected.
-    public Camera? _uiSceneCamera;
+    public static Camera? _uiSceneCamera;
     
     protected override void OnSettingChanged()
     {
@@ -23,8 +21,6 @@ public class UiOverlayRenderMode: UuvrBehaviour
 
     private void Awake()
     {
-        Instance = this;
-        
         _uiSceneCamera = Create<UuvrPoseDriver>(transform).gameObject.AddComponent<Camera>();
         VrCamera.VrCamera.IgnoredCameras.Add(_uiSceneCamera);
         _uiSceneCamera.clearFlags = CameraClearFlags.Depth;
