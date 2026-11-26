@@ -3,7 +3,6 @@ using ECM.Components;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.XR;
-using Uuvr.VrUi;
 
 namespace Uuvr;
 
@@ -134,12 +133,6 @@ public class VrPlayer : MonoBehaviour
 
             // VrHand.AddGizmo(flarePoint);
         }
-
-        // move ui to right hand
-        VrUiManager._vrUiQuad.transform.SetParent(rightHand.offset.transform, false);
-        VrUiManager._vrUiQuad.transform.localPosition = new(0, .1f, 0);
-        VrUiManager._vrUiQuad.transform.localRotation = Quaternion.identity;
-        VrUiManager._vrUiQuad.transform.localScale /= 2;
     }
 
     private void Update()

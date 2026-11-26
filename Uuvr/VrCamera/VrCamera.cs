@@ -119,7 +119,7 @@ public class VrCamera : UuvrBehaviour
     private void Update()
     {
         // we use separate overlay camera for ui. dont render it in any other camera
-        // ParentCamera.cullingMask &= ~(1 << LayerHelper.GetVrUiLayer());
+        ParentCamera.cullingMask &= ~(1 << LayerHelper.GetVrUiLayer());
         
         if (ModConfiguration.Instance.OverrideDepth.Value)
         {
