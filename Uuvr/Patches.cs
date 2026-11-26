@@ -660,6 +660,7 @@ public static class Patches
     // TODO gameoptions and settings for bloom and sens fix
 
     // TODO: use hand forward for movement? doesnt work with wall detection or head tilt :(
+    /*
     [HarmonyPrefix, HarmonyPatch(typeof(BaseFirstPersonController), nameof(BaseFirstPersonController.CalcDesiredVelocity))]
     private static bool BaseFirstPersonController_CalcDesiredVelocity(BaseFirstPersonController __instance, out Vector3 __result)
     {
@@ -668,6 +669,7 @@ public static class Patches
         __result = VrPlayer.Instance.rightHand.offset.transform.TransformDirection(CalcDesiredVelocity);
         return false;
     }
+    */
 
 
     // TODO: fix cutscene camera... how?? it also never ends on level 2 cutscene, you have to skip manually

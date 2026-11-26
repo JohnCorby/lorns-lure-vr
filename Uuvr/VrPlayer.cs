@@ -177,7 +177,7 @@ public class VrPlayer : MonoBehaviour
         if (!paused)
         {
             VrUiManager._uiContainer.transform.localPosition = UiOverlayRenderMode._uiSceneCamera.transform.localPosition;
-            VrUiManager._uiContainer.transform.localRotation = UiOverlayRenderMode._uiSceneCamera.transform.localRotation with { /*y = 0, */z = 0 };
+            VrUiManager._uiContainer.transform.localRotation = UiOverlayRenderMode._uiSceneCamera.transform.localRotation with { y = 0, z = 0 };
         }
     }
 }
