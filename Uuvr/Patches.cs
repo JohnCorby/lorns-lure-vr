@@ -404,6 +404,8 @@ public static class Patches
     [HarmonyPrefix, HarmonyPatch(typeof(ClimbingAbilityV2), nameof(ClimbingAbilityV2.Update))]
     private static bool Update(ClimbingAbilityV2 __instance)
     {
+        return true; // meh
+        
         if (PauseHelper.currentlyPaused || PauseHelper.cutscenePause || PauseHelper.narrationPause)
         {
             return false;
@@ -461,7 +463,7 @@ public static class Patches
                     __instance.ExitClimbByJump();
                     __instance.bfpsc._midAirJumpCount = 0;
                     // here
-                    var climbingCamera = VrPlayer.Instance.leftHand.offset;
+                    var climbingCamera = VrPlayer.Instance.rightHand.offset;
                     if (climbingCamera.transform.forward.y > -0.4f)
                     {
                         __instance.rb.AddForce(Vector3.up * __instance.jumpOffWallVerticalImpulse);
