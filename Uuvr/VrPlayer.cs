@@ -2,6 +2,7 @@
 using ECM.Components;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.UI;
 using UnityEngine.XR;
 using Uuvr.VrUi;
 
@@ -32,6 +33,8 @@ public class VrPlayer : MonoBehaviour
 
     private MouseLook mouseLook;
     private WallMouseLook wallMouseLook;
+
+    private Scanner scanner;
 
     public static readonly Shader UnlitAlwaysDrawShader = Shader.Find("GUI/Text Shader");
 
@@ -78,10 +81,12 @@ public class VrPlayer : MonoBehaviour
          * flarechargereadyalert
          *
          * layers: UI,
-         *     "SpeedrunUI",
-    "DisableInPictureMode",
-    "DisableInVideoMode"
-
+         *      "SpeedrunUI",
+         *      "DisableInPictureMode",
+         *      "DisableInVideoMode"
+         *
+         *
+         * DemoTransition does fadeout on DeathSceneManagement go
          */
 
         _vrPivot = new GameObject("VrPivot");
@@ -136,6 +141,15 @@ public class VrPlayer : MonoBehaviour
         }
 
         // TODO: scanner sets cursor color. make it not transparent
+        scanner = _climber.GetComponent<Scanner>();
+        // scanner.scannableReticleColor.a = 1;
+        // scanner.alreadyScannedReticleColor.a = 1;
+        // scanner.unreachableReticleColor.a = 1;
+        // scanner.climbableReticleColor.a = 1;
+        // scanner.unclimbableColor.a = 1;
+        // scanner.scanningReticleColor.a = 1;
+
+        VrUiManager._vrUiQuad.transform.localPosition = VrUiManager._vrUiQuad.transform.localPosition with { y = 0 };
     }
 
     private void Update()
@@ -154,13 +168,16 @@ public class VrPlayer : MonoBehaviour
         // mouseLook.enabled = false;
         // wallMouseLook.enabled = false;
 
+        // _climber.transform.eulerAngles = _climber.transform.eulerAngles with { y = rightHand.offset.transform.localEulerAngles.y };
+        // _climber.transform.eulerAngles = _climber.transform.eulerAngles with { y = _climber.transform.eulerAngles.y+1 };
+
         // move ui with camera when not paused
-        var terminalContainer = _climber.GetComponent<Scanner>().terminalContainer;
+        var terminalContainer = scanner.terminalContainer;
         var paused = PauseHelper.currentlyPaused || PauseHelper.cutscenePause || PauseHelper.narrationPause || terminalContainer.activeSelf;
         if (!paused)
         {
             VrUiManager._uiContainer.transform.localPosition = UiOverlayRenderMode._uiSceneCamera.transform.localPosition;
-            VrUiManager._uiContainer.transform.localRotation = UiOverlayRenderMode._uiSceneCamera.transform.localRotation with { z = 0 };
+            VrUiManager._uiContainer.transform.localRotation = UiOverlayRenderMode._uiSceneCamera.transform.localRotation with { /*y = 0, */z = 0 };
         }
     }
 }

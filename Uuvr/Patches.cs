@@ -405,7 +405,7 @@ public static class Patches
     private static bool Update(ClimbingAbilityV2 __instance)
     {
         // return true; // meh
-        
+
         if (PauseHelper.currentlyPaused || PauseHelper.cutscenePause || PauseHelper.narrationPause)
         {
             return false;
@@ -659,16 +659,24 @@ public static class Patches
 
     // TODO gameoptions and settings for bloom and sens fix
 
-    // TODO: use hand forward for movement? doesnt work with ui or wall detection :(
+    // TODO: use hand forward for movement? doesnt work with wall detection or head tilt :(
+    [HarmonyPrefix, HarmonyPatch(typeof(BaseFirstPersonController), nameof(BaseFirstPersonController.CalcDesiredVelocity))]
+    private static bool BaseFirstPersonController_CalcDesiredVelocity(BaseFirstPersonController __instance, out Vector3 __result)
+    {
+        __instance.speed = __instance.GetTargetSpeed();
+        var CalcDesiredVelocity = __instance.useRootMotion && __instance.applyRootMotion ? __instance.rootMotionController.animVelocity : __instance.moveDirection * __instance.speed;
+        __result = VrPlayer.Instance.rightHand.offset.transform.TransformDirection(CalcDesiredVelocity);
+        return false;
+    }
+
 
     // TODO: fix cutscene camera... how?? it also never ends on level 2 cutscene, you have to skip manually
 
     // TODO: AnimateView return false. iscrouching use camera height instead of button press for input
-
-    // TODO: turn off water reflections? i think that exists and i think its broken but its hard to tell cuz its so subtle anyway
-
     [HarmonyPrefix, HarmonyPatch(typeof(BaseFirstPersonController), nameof(BaseFirstPersonController.AnimateView))]
     private static bool BaseFirstPersonController_AnimateView(BaseFirstPersonController __instance) => true;
+
+    // TODO: turn off water reflections? i think that exists and i think its broken but its hard to tell cuz its so subtle anyway
 
     #endregion
 }

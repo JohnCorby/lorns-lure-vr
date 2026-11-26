@@ -15,7 +15,7 @@ public class VrUiManager : UuvrBehaviour
 #endif
     
     private RenderTexture? _uiTexture;
-    private GameObject? _vrUiQuad;
+    public static GameObject? _vrUiQuad;
     public static GameObject? _uiContainer;
     private CanvasRedirectPatchMode? _canvasRedirectPatchMode;
     private ScreenMirrorPatchMode? _screenMirrorPatchMode;
