@@ -220,84 +220,92 @@ public static class Patches
     [HarmonyPrefix, HarmonyPatch(typeof(DRGFlareThrower2), nameof(DRGFlareThrower2.Update))]
     public static bool DRGFlareThrower2_Update(DRGFlareThrower2 __instance)
     {
-		if (PauseHelper.currentlyPaused || PauseHelper.narrationPause || PauseHelper.cutscenePause)
-		{
-			return false;
-		}
-		if (Input.GetButtonDown("Flare"))
-		{
-			__instance.timePressed = Time.time;
-		}
-		else if (Input.GetButton("Flare") && __instance.chargeSound)
-		{
-			if (Time.time - __instance.timePressed > __instance.chargeSoundDelay && !__instance.chargeSound.isPlaying)
-			{
-				__instance.chargeSound.Play();
-				__instance.chargeSpark.Play();
-				if (HideUIToggle.liveMode == "default")
-				{
-					__instance.chargeCompleteUI.SetActive(true);
-				}
-			}
-			if (Time.time - __instance.timePressed >= __instance.chargeTime && !__instance.chargeCompleteSound.isPlaying)
-			{
-				__instance.chargeCompleteSound.Play();
-				__instance.chargeCompleteUI.GetComponent<FlashUI>().enabled = true;
-			}
-		}
-		if (Input.GetButtonUp("Flare"))
-		{
-			if (__instance.chargeSound)
-			{
-				__instance.chargeSound.Stop();
-				__instance.chargeCompleteSound.Stop();
-				__instance.chargeCompleteUI.GetComponent<FlashUI>().enabled = false;
-				__instance.chargeCompleteUI.GetComponent<FlashUI>().ResetColor();
-				__instance.chargeCompleteUI.SetActive(false);
-			}
-			if (__instance.throwable)
-			{
-				if (__instance.cav2.onWall)
-				{
-					__instance.flareInstances.Add(Object.Instantiate<GameObject>(__instance.flarePrefab, VrPlayer.Instance.flarePoint.position, VrPlayer.Instance.flarePoint.rotation));
-					if (Time.time - __instance.timePressed < __instance.chargeTime)
-					{
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = false;
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce, ForceMode.Impulse);
-					}
-					else
-					{
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = true;
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().ChangeFlare(40f);
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce * 2f, ForceMode.Impulse);
-					}
-					__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddTorque(20f, 0f, 2f, ForceMode.Impulse);
-				}
-				else
-				{
-					__instance.flareInstances.Add(Object.Instantiate<GameObject>(__instance.flarePrefab, VrPlayer.Instance.flarePoint.position, VrPlayer.Instance.flarePoint.rotation));
-					if (Time.time - __instance.timePressed < __instance.chargeTime)
-					{
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = false;
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce + __instance.cav2.GetComponent<Rigidbody>().velocity, ForceMode.Impulse);
-					}
-					else
-					{
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = true;
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().ChangeFlare(40f);
-						__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce * 2f + __instance.cav2.GetComponent<Rigidbody>().velocity, ForceMode.Impulse);
-					}
-					__instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddTorque(20f, 0f, 2f, ForceMode.Impulse);
-				}
-				if (__instance.flareInstances.Count >= __instance.maxFlares)
-				{
-					Object.Destroy(__instance.flareInstances[0]);
-					__instance.flareInstances.RemoveAt(0);
-				}
-				__instance.throwable = false;
-				__instance.StartCoroutine(__instance.DeactivateFlare());
-			}
-		}
+        if (PauseHelper.currentlyPaused || PauseHelper.narrationPause || PauseHelper.cutscenePause)
+        {
+            return false;
+        }
+
+        if (Input.GetButtonDown("Flare"))
+        {
+            __instance.timePressed = Time.time;
+        }
+        else if (Input.GetButton("Flare") && __instance.chargeSound)
+        {
+            if (Time.time - __instance.timePressed > __instance.chargeSoundDelay && !__instance.chargeSound.isPlaying)
+            {
+                __instance.chargeSound.Play();
+                __instance.chargeSpark.Play();
+                if (HideUIToggle.liveMode == "default")
+                {
+                    __instance.chargeCompleteUI.SetActive(true);
+                }
+            }
+
+            if (Time.time - __instance.timePressed >= __instance.chargeTime && !__instance.chargeCompleteSound.isPlaying)
+            {
+                __instance.chargeCompleteSound.Play();
+                __instance.chargeCompleteUI.GetComponent<FlashUI>().enabled = true;
+            }
+        }
+
+        if (Input.GetButtonUp("Flare"))
+        {
+            if (__instance.chargeSound)
+            {
+                __instance.chargeSound.Stop();
+                __instance.chargeCompleteSound.Stop();
+                __instance.chargeCompleteUI.GetComponent<FlashUI>().enabled = false;
+                __instance.chargeCompleteUI.GetComponent<FlashUI>().ResetColor();
+                __instance.chargeCompleteUI.SetActive(false);
+            }
+
+            if (__instance.throwable)
+            {
+                if (__instance.cav2.onWall)
+                {
+                    __instance.flareInstances.Add(Object.Instantiate<GameObject>(__instance.flarePrefab, VrPlayer.Instance.flarePoint.position, VrPlayer.Instance.flarePoint.rotation));
+                    if (Time.time - __instance.timePressed < __instance.chargeTime)
+                    {
+                        __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = false;
+                        __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce, ForceMode.Impulse);
+                    }
+                    else
+                    {
+                        __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = true;
+                        __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().ChangeFlare(40f);
+                        __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce * 2f, ForceMode.Impulse);
+                    }
+
+                    __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddTorque(20f, 0f, 2f, ForceMode.Impulse);
+                }
+                else
+                {
+                    __instance.flareInstances.Add(Object.Instantiate<GameObject>(__instance.flarePrefab, VrPlayer.Instance.flarePoint.position, VrPlayer.Instance.flarePoint.rotation));
+                    if (Time.time - __instance.timePressed < __instance.chargeTime)
+                    {
+                        __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = false;
+                        __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce + __instance.cav2.GetComponent<Rigidbody>().velocity, ForceMode.Impulse);
+                    }
+                    else
+                    {
+                        __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().sticky = true;
+                        __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<DRGFlare>().ChangeFlare(40f);
+                        __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddForce(VrPlayer.Instance.flarePoint.forward * __instance.throwForce * 2f + __instance.cav2.GetComponent<Rigidbody>().velocity, ForceMode.Impulse);
+                    }
+
+                    __instance.flareInstances[__instance.flareInstances.Count - 1].GetComponent<Rigidbody>().AddTorque(20f, 0f, 2f, ForceMode.Impulse);
+                }
+
+                if (__instance.flareInstances.Count >= __instance.maxFlares)
+                {
+                    Object.Destroy(__instance.flareInstances[0]);
+                    __instance.flareInstances.RemoveAt(0);
+                }
+
+                __instance.throwable = false;
+                __instance.StartCoroutine(__instance.DeactivateFlare());
+            }
+        }
 
         return false;
     }
@@ -310,7 +318,7 @@ public static class Patches
     private static bool Scanner_Update(Scanner __instance)
     {
         return true; // nah
-        
+
         if (__instance.isScanning)
         {
             if (Input.GetButtonDown("UIScanClose") || Input.GetButtonUp("Scan"))
@@ -389,15 +397,272 @@ public static class Patches
 
         return false;
     }
-    
+
+    /// <summary>
+    /// jump off wall using left hand
+    /// </summary>
+    [HarmonyPrefix, HarmonyPatch(typeof(ClimbingAbilityV2), nameof(ClimbingAbilityV2.Update))]
+    private static bool Update(ClimbingAbilityV2 __instance)
+    {
+        if (PauseHelper.currentlyPaused || PauseHelper.cutscenePause || PauseHelper.narrationPause)
+        {
+            return false;
+        }
+
+        if (__instance.pause)
+        {
+            return false;
+        }
+
+        if (__instance.bfpsc.pause)
+        {
+            return false;
+        }
+
+        if ((__instance.bfpsc.isGrounded || __instance.bfpsc.movement.isSliding) && Time.time - __instance.GetComponent<RunDash>().lastDashTime > 0.5f && __instance.cm.isOnGround)
+        {
+            if (!__instance.dontResetAirControl)
+            {
+                __instance.GetComponent<BaseFirstPersonController>().airControl = 0.625f;
+            }
+
+            __instance.ss.ResetStamina();
+        }
+
+        if (!__instance.abilityActive)
+        {
+            if (!__instance.climbingLedge)
+            {
+                __instance.ExitClimbByReachingTop(false);
+            }
+
+            if (__instance.exitClimbByReachingTop && __instance.reachedTopLerp.StepPositionLERP())
+            {
+                __instance.onWall = false;
+                __instance.ml._Active = true;
+                __instance.exitClimbByReachingTop = false;
+                __instance.rb.isKinematic = false;
+                __instance.ActivateDefaultCamera();
+                __instance.csem.lastFrameState = "running";
+            }
+
+            return false;
+        }
+
+        __instance.ResetWallHold();
+        if (!__instance.clinging && !__instance.climbingLedge)
+        {
+            if (__instance.onWall)
+            {
+                __instance.ml._Active = false;
+                __instance.ss.PauseStamina();
+                if (Input.GetButtonDown("Jump") && !__instance.exitClimbByReachingTop && !__instance.climbingLedge && !__instance.clinging)
+                {
+                    __instance.ExitClimbByJump();
+                    __instance.bfpsc._midAirJumpCount = 0;
+                    // here
+                    var climbingCamera = VrPlayer.Instance.leftHand.offset;
+                    if (climbingCamera.transform.forward.y > -0.4f)
+                    {
+                        __instance.rb.AddForce(Vector3.up * __instance.jumpOffWallVerticalImpulse);
+                        __instance.rb.AddForce(climbingCamera.transform.forward * __instance.jumpOffWallHorizontalImpulse);
+                    }
+
+                    __instance.ss.DepleteStaminaBurst(30f);
+                    __instance.ActivateDefaultCamera();
+                    __instance.an.StopPlayback();
+                    __instance.walkShifting.CrossFade("Jump", 0.1f, 1);
+                    __instance.wallJumpTime = Time.time;
+                    __instance.GetComponent<TicTac>().jumpTime = Time.time;
+                    return false;
+                }
+
+                if (__instance.exitClimbByReachingTop)
+                {
+                    if (__instance.reachedTopLerp.StepPositionLERP() && !__instance.reachedTop)
+                    {
+                        __instance.onWall = false;
+                        __instance.ml._Active = true;
+                        __instance.exitClimbByReachingTop = false;
+                        __instance.rb.isKinematic = false;
+                        __instance.ActivateMovePicks();
+                        __instance.ActivateDefaultCamera();
+                        __instance.walkShifting.CrossFade("RiseFromBottom", 0f);
+                        __instance.csem.lastFrameState = "running";
+                        return false;
+                    }
+                }
+                else if (__instance.isClimbing)
+                {
+                    float axis = Input.GetAxis("Vertical");
+                    float axis2 = Input.GetAxis("Horizontal");
+                    bool flag = axis > 0f;
+                    bool flag2 = axis < 0f;
+                    bool flag3 = axis2 < 0f;
+                    bool flag4 = axis2 > 0f;
+                    if (flag && flag4)
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("UpRight");
+                    }
+                    else if (flag && flag3)
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("UpLeft");
+                    }
+                    else if (flag2 && flag3)
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("DownLeft");
+                    }
+                    else if (flag2 && flag4)
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("DownRight");
+                    }
+                    else if (flag)
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("Up");
+                    }
+                    else if (flag2)
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("Down");
+                    }
+                    else if (flag3)
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("Left");
+                    }
+                    else if (flag4)
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("Right");
+                    }
+                    else
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("ClingOnWall");
+                    }
+
+                    __instance.ss.SendMessage("DepleteStamina");
+                    if (!__instance.inClimbableRegion)
+                    {
+                        __instance.isClimbing = false;
+                        __instance.climbingAroundCorner = false;
+                        __instance.transferringWallFace = false;
+                        __instance.climbFinished = true;
+                        __instance.ss.PauseStamina();
+                        __instance.climbLerp.RewindLERP();
+                        __instance.CrossFadeIfNotAlreadyPlaying("ClingOnWall");
+                    }
+                    else if (__instance.StopLERPIfTouchWall(__instance.climbLerp._start, __instance.climbLerp._end))
+                    {
+                        __instance.isClimbing = false;
+                        __instance.climbingAroundCorner = false;
+                        __instance.transferringWallFace = false;
+                        __instance.climbFinished = true;
+                        __instance.climbLerp.StopLERP();
+                        __instance.ss.PauseStamina();
+                        __instance.CrossFadeIfNotAlreadyPlaying("ClingOnWall");
+                    }
+                    else if (!__instance.climbFinished)
+                    {
+                        bool flag5 = __instance.climbLerp.StepPositionLERP();
+                        if (!__instance.climbingAroundCorner && !__instance.transferringWallFace)
+                        {
+                            if (__instance.wallLookatLerp.StepRotateForwardY() && flag5)
+                            {
+                                __instance.isClimbing = false;
+                                __instance.climbFinished = true;
+                            }
+                        }
+                        else if (__instance.climbingAroundCorner)
+                        {
+                            if (__instance.wallLookatLerp.StepRotateForwardY() && flag5)
+                            {
+                                __instance.climbingAroundCorner = false;
+                                __instance.isClimbing = false;
+                                __instance.climbFinished = true;
+                            }
+                        }
+                        else if (__instance.transferringWallFace && (__instance.fastWallLookatLerp.StepRotateForwardY() && flag5))
+                        {
+                            __instance.transferringWallFace = false;
+                            __instance.isClimbing = false;
+                            __instance.climbFinished = true;
+                        }
+                    }
+                    else
+                    {
+                        __instance.ActivateDefaultCamera();
+                        __instance.CrossFadeIfNotAlreadyPlaying("ClingOnWall");
+                        __instance.isClimbing = false;
+                        __instance.climbingAroundCorner = false;
+                        __instance.transferringWallFace = false;
+                    }
+
+                    if (__instance.bfpsc.isGrounded)
+                    {
+                        Debug.Log("exiting climb, touched something while climbing");
+                        __instance.ExitClimbExternal();
+                        __instance.csem.audioSource.Stop();
+                        __instance.CrossFadeIfNotAlreadyPlaying("Idle");
+                        return false;
+                    }
+                }
+                else if (!__instance.ExitClimbByReachingTop(false))
+                {
+                    __instance.Climb();
+                    if (!__instance.isClimbing)
+                    {
+                        __instance.climbingAroundCorner = false;
+                        __instance.transferringWallFace = false;
+                        __instance.CrossFadeIfNotAlreadyPlaying("ClingOnWall");
+                        return false;
+                    }
+                }
+            }
+            else
+            {
+                if (!__instance.ExitClimbByReachingTop(false))
+                {
+                    __instance.CheckClimbTriggered();
+                    if (__instance.clinging)
+                    {
+                        return false;
+                    }
+                }
+
+                float axis3 = Input.GetAxis("Vertical");
+                float axis4 = Input.GetAxis("Horizontal");
+                if (__instance.bfpsc.isGrounded)
+                {
+                    if (axis3 > 0f || axis4 > 0f)
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("Running");
+                        return false;
+                    }
+
+                    if (axis3 < 0f || axis4 < 0f)
+                    {
+                        __instance.CrossFadeIfNotAlreadyPlaying("Running");
+                        return false;
+                    }
+
+                    __instance.CrossFadeIfNotAlreadyPlaying("Idle");
+                    return false;
+                }
+                else if (Input.GetButton("Jump") && !__instance.exitClimbByReachingTop && !__instance.climbingLedge && !__instance.clinging)
+                {
+                    __instance.CrossFadeIfNotAlreadyPlaying("Jump");
+                }
+            }
+        }
+
+        return false;
+    }
+
     // TODO gameoptions and settings for bloom and sens fix
-    
+
     // TODO: use hand forward for movement? doesnt work with ui or wall detection :(
-    
+
     // TODO: fix cutscene camera... how?? it also never ends on level 2 cutscene, you have to skip manually
-    
+
     // TODO: AnimateView return false. iscrouching use camera height instead of button press for input
-    
+
     // TODO: turn off water reflections? i think that exists and i think its broken but its hard to tell cuz its so subtle anyway
 
     #endregion
