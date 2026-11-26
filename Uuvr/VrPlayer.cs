@@ -75,6 +75,12 @@ public class VrPlayer : MonoBehaviour
          * lag retical for box. can flash using flashui
          * deathimage for text blah
          * flarechargereadyalert
+         *
+         * layers: UI,
+         *     "SpeedrunUI",
+    "DisableInPictureMode",
+    "DisableInVideoMode"
+
          */
 
         _vrPivot = new GameObject("VrPivot");
