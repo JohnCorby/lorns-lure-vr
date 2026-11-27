@@ -42,9 +42,6 @@ public class VrPlayer : MonoBehaviour
     {
         _climber = GetComponent<ClimbingAbilityV2>(); // this should be on ClimbingSystemPrefab/Climber
         _ui = GameObject.Find("UI").GetComponent<Canvas>();
-        // TODO move this to right hand. except for Blackout/DeathImage part (DemoTransition holds that stuff)
-        // okay moving ui is gonna be annoying. will have to test each thing to see if it should be on hand or not. like uh terminal container probably shouldnt be maybe
-        // TODO: how the fuck does ui work? this is so shit
 
         defaultCamera = _climber.defaultCamera.GetComponent<Camera>();
         climbingCamera = _climber.climbingCamera.GetComponent<Camera>();
@@ -171,7 +168,7 @@ public class VrPlayer : MonoBehaviour
         // _climber.transform.eulerAngles = _climber.transform.eulerAngles with { y = rightHand.offset.transform.localEulerAngles.y };
         // _climber.transform.eulerAngles = _climber.transform.eulerAngles with { y = _climber.transform.eulerAngles.y+1 };
 
-        // move ui with camera when not paused
+        // move ui with camera when not paused. hand was annoying
         var terminalContainer = scanner.terminalContainer;
         var paused = PauseHelper.currentlyPaused || PauseHelper.cutscenePause || PauseHelper.narrationPause || terminalContainer.activeSelf;
         if (!paused)

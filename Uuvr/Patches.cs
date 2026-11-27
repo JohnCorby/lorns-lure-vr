@@ -47,7 +47,7 @@ public static class Patches
                 __instance.GetComponent<BaseFirstPersonController>().movement.StopVelocity();
                 if (mainCameraTransform.forward.y < 0f)
                 {
-                    // BUG: something about this is really finnicky when dashing straight up
+                    // BUG: something about this is really finnicky when dashing straight up. oh well, that's how it works in vanilla too
                     // used to use body forward
                     __instance.GetComponent<BaseFirstPersonController>().movement.ApplyImpulse(__instance.weakDashForce * 0.02f, mainCameraTransform.forward);
                 }
@@ -659,7 +659,9 @@ public static class Patches
 
     // TODO gameoptions and settings for bloom and sens fix
 
-    // TODO: use hand forward for movement? doesnt work with wall detection or head tilt :(
+    /// <summary>
+    /// use hand forward for movement. doesnt work with wall detection or head tilt so we use ui to keep the player facing forward
+    /// </summary>
     [HarmonyPrefix, HarmonyPatch(typeof(BaseFirstPersonController), nameof(BaseFirstPersonController.CalcDesiredVelocity))]
     private static bool BaseFirstPersonController_CalcDesiredVelocity(BaseFirstPersonController __instance, out Vector3 __result)
     {
