@@ -77,7 +77,9 @@ namespace Valve.VR
         
         private static SteamVR_Action_Skeleton p_game_RightHandSkeleton;
         
-        private static SteamVR_Action_Vibration p_game_Haptics;
+        private static SteamVR_Action_Vibration p_game_LeftHandHaptics;
+        
+        private static SteamVR_Action_Vibration p_game_RightHandHaptics;
         
         public static SteamVR_Action_Boolean game_Jump
         {
@@ -319,11 +321,19 @@ namespace Valve.VR
             }
         }
         
-        public static SteamVR_Action_Vibration game_Haptics
+        public static SteamVR_Action_Vibration game_LeftHandHaptics
         {
             get
             {
-                return SteamVR_Actions.p_game_Haptics.GetCopy<SteamVR_Action_Vibration>();
+                return SteamVR_Actions.p_game_LeftHandHaptics.GetCopy<SteamVR_Action_Vibration>();
+            }
+        }
+        
+        public static SteamVR_Action_Vibration game_RightHandHaptics
+        {
+            get
+            {
+                return SteamVR_Actions.p_game_RightHandHaptics.GetCopy<SteamVR_Action_Vibration>();
             }
         }
         
@@ -360,7 +370,8 @@ namespace Valve.VR
                     SteamVR_Actions.game_RightHandPose,
                     SteamVR_Actions.game_LeftHandSkeleton,
                     SteamVR_Actions.game_RightHandSkeleton,
-                    SteamVR_Actions.game_Haptics};
+                    SteamVR_Actions.game_LeftHandHaptics,
+                    SteamVR_Actions.game_RightHandHaptics};
             Valve.VR.SteamVR_Input.actionsIn = new Valve.VR.ISteamVR_Action_In[] {
                     SteamVR_Actions.game_Jump,
                     SteamVR_Actions.game_SlowDown,
@@ -393,9 +404,11 @@ namespace Valve.VR
                     SteamVR_Actions.game_LeftHandSkeleton,
                     SteamVR_Actions.game_RightHandSkeleton};
             Valve.VR.SteamVR_Input.actionsOut = new Valve.VR.ISteamVR_Action_Out[] {
-                    SteamVR_Actions.game_Haptics};
+                    SteamVR_Actions.game_LeftHandHaptics,
+                    SteamVR_Actions.game_RightHandHaptics};
             Valve.VR.SteamVR_Input.actionsVibration = new Valve.VR.SteamVR_Action_Vibration[] {
-                    SteamVR_Actions.game_Haptics};
+                    SteamVR_Actions.game_LeftHandHaptics,
+                    SteamVR_Actions.game_RightHandHaptics};
             Valve.VR.SteamVR_Input.actionsPose = new Valve.VR.SteamVR_Action_Pose[] {
                     SteamVR_Actions.game_LeftHandPose,
                     SteamVR_Actions.game_RightHandPose};
@@ -493,7 +506,8 @@ namespace Valve.VR
             SteamVR_Actions.p_game_RightHandPose = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/game/in/RightHandPose")));
             SteamVR_Actions.p_game_LeftHandSkeleton = ((SteamVR_Action_Skeleton)(SteamVR_Action.Create<SteamVR_Action_Skeleton>("/actions/game/in/LeftHandSkeleton")));
             SteamVR_Actions.p_game_RightHandSkeleton = ((SteamVR_Action_Skeleton)(SteamVR_Action.Create<SteamVR_Action_Skeleton>("/actions/game/in/RightHandSkeleton")));
-            SteamVR_Actions.p_game_Haptics = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/game/out/Haptics")));
+            SteamVR_Actions.p_game_LeftHandHaptics = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/game/out/LeftHandHaptics")));
+            SteamVR_Actions.p_game_RightHandHaptics = ((SteamVR_Action_Vibration)(SteamVR_Action.Create<SteamVR_Action_Vibration>("/actions/game/out/RightHandHaptics")));
         }
     }
 }

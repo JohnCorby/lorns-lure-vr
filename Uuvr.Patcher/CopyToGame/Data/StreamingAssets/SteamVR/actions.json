@@ -123,7 +123,11 @@
       "skeleton": "/skeleton/hand/right"
     },
     {
-      "name": "/actions/game/out/Haptics",
+      "name": "/actions/game/out/LeftHandHaptics",
+      "type": "vibration"
+    },
+    {
+      "name": "/actions/game/out/RightHandHaptics",
       "type": "vibration"
     }
   ],
@@ -189,8 +193,7 @@
   ],
   "localization": [
     {
-      "language_tag": "en_US",
-      "/actions/game/out/Haptics": "Haptics"
+      "language_tag": "en_US"
     }
   ]
 }

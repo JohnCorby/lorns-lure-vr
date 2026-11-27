@@ -257,11 +257,19 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Vibration Haptics
+        public virtual SteamVR_Action_Vibration LeftHandHaptics
         {
             get
             {
-                return SteamVR_Actions.game_Haptics;
+                return SteamVR_Actions.game_LeftHandHaptics;
+            }
+        }
+        
+        public virtual SteamVR_Action_Vibration RightHandHaptics
+        {
+            get
+            {
+                return SteamVR_Actions.game_RightHandHaptics;
             }
         }
     }
