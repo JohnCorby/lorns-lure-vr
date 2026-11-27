@@ -19,6 +19,7 @@ Also Lorn's Lure has a codebase that's really annoying to mod around so I'm hesi
 - No moving or rotating origin, because I couldn't be bothered to figure it out. Your right hand controls direction, but wall detection and head tilt still uses the real player forward.
 - You must manually turn off bloom or else you get a weird white haze over your screen. Also turn the sensitivity down. I use 2.
 - I have not tested other controllers, so the hands might be rotated weirdly if you don't have HP Reverb G2 controllers.
+- Cutscenes are kinda busted. They also dont end for some reason so you have to hold interact (X) to skip them.
 
 # Installing
 
