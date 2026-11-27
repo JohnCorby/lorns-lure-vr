@@ -110,7 +110,7 @@ public class UuvrInput : UuvrBehaviour
             // "Zoom" => Actions.Y.state,
             "Dash" => Actions.Dash.state,
             "TryAgain" => Actions.TryAgain.state,
-            "Crouch" => Actions.Crouch.state,
+            "Crouch" => VrPlayer.Instance.crouch,
             "Hints" => Actions.Hints.state,
             // "PictureMode" => Actions.DUp.state,
             // "VideoMode" => Actions.DLeft.state,

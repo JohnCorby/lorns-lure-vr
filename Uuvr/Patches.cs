@@ -676,7 +676,7 @@ public static class Patches
 
     // TODO: AnimateView return false. iscrouching use camera height instead of button press for input
     [HarmonyPrefix, HarmonyPatch(typeof(BaseFirstPersonController), nameof(BaseFirstPersonController.AnimateView))]
-    private static bool BaseFirstPersonController_AnimateView(BaseFirstPersonController __instance) => true;
+    private static bool BaseFirstPersonController_AnimateView(BaseFirstPersonController __instance) => false;
 
     // TODO: turn off water reflections? i think that exists and i think its broken but its hard to tell cuz its so subtle anyway
 

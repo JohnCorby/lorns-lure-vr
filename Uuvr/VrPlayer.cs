@@ -36,6 +36,8 @@ public class VrPlayer : MonoBehaviour
 
     private Scanner scanner;
 
+    public bool crouch;
+
     public static readonly Shader UnlitAlwaysDrawShader = Shader.Find("GUI/Text Shader");
 
     private void Awake()
@@ -176,5 +178,8 @@ public class VrPlayer : MonoBehaviour
             VrUiManager._uiContainer.transform.localPosition = UiOverlayRenderMode._uiSceneCamera.transform.localPosition;
             VrUiManager._uiContainer.transform.localRotation = UiOverlayRenderMode._uiSceneCamera.transform.localRotation with { y = 0, z = 0 };
         }
+
+        // for some reason the camera is always at 0 1.6 0. i guess something else is setting it but whatever
+        crouch = InputTracking.GetLocalPosition(XRNode.CenterEye).y <= 0.8;
     }
 }
