@@ -81,28 +81,16 @@
       "type": "boolean"
     },
     {
-      "name": "/actions/game/in/MouseX",
-      "type": "vector1"
+      "name": "/actions/game/in/MouseX MouseY",
+      "type": "vector2"
     },
     {
-      "name": "/actions/game/in/MouseY",
-      "type": "vector1"
+      "name": "/actions/game/in/Horizontal Vertical",
+      "type": "vector2"
     },
     {
-      "name": "/actions/game/in/Horizontal",
-      "type": "vector1"
-    },
-    {
-      "name": "/actions/game/in/Vertical",
-      "type": "vector1"
-    },
-    {
-      "name": "/actions/game/in/UIHorizontal",
-      "type": "vector1"
-    },
-    {
-      "name": "/actions/game/in/UIVertical",
-      "type": "vector1"
+      "name": "/actions/game/in/UIHorizontal UIVertical",
+      "type": "vector2"
     },
     {
       "name": "/actions/game/in/LeftHandPose",
