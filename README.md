@@ -4,21 +4,36 @@ Fork of [UUVR](https://github.com/Raicuparta/uuvr) tailored for [Lorn's lure](ht
 
 Yes, this means the code looks kind of bad. It's my first VR project, sorry!
 
+Also Lorn's Lure has a codebase that's really annoying to mod around so I'm hesitant to work on this more. 
+
+## Features
+
+- 6DOF
+- You have hands and they function.
+- Most actions are tied to hand direction instead of camera direction.
+- Crouching requires crouching irl
+
+## Current inconveniences
+
+- No moving or rotating origin, because I couldn't be bothered to figure it out.
+Your right hand controls direction, but wall detection and head tilt still uses the real player forward.
+- You must manually turn off bloom or else you get a weird white haze over your screen. Also turn the sensitivity down. I use 2.
+- I have not tested other controllers, so the hands might be rotated weirdly if you don't have HP Reverb G2 controllers.
+
 # Installing
 
-Use [Rai Pal](https://pal.raicuparta.com) to install `UUVR Mono Legacy`, then build this mod over it.
+idk yet raicuparta needs to set that up
 
 # Building
 
 - Switch to the legacy-mono build configuration
 - In Directory.Build.Props, set BepInExDir and GameManagedDir
-- Make sure UUVR Mono Legacy is installed from Rai Pal (this sets up the right directories and lets you uninstall the mod later)
 - Build
 
 ## License
 
     Rai Pal
-    Copyright (C) 2024  Raicuparta (and JohnCorby)
+    Copyright (C) 2026  Raicuparta and JohnCorby
 
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
