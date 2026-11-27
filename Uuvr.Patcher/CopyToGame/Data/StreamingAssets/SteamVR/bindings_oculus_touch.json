@@ -14,6 +14,241 @@
       "sources": [],
       "skeleton": []
     },
+    "/actions/game": {
+      "chords": [],
+      "poses": [
+        {
+          "path": "/user/hand/left/pose/openxr_pinch",
+          "output": "none"
+        },
+        {
+          "path": "/user/hand/right/pose/openxr_pinch",
+          "output": "none"
+        },
+        {
+          "path": "/user/hand/left/pose/openxr_poke",
+          "output": "none"
+        },
+        {
+          "path": "/user/hand/right/pose/openxr_poke",
+          "output": "none"
+        },
+        {
+          "path": "/user/hand/left/pose/raw",
+          "output": "/actions/game/in/lefthandpose"
+        },
+        {
+          "path": "/user/hand/right/pose/raw",
+          "output": "/actions/game/in/righthandpose"
+        }
+      ],
+      "haptics": [
+        {
+          "output": "/actions/game/out/lefthandhaptics",
+          "path": "/user/hand/left/output/haptic"
+        },
+        {
+          "output": "/actions/game/out/righthandhaptics",
+          "path": "/user/hand/right/output/haptic"
+        }
+      ],
+      "sources": [
+        {
+          "path": "/user/hand/right/input/a",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/jump"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/a",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/uisubmit"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/a",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/submit"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/b",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/slowdown"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/b",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/uicancel"
+            },
+            "long": {
+              "output": "/actions/game/in/cancel"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/x",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/interact"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/joystick",
+          "mode": "joystick",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/usebattery"
+            },
+            "position": {
+              "output": "/actions/game/in/horizontal vertical"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/joystick",
+          "mode": "joystick",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/dropcheckpoint"
+            },
+            "position": {
+              "output": "/actions/game/in/mousex mousey"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/trigger",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/grapple"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/trigger",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/cling"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/grip",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/dash"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/right/input/grip",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/flare"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/y",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/crouch"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/application_menu",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/tryagain"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/x",
+          "mode": "button",
+          "parameters": {},
+          "inputs": {
+            "click": {
+              "output": "/actions/game/in/uiscanclose"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/joystick",
+          "mode": "joystick",
+          "parameters": {},
+          "inputs": {
+            "position": {
+              "output": "/actions/game/in/uihorizontal uivertical"
+            }
+          }
+        },
+        {
+          "path": "/user/hand/left/input/joystick",
+          "mode": "dpad",
+          "parameters": {
+            "sub_mode": "touch"
+          },
+          "inputs": {
+            "north": {
+              "output": "/actions/game/in/scrollterminalup"
+            },
+            "south": {
+              "output": "/actions/game/in/scrollterminaldown"
+            }
+          }
+        }
+      ],
+      "skeleton": [
+        {
+          "path": "/user/hand/left/input/skeleton/left",
+          "output": "/actions/game/in/lefthandskeleton"
+        },
+        {
+          "path": "/user/hand/right/input/skeleton/right",
+          "output": "/actions/game/in/righthandskeleton"
+        }
+      ]
+    },
     "/actions/platformer": {
       "chords": [],
       "poses": [],
