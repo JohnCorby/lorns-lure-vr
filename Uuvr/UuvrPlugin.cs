@@ -15,12 +15,12 @@ namespace Uuvr;
 
 [BepInPlugin(
 #if LEGACY
-    "raicuparta.uuvr-legacy",
+    "johncorby.lorns-lure-vr",
 #elif MODERN
     "raicuparta.uuvr-modern",
 #endif
-    "UUVR",
-    "0.3.1")]
+    "Lorn's Lure VR",
+    "1.0.0")]
 public class UuvrPlugin
 #if CPP
 : BasePlugin
