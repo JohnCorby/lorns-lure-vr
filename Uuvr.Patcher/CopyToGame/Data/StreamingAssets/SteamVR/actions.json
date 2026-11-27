@@ -1,89 +1,135 @@
 {
   "actions": [
     {
-      "name": "/actions/Xbox/in/A",
+      "name": "/actions/game/in/Jump",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/B",
+      "name": "/actions/game/in/SlowDown",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/Y",
+      "name": "/actions/game/in/Interact",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/X",
+      "name": "/actions/game/in/Dash",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/Start",
+      "name": "/actions/game/in/TryAgain",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/Select",
+      "name": "/actions/game/in/Crouch",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/DUp",
+      "name": "/actions/game/in/Hints",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/DDown",
+      "name": "/actions/game/in/Cling",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/DLeft",
+      "name": "/actions/game/in/Grapple",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/DRight",
+      "name": "/actions/game/in/Scan",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/DPad",
-      "type": "vector2"
-    },
-    {
-      "name": "/actions/Xbox/in/StickLeft",
-      "type": "vector2"
-    },
-    {
-      "name": "/actions/Xbox/in/StickRight",
-      "type": "vector2"
-    },
-    {
-      "name": "/actions/Xbox/in/LB",
+      "name": "/actions/game/in/Flare",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/RB",
+      "name": "/actions/game/in/DropCheckpoint",
       "type": "boolean"
     },
     {
-      "name": "/actions/Xbox/in/LT",
+      "name": "/actions/game/in/UseBattery",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/game/in/Submit",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/game/in/Cancel",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/game/in/UIScanClose",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/game/in/ScrollTerminalUp",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/game/in/ScrollTerminalDown",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/game/in/UISubmit",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/game/in/UICancel",
+      "type": "boolean"
+    },
+    {
+      "name": "/actions/game/in/MouseX",
       "type": "vector1"
     },
     {
-      "name": "/actions/Xbox/in/RT",
+      "name": "/actions/game/in/MouseY",
       "type": "vector1"
     },
     {
-      "name": "/actions/Xbox/in/StickLeftClick",
-      "type": "boolean"
+      "name": "/actions/game/in/Horizontal",
+      "type": "vector1"
     },
     {
-      "name": "/actions/Xbox/in/StickRightClick",
-      "type": "boolean"
+      "name": "/actions/game/in/Vertical",
+      "type": "vector1"
     },
     {
-      "name": "/actions/Xbox/out/Vibration",
+      "name": "/actions/game/in/UIHorizontal",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/game/in/UIVertical",
+      "type": "vector1"
+    },
+    {
+      "name": "/actions/game/in/LeftHandPose",
+      "type": "pose"
+    },
+    {
+      "name": "/actions/game/in/RightHandPose",
+      "type": "pose"
+    },
+    {
+      "name": "/actions/game/in/LeftHandSkeleton",
+      "type": "skeleton",
+      "skeleton": "/skeleton/hand/left"
+    },
+    {
+      "name": "/actions/game/in/RightHandSkeleton",
+      "type": "skeleton",
+      "skeleton": "/skeleton/hand/right"
+    },
+    {
+      "name": "/actions/game/out/Haptics",
       "type": "vibration"
     }
   ],
   "action_sets": [
     {
-      "name": "/actions/Xbox",
+      "name": "/actions/game",
       "usage": "leftright"
     }
   ],
@@ -143,7 +189,8 @@
   ],
   "localization": [
     {
-      "language_tag": "en_US"
+      "language_tag": "en_US",
+      "/actions/game/out/Haptics": "Haptics"
     }
   ]
 }

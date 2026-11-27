@@ -85,7 +85,7 @@ public class UuvrInput : UuvrBehaviour
     }
 */
 
-    private static SteamVR_Input_ActionSet_Xbox Actions => SteamVR_Actions.Xbox;
+    private static SteamVR_Input_ActionSet_game Actions => SteamVR_Actions.game;
 
 
     #region patches
