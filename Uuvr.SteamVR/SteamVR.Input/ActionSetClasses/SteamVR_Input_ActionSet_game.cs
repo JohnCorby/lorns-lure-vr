@@ -177,51 +177,27 @@ namespace Valve.VR
             }
         }
         
-        public virtual SteamVR_Action_Single MouseX
+        public virtual SteamVR_Action_Vector2 MouseX_MouseY
         {
             get
             {
-                return SteamVR_Actions.game_MouseX;
+                return SteamVR_Actions.game_MouseX_MouseY;
             }
         }
         
-        public virtual SteamVR_Action_Single MouseY
+        public virtual SteamVR_Action_Vector2 Horizontal_Vertical
         {
             get
             {
-                return SteamVR_Actions.game_MouseY;
+                return SteamVR_Actions.game_Horizontal_Vertical;
             }
         }
         
-        public virtual SteamVR_Action_Single Horizontal
+        public virtual SteamVR_Action_Vector2 UIHorizontal_UIVertical
         {
             get
             {
-                return SteamVR_Actions.game_Horizontal;
-            }
-        }
-        
-        public virtual SteamVR_Action_Single Vertical
-        {
-            get
-            {
-                return SteamVR_Actions.game_Vertical;
-            }
-        }
-        
-        public virtual SteamVR_Action_Single UIHorizontal
-        {
-            get
-            {
-                return SteamVR_Actions.game_UIHorizontal;
-            }
-        }
-        
-        public virtual SteamVR_Action_Single UIVertical
-        {
-            get
-            {
-                return SteamVR_Actions.game_UIVertical;
+                return SteamVR_Actions.game_UIHorizontal_UIVertical;
             }
         }
         

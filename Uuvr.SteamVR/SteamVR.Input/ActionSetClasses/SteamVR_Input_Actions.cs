@@ -57,17 +57,11 @@ namespace Valve.VR
         
         private static SteamVR_Action_Boolean p_game_UICancel;
         
-        private static SteamVR_Action_Single p_game_MouseX;
+        private static SteamVR_Action_Vector2 p_game_MouseX_MouseY;
         
-        private static SteamVR_Action_Single p_game_MouseY;
+        private static SteamVR_Action_Vector2 p_game_Horizontal_Vertical;
         
-        private static SteamVR_Action_Single p_game_Horizontal;
-        
-        private static SteamVR_Action_Single p_game_Vertical;
-        
-        private static SteamVR_Action_Single p_game_UIHorizontal;
-        
-        private static SteamVR_Action_Single p_game_UIVertical;
+        private static SteamVR_Action_Vector2 p_game_UIHorizontal_UIVertical;
         
         private static SteamVR_Action_Pose p_game_LeftHandPose;
         
@@ -241,51 +235,27 @@ namespace Valve.VR
             }
         }
         
-        public static SteamVR_Action_Single game_MouseX
+        public static SteamVR_Action_Vector2 game_MouseX_MouseY
         {
             get
             {
-                return SteamVR_Actions.p_game_MouseX.GetCopy<SteamVR_Action_Single>();
+                return SteamVR_Actions.p_game_MouseX_MouseY.GetCopy<SteamVR_Action_Vector2>();
             }
         }
         
-        public static SteamVR_Action_Single game_MouseY
+        public static SteamVR_Action_Vector2 game_Horizontal_Vertical
         {
             get
             {
-                return SteamVR_Actions.p_game_MouseY.GetCopy<SteamVR_Action_Single>();
+                return SteamVR_Actions.p_game_Horizontal_Vertical.GetCopy<SteamVR_Action_Vector2>();
             }
         }
         
-        public static SteamVR_Action_Single game_Horizontal
+        public static SteamVR_Action_Vector2 game_UIHorizontal_UIVertical
         {
             get
             {
-                return SteamVR_Actions.p_game_Horizontal.GetCopy<SteamVR_Action_Single>();
-            }
-        }
-        
-        public static SteamVR_Action_Single game_Vertical
-        {
-            get
-            {
-                return SteamVR_Actions.p_game_Vertical.GetCopy<SteamVR_Action_Single>();
-            }
-        }
-        
-        public static SteamVR_Action_Single game_UIHorizontal
-        {
-            get
-            {
-                return SteamVR_Actions.p_game_UIHorizontal.GetCopy<SteamVR_Action_Single>();
-            }
-        }
-        
-        public static SteamVR_Action_Single game_UIVertical
-        {
-            get
-            {
-                return SteamVR_Actions.p_game_UIVertical.GetCopy<SteamVR_Action_Single>();
+                return SteamVR_Actions.p_game_UIHorizontal_UIVertical.GetCopy<SteamVR_Action_Vector2>();
             }
         }
         
@@ -360,12 +330,9 @@ namespace Valve.VR
                     SteamVR_Actions.game_ScrollTerminalDown,
                     SteamVR_Actions.game_UISubmit,
                     SteamVR_Actions.game_UICancel,
-                    SteamVR_Actions.game_MouseX,
-                    SteamVR_Actions.game_MouseY,
-                    SteamVR_Actions.game_Horizontal,
-                    SteamVR_Actions.game_Vertical,
-                    SteamVR_Actions.game_UIHorizontal,
-                    SteamVR_Actions.game_UIVertical,
+                    SteamVR_Actions.game_MouseX_MouseY,
+                    SteamVR_Actions.game_Horizontal_Vertical,
+                    SteamVR_Actions.game_UIHorizontal_UIVertical,
                     SteamVR_Actions.game_LeftHandPose,
                     SteamVR_Actions.game_RightHandPose,
                     SteamVR_Actions.game_LeftHandSkeleton,
@@ -393,12 +360,9 @@ namespace Valve.VR
                     SteamVR_Actions.game_ScrollTerminalDown,
                     SteamVR_Actions.game_UISubmit,
                     SteamVR_Actions.game_UICancel,
-                    SteamVR_Actions.game_MouseX,
-                    SteamVR_Actions.game_MouseY,
-                    SteamVR_Actions.game_Horizontal,
-                    SteamVR_Actions.game_Vertical,
-                    SteamVR_Actions.game_UIHorizontal,
-                    SteamVR_Actions.game_UIVertical,
+                    SteamVR_Actions.game_MouseX_MouseY,
+                    SteamVR_Actions.game_Horizontal_Vertical,
+                    SteamVR_Actions.game_UIHorizontal_UIVertical,
                     SteamVR_Actions.game_LeftHandPose,
                     SteamVR_Actions.game_RightHandPose,
                     SteamVR_Actions.game_LeftHandSkeleton,
@@ -433,14 +397,11 @@ namespace Valve.VR
                     SteamVR_Actions.game_ScrollTerminalDown,
                     SteamVR_Actions.game_UISubmit,
                     SteamVR_Actions.game_UICancel};
-            Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[] {
-                    SteamVR_Actions.game_MouseX,
-                    SteamVR_Actions.game_MouseY,
-                    SteamVR_Actions.game_Horizontal,
-                    SteamVR_Actions.game_Vertical,
-                    SteamVR_Actions.game_UIHorizontal,
-                    SteamVR_Actions.game_UIVertical};
-            Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[0];
+            Valve.VR.SteamVR_Input.actionsSingle = new Valve.VR.SteamVR_Action_Single[0];
+            Valve.VR.SteamVR_Input.actionsVector2 = new Valve.VR.SteamVR_Action_Vector2[] {
+                    SteamVR_Actions.game_MouseX_MouseY,
+                    SteamVR_Actions.game_Horizontal_Vertical,
+                    SteamVR_Actions.game_UIHorizontal_UIVertical};
             Valve.VR.SteamVR_Input.actionsVector3 = new Valve.VR.SteamVR_Action_Vector3[0];
             Valve.VR.SteamVR_Input.actionsSkeleton = new Valve.VR.SteamVR_Action_Skeleton[] {
                     SteamVR_Actions.game_LeftHandSkeleton,
@@ -466,12 +427,9 @@ namespace Valve.VR
                     SteamVR_Actions.game_ScrollTerminalDown,
                     SteamVR_Actions.game_UISubmit,
                     SteamVR_Actions.game_UICancel,
-                    SteamVR_Actions.game_MouseX,
-                    SteamVR_Actions.game_MouseY,
-                    SteamVR_Actions.game_Horizontal,
-                    SteamVR_Actions.game_Vertical,
-                    SteamVR_Actions.game_UIHorizontal,
-                    SteamVR_Actions.game_UIVertical};
+                    SteamVR_Actions.game_MouseX_MouseY,
+                    SteamVR_Actions.game_Horizontal_Vertical,
+                    SteamVR_Actions.game_UIHorizontal_UIVertical};
         }
         
         private static void PreInitActions()
@@ -496,12 +454,9 @@ namespace Valve.VR
             SteamVR_Actions.p_game_ScrollTerminalDown = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/game/in/ScrollTerminalDown")));
             SteamVR_Actions.p_game_UISubmit = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/game/in/UISubmit")));
             SteamVR_Actions.p_game_UICancel = ((SteamVR_Action_Boolean)(SteamVR_Action.Create<SteamVR_Action_Boolean>("/actions/game/in/UICancel")));
-            SteamVR_Actions.p_game_MouseX = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/game/in/MouseX")));
-            SteamVR_Actions.p_game_MouseY = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/game/in/MouseY")));
-            SteamVR_Actions.p_game_Horizontal = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/game/in/Horizontal")));
-            SteamVR_Actions.p_game_Vertical = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/game/in/Vertical")));
-            SteamVR_Actions.p_game_UIHorizontal = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/game/in/UIHorizontal")));
-            SteamVR_Actions.p_game_UIVertical = ((SteamVR_Action_Single)(SteamVR_Action.Create<SteamVR_Action_Single>("/actions/game/in/UIVertical")));
+            SteamVR_Actions.p_game_MouseX_MouseY = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/game/in/MouseX MouseY")));
+            SteamVR_Actions.p_game_Horizontal_Vertical = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/game/in/Horizontal Vertical")));
+            SteamVR_Actions.p_game_UIHorizontal_UIVertical = ((SteamVR_Action_Vector2)(SteamVR_Action.Create<SteamVR_Action_Vector2>("/actions/game/in/UIHorizontal UIVertical")));
             SteamVR_Actions.p_game_LeftHandPose = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/game/in/LeftHandPose")));
             SteamVR_Actions.p_game_RightHandPose = ((SteamVR_Action_Pose)(SteamVR_Action.Create<SteamVR_Action_Pose>("/actions/game/in/RightHandPose")));
             SteamVR_Actions.p_game_LeftHandSkeleton = ((SteamVR_Action_Skeleton)(SteamVR_Action.Create<SteamVR_Action_Skeleton>("/actions/game/in/LeftHandSkeleton")));

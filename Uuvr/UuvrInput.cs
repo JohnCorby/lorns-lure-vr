@@ -105,33 +105,33 @@ public class UuvrInput : UuvrBehaviour
     {
         __result |= buttonName switch
         {
-            "Jump" => Actions.A.state,
-            "SlowDown" => Actions.B.state,
-            "Interact" => Actions.X.state,
+            "Jump" => Actions.Jump.state,
+            "SlowDown" => Actions.SlowDown.state,
+            "Interact" => Actions.Interact.state,
             // "Zoom" => Actions.Y.state,
-            "Dash" => Actions.LB.state,
-            "TryAgain" => Actions.Select.state,
-            "Crouch" => Actions.DDown.state,
-            "Hints" => Actions.DRight.state,
+            "Dash" => Actions.Dash.state,
+            "TryAgain" => Actions.TryAgain.state,
+            "Crouch" => Actions.Crouch.state,
+            "Hints" => Actions.Hints.state,
             // "PictureMode" => Actions.DUp.state,
             // "VideoMode" => Actions.DLeft.state,
 
-            "Cling" => Actions.LT.axis > .5f,
-            "Grapple" => Actions.RT.axis > .5f,
-            "Scan" => Actions.LT.axis > .5f,
-            "Flare" => Actions.RT.axis > .5f,
+            "Cling" => Actions.Cling.state,
+            "Grapple" => Actions.Grapple.state,
+            "Scan" => Actions.Scan.state,
+            "Flare" => Actions.Flare.state,
 
-            "DropCheckpoint" => Actions.StickLeftClick.state,
-            "UseBattery" => Actions.StickRightClick.state,
+            "DropCheckpoint" => Actions.DropCheckpoint.state,
+            "UseBattery" => Actions.UseBattery.state,
 
-            "Submit" => Actions.A.state,
-            "Cancel" => Actions.Start.state,
-            "UIScanClose" => Actions.X.state,
-            "ScrollTerminalUp" => Actions.StickLeft.axis.y > .5f,
-            "ScrollTerminalDown" => Actions.StickLeft.axis.y < -.5f,
+            "Submit" => Actions.Submit.state,
+            "Cancel" => Actions.Cancel.state,
+            "UIScanClose" => Actions.UIScanClose.state,
+            "ScrollTerminalUp" => Actions.ScrollTerminalUp.state,
+            "ScrollTerminalDown" => Actions.ScrollTerminalDown.state,
 
-            "UISubmit" => Actions.A.state,
-            "UICancel" => Actions.B.state,
+            "UISubmit" => Actions.UISubmit.state,
+            "UICancel" => Actions.UICancel.state,
             _ => false,
         };
     }
@@ -141,33 +141,33 @@ public class UuvrInput : UuvrBehaviour
     {
         __result |= buttonName switch
         {
-            "Jump" => Actions.A.stateDown,
-            "SlowDown" => Actions.B.stateDown,
-            "Interact" => Actions.X.stateDown,
+            "Jump" => Actions.Jump.stateDown,
+            "SlowDown" => Actions.SlowDown.stateDown,
+            "Interact" => Actions.Interact.stateDown,
             // "Zoom" => Actions.Y.stateDown,
-            "Dash" => Actions.LB.stateDown,
-            "TryAgain" => Actions.Select.stateDown,
-            "Crouch" => Actions.DDown.stateDown,
-            "Hints" => Actions.DRight.stateDown,
+            "Dash" => Actions.Dash.stateDown,
+            "TryAgain" => Actions.TryAgain.stateDown,
+            "Crouch" => Actions.Crouch.stateDown,
+            "Hints" => Actions.Hints.stateDown,
             // "PictureMode" => Actions.DUp.stateDown,
             // "VideoMode" => Actions.DLeft.stateDown,
 
-            "Cling" => Actions.LT.axis > .5f && Actions.LT.lastAxis <= .5f,
-            "Grapple" => Actions.RT.axis > .5f && Actions.RT.lastAxis <= .5f,
-            "Scan" => Actions.LT.axis > .5f && Actions.LT.lastAxis <= .5f,
-            "Flare" => Actions.RT.axis > .5f && Actions.RT.lastAxis <= .5f,
+            "Cling" => Actions.Cling.stateDown,
+            "Grapple" => Actions.Grapple.stateDown,
+            "Scan" => Actions.Scan.stateDown,
+            "Flare" => Actions.Flare.stateDown,
 
-            "DropCheckpoint" => Actions.StickLeftClick.stateDown,
-            "UseBattery" => Actions.StickRightClick.stateDown,
+            "DropCheckpoint" => Actions.DropCheckpoint.stateDown,
+            "UseBattery" => Actions.UseBattery.stateDown,
 
-            "Submit" => Actions.A.stateDown,
-            "Cancel" => Actions.Start.stateDown,
-            "UIScanClose" => Actions.X.stateDown,
-            "ScrollTerminalUp" => Actions.StickLeft.axis.y > .5f && Actions.StickLeft.lastAxis.y <= .5f,
-            "ScrollTerminalDown" => Actions.StickLeft.axis.y < -.5f && Actions.StickLeft.lastAxis.y >= -.5f,
+            "Submit" => Actions.Submit.stateDown,
+            "Cancel" => Actions.Cancel.stateDown,
+            "UIScanClose" => Actions.UIScanClose.stateDown,
+            "ScrollTerminalUp" => Actions.ScrollTerminalUp.stateDown,
+            "ScrollTerminalDown" => Actions.ScrollTerminalDown.stateDown,
 
-            "UISubmit" => Actions.A.stateDown,
-            "UICancel" => Actions.B.stateDown,
+            "UISubmit" => Actions.UISubmit.stateDown,
+            "UICancel" => Actions.UICancel.stateDown,
             _ => false,
         };
     }
@@ -177,33 +177,33 @@ public class UuvrInput : UuvrBehaviour
     {
         __result |= buttonName switch
         {
-            "Jump" => Actions.A.stateUp,
-            "SlowDown" => Actions.B.stateUp,
-            "Interact" => Actions.X.stateUp,
+            "Jump" => Actions.Jump.stateUp,
+            "SlowDown" => Actions.SlowDown.stateUp,
+            "Interact" => Actions.Interact.stateUp,
             // "Zoom" => Actions.Y.stateUp,
-            "Dash" => Actions.LB.stateUp,
-            "TryAgain" => Actions.Select.stateUp,
-            "Crouch" => Actions.DDown.stateUp,
-            "Hints" => Actions.DRight.stateUp,
+            "Dash" => Actions.Dash.stateUp,
+            "TryAgain" => Actions.TryAgain.stateUp,
+            "Crouch" => Actions.Crouch.stateUp,
+            "Hints" => Actions.Hints.stateUp,
             // "PictureMode" => Actions.DUp.stateUp,
             // "VideoMode" => Actions.DLeft.stateUp,
 
-            "Cling" => Actions.LT.axis < .5f && Actions.LT.lastAxis >= .5f,
-            "Grapple" => Actions.RT.axis < .5f && Actions.RT.lastAxis >= .5f,
-            "Scan" => Actions.LT.axis < .5f && Actions.LT.lastAxis >= .5f,
-            "Flare" => Actions.RT.axis < .5f && Actions.RT.lastAxis >= .5f,
+            "Cling" => Actions.Cling.stateUp,
+            "Grapple" => Actions.Grapple.stateUp,
+            "Scan" => Actions.Scan.stateUp,
+            "Flare" => Actions.Flare.stateUp,
 
-            "DropCheckpoint" => Actions.StickLeftClick.stateUp,
-            "UseBattery" => Actions.StickRightClick.stateUp,
+            "DropCheckpoint" => Actions.DropCheckpoint.stateUp,
+            "UseBattery" => Actions.UseBattery.stateUp,
 
-            "Submit" => Actions.A.stateUp,
-            "Cancel" => Actions.Start.stateUp,
-            "UIScanClose" => Actions.X.stateUp,
-            "ScrollTerminalUp" => Actions.StickLeft.axis.y < .5f && Actions.StickLeft.lastAxis.y >= .5f,
-            "ScrollTerminalDown" => Actions.StickLeft.axis.y > -.5f && Actions.StickLeft.lastAxis.y <= -.5f,
+            "Submit" => Actions.Submit.stateUp,
+            "Cancel" => Actions.Cancel.stateUp,
+            "UIScanClose" => Actions.UIScanClose.stateUp,
+            "ScrollTerminalUp" => Actions.ScrollTerminalUp.stateUp,
+            "ScrollTerminalDown" => Actions.ScrollTerminalDown.stateUp,
 
-            "UISubmit" => Actions.A.stateUp,
-            "UICancel" => Actions.B.stateUp,
+            "UISubmit" => Actions.UISubmit.stateUp,
+            "UICancel" => Actions.UICancel.stateUp,
             _ => false,
         };
     }
@@ -214,13 +214,13 @@ public class UuvrInput : UuvrBehaviour
         if (__result != 0) return;
         __result = axisName switch
         {
-            "Mouse X" => Actions.StickRight.axis.x,
-            "Mouse Y" => Actions.StickRight.axis.y,
-            "Horizontal" => Actions.StickLeft.axis.x,
-            "Vertical" => Actions.StickLeft.axis.y,
+            "Mouse X" => Actions.MouseX_MouseY.axis.x,
+            "Mouse Y" => Actions.MouseX_MouseY.axis.y,
+            "Horizontal" => Actions.Horizontal_Vertical.axis.x,
+            "Vertical" => Actions.Horizontal_Vertical.axis.y,
 
-            "UIHorizontal" => Actions.StickLeft.axis.x,
-            "UIVertical" => Actions.StickLeft.axis.y,
+            "UIHorizontal" => Actions.UIHorizontal_UIVertical.axis.x,
+            "UIVertical" => Actions.UIHorizontal_UIVertical.axis.y,
             _ => 0f,
         };
     }
@@ -231,13 +231,13 @@ public class UuvrInput : UuvrBehaviour
         if (__result != 0) return;
         __result = axisName switch
         {
-            "Mouse X" => Actions.StickRight.axis.x,
-            "Mouse Y" => Actions.StickRight.axis.y,
-            "Horizontal" => Actions.StickLeft.axis.x,
-            "Vertical" => Actions.StickLeft.axis.y,
+            "Mouse X" => Actions.MouseX_MouseY.axis.x,
+            "Mouse Y" => Actions.MouseX_MouseY.axis.y,
+            "Horizontal" => Actions.Horizontal_Vertical.axis.x,
+            "Vertical" => Actions.Horizontal_Vertical.axis.y,
 
-            "UIHorizontal" => Actions.StickLeft.axis.x,
-            "UIVertical" => Actions.StickLeft.axis.y,
+            "UIHorizontal" => Actions.UIHorizontal_UIVertical.axis.x,
+            "UIVertical" => Actions.UIHorizontal_UIVertical.axis.y,
             _ => 0f,
         };
     }
@@ -247,14 +247,14 @@ public class UuvrInput : UuvrBehaviour
     {
         __result |= actionId switch
         {
-            UIHorizontal => Actions.StickLeft.axis.x > .5f,
-            UIVertical => Actions.StickLeft.axis.y > .5f,
+            UIHorizontal => Actions.UIHorizontal_UIVertical.axis.x > .5f,
+            UIVertical => Actions.UIHorizontal_UIVertical.axis.y > .5f,
             _ => false,
         };
         __result |= actionId switch
         {
-            UISubmit => Actions.A.stateDown,
-            UICancel => Actions.B.stateDown,
+            UISubmit => Actions.UISubmit.state,
+            UICancel => Actions.UICancel.state,
             _ => false,
         };
     }
@@ -264,14 +264,14 @@ public class UuvrInput : UuvrBehaviour
     {
         __result |= actionId switch
         {
-            UIHorizontal => Actions.StickLeft.axis.x > .5f && Actions.StickLeft.lastAxis.x <= .5f,
-            UIVertical => Actions.StickLeft.axis.y > .5f && Actions.StickLeft.lastAxis.y <= .5f,
+            UIHorizontal => Actions.UIHorizontal_UIVertical.axis.x > .5f && Actions.UIHorizontal_UIVertical.lastAxis.x <= .5f,
+            UIVertical => Actions.UIHorizontal_UIVertical.axis.y > .5f && Actions.UIHorizontal_UIVertical.lastAxis.y <= .5f,
             _ => false,
         };
         __result |= actionId switch
         {
-            UISubmit => Actions.A.stateDown,
-            UICancel => Actions.B.stateDown,
+            UISubmit => Actions.UISubmit.stateDown,
+            UICancel => Actions.UICancel.stateDown,
             _ => false,
         };
     }
@@ -281,8 +281,8 @@ public class UuvrInput : UuvrBehaviour
     {
         __result |= actionId switch
         {
-            UIHorizontal => Actions.StickLeft.axis.x < -.5f,
-            UIVertical => Actions.StickLeft.axis.y < -.5f,
+            UIHorizontal => Actions.UIHorizontal_UIVertical.axis.x < -.5f,
+            UIVertical => Actions.UIHorizontal_UIVertical.axis.y < -.5f,
             _ => false,
         };
     }
@@ -292,8 +292,8 @@ public class UuvrInput : UuvrBehaviour
     {
         __result |= actionId switch
         {
-            UIHorizontal => Actions.StickLeft.axis.x < -.5f && Actions.StickLeft.lastAxis.x >= -.5f,
-            UIVertical => Actions.StickLeft.axis.y < -.5f && Actions.StickLeft.lastAxis.y >= -.5f,
+            UIHorizontal => Actions.UIHorizontal_UIVertical.axis.x < -.5f && Actions.UIHorizontal_UIVertical.lastAxis.x >= -.5f,
+            UIVertical => Actions.UIHorizontal_UIVertical.axis.y < -.5f && Actions.UIHorizontal_UIVertical.lastAxis.y >= -.5f,
             _ => false,
         };
     }
@@ -304,8 +304,8 @@ public class UuvrInput : UuvrBehaviour
         if (__result != 0) return;
         __result = actionId switch
         {
-            UIHorizontal => Actions.StickLeft.axis.x,
-            UIVertical => Actions.StickLeft.axis.y,
+            UIHorizontal => Actions.UIHorizontal_UIVertical.axis.x,
+            UIVertical => Actions.UIHorizontal_UIVertical.axis.y,
             _ => 0f,
         };
     }
