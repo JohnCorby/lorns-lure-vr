@@ -15,8 +15,8 @@ Also Lorn's Lure has a codebase that's really annoying to mod around so I'm hesi
 
 ## Current inconveniences
 
-- No moving or rotating origin, because I couldn't be bothered to figure it out.
-Your right hand controls direction, but wall detection and head tilt still uses the real player forward.
+- You have to wiggle the mouse a little for it to register turning with the vr controllers for some reason. Probably something with Rewired, which I hate with every fiber of my being.
+- No moving or rotating origin, because I couldn't be bothered to figure it out. Your right hand controls direction, but wall detection and head tilt still uses the real player forward.
 - You must manually turn off bloom or else you get a weird white haze over your screen. Also turn the sensitivity down. I use 2.
 - I have not tested other controllers, so the hands might be rotated weirdly if you don't have HP Reverb G2 controllers.
 
