@@ -89,11 +89,10 @@ public class UuvrInput : UuvrBehaviour
 
 
     #region patches
-
-    // everything goes through these. just patch the methods to give hardcoded outputs using the default binds
-    // this code is terrible. i dont care! i want to work on other things!
-    // TODO: eventually, open unity, change actions.json to have these rewired actions directly instead of mapping in the patches.
-    //       thisll make this code a million times simpler because buttons and axes can just be those directly
+    
+    // terrible but works well and is rebindable
+    // BUG: must move mouse before mouse inputs register. oh well
+    // BUG: Input.anyKeyDown used in AnimateOnTrigger for splash screen. i dont care 
 
     private const int UIHorizontal = 20;
     private const int UIVertical = 21;
