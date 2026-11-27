@@ -26,7 +26,7 @@ idk yet raicuparta needs to set that up
 
 # Contributing
 
-Please go through the TODOs and fix them. You can use AI if you want, the code that I wrote is already so bad I don't think AI slop will make it worse.
+Please go through the TODO and BUG comments and fix them. You can use AI if you want, the code that I wrote is already so bad I don't think AI slop will make it worse.
 
 ## Building
 
