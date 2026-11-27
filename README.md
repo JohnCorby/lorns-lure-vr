@@ -24,7 +24,11 @@ Your right hand controls direction, but wall detection and head tilt still uses 
 
 idk yet raicuparta needs to set that up
 
-# Building
+# Contributing
+
+Please go through the TODOs and fix them. You can use AI if you want, the code that I wrote is already so bad I don't think AI slop will make it worse.
+
+## Building
 
 - Switch to the legacy-mono build configuration
 - In Directory.Build.Props, set BepInExDir and GameManagedDir
